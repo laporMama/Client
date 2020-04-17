@@ -2,12 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import AtComponents from 'at-ui'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import VuePageTransition from 'vue-page-transition'
-import 'at-ui-style'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
-Vue.use(AtComponents)
 Vue.use(VuePageTransition)
 
 new Vue({

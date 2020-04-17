@@ -1,37 +1,32 @@
 <template>
-  <div class="login">
-    <div class="row at-row flex-center flex-center">
-      <h1>Selamat Datang di LaporMama</h1>
+  <div class="container">
+    <div class="title">
+      <h1>Selamat datang di Lapor Mama</h1>
     </div>
-    <div class="loginChoose row at-row flex-around flex-center">
-      <div class="col-md-4" @click.prevent="loginas('Guru')"><at-tooltip class="item" content="Masuk Sebagai Guru" placement="top-left"><at-button type="success" size="large" hollow>Guru</at-button></at-tooltip></div>
-      <div class="col-md-4" @click.prevent="loginas('Mama')"><at-tooltip class="item" content="Masuk Sebagai Mama" placement="top-right"><at-button type="success" size="large" hollow>Mama</at-button></at-tooltip></div>
-    </div>
+    <b-row class="chooseLogin">
+      <b-col><b-button variant="outline-success" id="tooltip-target-2" size="lg" :to="{path: '/login'}">Guru</b-button></b-col>
+      <b-col><b-button variant="outline-success" id="tooltip-target-1" size="lg" :to="{path: '/login'}">Mama</b-button></b-col>
+    </b-row>
+      <b-tooltip target="tooltip-target-1" triggers="hover" placement="topleft">
+        Masuk SebagaiMama
+      </b-tooltip>
+      <b-tooltip target="tooltip-target-2" triggers="hover" placement="topright">
+          Masuk SebagaiGuru
+      </b-tooltip>
   </div>
 </template>
 
 <script>
 export default {
-  methods: {
-    loginas (payload) {
-      this.$store.commit('SET_LOGINROLE', payload)
-      this.$router.push('/login')
-    }
-  }
+
 }
 </script>
 
-<style scoped>
-  .login {
-    margin: 50px;
-    padding-top: 80px;
+<style>
+  .container {
+    margin-top: 150px;
   }
-  .loginChoose {
-    margin-top: 50px;
-    padding-top: 50px
-  }
-  .at-btn--large {
-    font-size: 14px;
-    padding: 30px 55px;
+  .chooseLogin {
+    margin-top: 100px;
   }
 </style>

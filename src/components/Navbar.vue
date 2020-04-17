@@ -1,39 +1,23 @@
 <template>
-  <div class="navbar">
-    <at-menu mode="horizontal" active-name="1" inlineCollapsed="true" >
-      <div @click.prevent="goTo">
-        <at-menu-item name="1"><div><h1>LALALA</h1></div></at-menu-item>
-      </div>
-      <div class="row at-row flex-end" v-if="loginStatus"  @click.prevent="login(false)" >
-        <at-menu-item name="4" @click.prevent="register"><i class="icon icon-log-out"></i>Logout</at-menu-item>
-      </div>
-    </at-menu>
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand :to="{path: '/'}">LaporMama</b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-button right>Keluar</b-button>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      islogin: false
-    }
-  },
-  methods: {
-    login (payload) {
-      this.$store.commit('SET_LOGIN', payload)
-    },
-    goTo () {
-      this.$router.push('/')
-    }
-  },
-  computed: {
-    loginStatus () {
-      return this.$store.state.isLogin
-    }
-  }
+
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

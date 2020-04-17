@@ -1,13 +1,11 @@
 <template>
-  <div id="card">
-    <at-card style="width: 400px;">
-      <h1 slot="title">Masuk Sebagai {{loginRole}}</h1>
-      <form class="row flex-center">
-        <div class="input"><at-input v-model="inputValue" placeholder="Please input"></at-input></div>
-        <div class="input"><at-input v-model="inputPassword" placeholder="Please Password" type="password"></at-input></div>
-        <div class="input"><at-button>Masuk</at-button></div>
-      </form>
-    </at-card>
+  <div>
+    <b-card
+      title="Card Title"
+      class="mb-2"
+    >
+    <b-button href="#" variant="primary">Go somewhere</b-button>
+    </b-card>
   </div>
 </template>
 
@@ -15,27 +13,38 @@
 export default {
   data () {
     return {
-      inputValue: '',
-      inputPassword: ''
+      form: {
+        email: '',
+        name: '',
+        food: null,
+        checked: []
+      },
+      foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
+      show: true
     }
   },
-  computed: {
-    loginRole () {
-      return this.$store.state.loginRole
+  methods: {
+    onSubmit (evt) {
+      evt.preventDefault()
+      alert(JSON.stringify(this.form))
+    },
+    onReset (evt) {
+      evt.preventDefault()
+      // Reset our form values
+      this.form.email = ''
+      this.form.name = ''
+      this.form.food = null
+      this.form.checked = []
+      // Trick to reset/clear native browser form validation state
+      this.show = false
+      this.$nextTick(() => {
+        this.show = true
+      })
     }
   }
 }
 </script>
 
 <style>
-  .input {
-    margin: 15px;
-    width: 60%;
-  }
-  #card {
-    margin-top: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+
 </style>
