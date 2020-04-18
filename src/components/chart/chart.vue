@@ -1,5 +1,5 @@
 <template>
-  <pie-chart :data="chartData" :options="chartOptions"></pie-chart>
+  <pie-chart :data="chartData" :options="chartOptions" class="container-fluid w-10"></pie-chart>
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
   data () {
     return {
       chartOptions: {
-        hoverBorderWidth: 20
+        hoverBorderWidth: 8
       },
       chartData: {
         hoverBackgroundColor: 'red',
@@ -32,12 +32,5 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

@@ -30,8 +30,8 @@ export default {
       sortBy: 'Mata Pelajaran',
       sortDesc: false,
       fields: [
-        { key: 'Mata Pelajaran', sortable: true },
-        { key: 'Nilai Harian', sortable: true },
+        { key: 'Name', sortable: true },
+        { key: 'Harian', sortable: true },
         { key: 'Ulangan', sortable: true },
         { key: 'UTS', sortable: true },
         { key: 'UAS', sortable: true }
