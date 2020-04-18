@@ -24,6 +24,7 @@
       </b-form-group>
     </b-form>
     <b-button variant="primary" :to="{path: '/teacher'}" v-if="(role === 'Guru')">Go somewhere</b-button>
+    <b-button variant="primary" :to="{path: '/mama'}" v-if="(role === 'Mama')">Go somewhere</b-button>
     </b-card>
   </div>
 </template>
