@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import loginForm from '../components/loginForm.vue'
 import home from '../views/Home.vue'
-import teacher from '../views/landingPage.vue'
+import landingPage from '../views/landingPage.vue'
+import table from '../components/table.vue'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,14 @@ const routes = [
   {
     path: '/teacher',
     name: 'teacher',
-    component: teacher
+    component: landingPage,
+    children: [
+      {
+        path: 'IX/A',
+        name: 'kelas',
+        component: table
+      }
+    ]
   }
 ]
 

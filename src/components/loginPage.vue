@@ -4,8 +4,8 @@
       <h1>Selamat datang di Lapor Mama</h1>
     </div>
     <b-row class="chooseLogin">
-      <b-col><b-button variant="outline-success" id="tooltip-target-2" size="lg" :to="{path: '/login'}">Guru</b-button></b-col>
-      <b-col><b-button variant="outline-success" id="tooltip-target-1" size="lg" :to="{path: '/login'}">Mama</b-button></b-col>
+      <b-col><b-button variant="outline-success" id="tooltip-target-2" size="lg" :to="{path: '/login'}" @click.prevent="role('Guru')">Guru</b-button></b-col>
+      <b-col><b-button variant="outline-success" id="tooltip-target-1" size="lg" :to="{path: '/login'}"  @click.prevent="role('Mama')">Mama</b-button></b-col>
     </b-row>
       <b-tooltip target="tooltip-target-1" triggers="hover" placement="topleft">
         Masuk SebagaiMama
@@ -18,7 +18,11 @@
 
 <script>
 export default {
-
+  methods: {
+    role (payload) {
+      this.$store.commit('SET_LOGINROLE', payload)
+    }
+  }
 }
 </script>
 
