@@ -30,5 +30,7 @@ export default {
   .sidenav {
     display: flex;
     flex-direction: column;
+    margin-top: 2%;
+    border: 1px black;
   }
 </style>
