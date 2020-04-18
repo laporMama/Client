@@ -4,6 +4,7 @@ import loginForm from '../components/loginForm.vue'
 import home from '../views/Home.vue'
 import landingPage from '../views/landingPage.vue'
 import table from '../components/table.vue'
+import parent from '../views/parent.vue'
 
 Vue.use(VueRouter)
 
@@ -31,6 +32,11 @@ const routes = [
         component: table
       }
     ]
+  },
+  {
+    path: '/parent',
+    name: 'Parent',
+    component: parent
   }
 ]
 
