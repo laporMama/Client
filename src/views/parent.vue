@@ -9,18 +9,29 @@
         <br>
         <h4 class="text-center"> Study Report </h4>
       </div>
-      <div class="col-md-7"> untuk pie chart </div>
+      <div class="col-md-7 d-flex justify-content-center">
+        <chart class="justify-content-center" />
+      </div>
     </div>
-    <div class="container-fluid w-90"> Untuk Table </div>
+    <div class="container-fluid w-90">
+      <Table />
+    </div>
   </div>
 </template>
 
 <script>
+import Table from '../components/parentTable'
+import Chart from '../components/chart/chart.vue'
 export default {
-
+  components: {
+    Table,
+    Chart
+  }
 }
 </script>
 
 <style>
-
+chart {
+  width: 8vh;
+}
 </style>

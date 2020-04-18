@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="content">
     <login />
   </div>
 </template>
@@ -14,5 +14,7 @@ export default {
 </script>
 
 <style>
-
+#content {
+  margin-bottom: 25%;
+}
 </style>

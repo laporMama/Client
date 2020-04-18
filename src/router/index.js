@@ -4,7 +4,11 @@ import loginForm from '../components/loginForm.vue'
 import home from '../views/Home.vue'
 import landingPage from '../views/landingPage.vue'
 import table from '../components/table.vue'
+import admin from '../views/admin.vue'
+import registerTeacher from '../components/registerGuru.vue'
+import registerMama from '../components/registerMama.vue'
 import parent from '../views/parent.vue'
+import tambahMurid from '../components/registerMurid.vue'
 
 Vue.use(VueRouter)
 
@@ -34,7 +38,29 @@ const routes = [
     ]
   },
   {
-    path: '/parent',
+    path: '/admin',
+    name: 'admin',
+    component: admin,
+    children: [
+      {
+        path: 'teacher',
+        name: 'registerTeacher',
+        component: registerTeacher
+      },
+      {
+        path: 'mama',
+        name: 'registerMama',
+        component: registerMama
+      },
+      {
+        path: 'TambahMurid',
+        name: 'tambahMurid',
+        component: tambahMurid
+      }
+    ]
+  },
+  {
+    path: '/mama',
     name: 'Parent',
     component: parent
   }

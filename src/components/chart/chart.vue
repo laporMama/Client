@@ -1,5 +1,5 @@
 <template>
-  <pie-chart :data="chartData" :options="chartOptions" class="container-fluid w-10"></pie-chart>
+  <pie-chart :data="chartData" :options="chartOptions" :styles="myStyles" ></pie-chart>
 </template>
 
 <script>
@@ -11,6 +11,7 @@ export default {
   },
   data () {
     return {
+      width: 20,
       chartOptions: {
         hoverBorderWidth: 8
       },
@@ -25,6 +26,14 @@ export default {
             data: [10, 10, 5, 3]
           }
         ]
+      }
+    }
+  },
+  computed: {
+    myStyles () {
+      return {
+        width: `${this.width}vw`,
+        position: 'relative'
       }
     }
   }
