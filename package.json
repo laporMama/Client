@@ -12,10 +12,12 @@
     "at-ui-style": "^1.5.1",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.11.0",
+    "chart.js": "^2.9.3",
     "core-js": "^3.6.4",
     "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
     "vue": "^2.6.11",
+    "vue-chartjs": "^3.5.0",
     "vue-page-transition": "^0.2.2",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.3"
