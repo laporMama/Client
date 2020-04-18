@@ -7,6 +7,7 @@ import table from '../components/table.vue'
 import admin from '../views/admin.vue'
 import registerTeacher from '../components/registerGuru.vue'
 import registerMama from '../components/registerMama.vue'
+import parent from '../views/parent.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,11 @@ const routes = [
         component: registerMama
       }
     ]
+  }
+  {
+    path: '/parent',
+    name: 'Parent',
+    component: parent
   }
 ]
 
