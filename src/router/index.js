@@ -31,7 +31,7 @@ const routes = [
     component: landingPage,
     children: [
       {
-        path: 'IX/A',
+        path: 'kelas/:id',
         name: 'kelas',
         component: table
       }
