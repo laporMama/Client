@@ -1,5 +1,5 @@
 <template>
-  <pie-chart :data="chartData" :options="chartOptions"></pie-chart>
+  <pie-chart :data="chartData" :options="chartOptions" :styles="myStyles" ></pie-chart>
 </template>
 
 <script>
@@ -11,8 +11,9 @@ export default {
   },
   data () {
     return {
+      width: 20,
       chartOptions: {
-        hoverBorderWidth: 20
+        hoverBorderWidth: 8
       },
       chartData: {
         hoverBackgroundColor: 'red',
@@ -27,16 +28,19 @@ export default {
         ]
       }
     }
+  },
+  computed: {
+    myStyles () {
+      return {
+        width: `${this.width}vw`,
+        position: 'relative'
+      }
+    }
   }
 }
 </script>
 
-<style scoped>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<style>
+
+
 </style>

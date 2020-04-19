@@ -9,8 +9,8 @@
         <br>
         <h4 class="text-center"> Study Report </h4>
       </div>
-      <div class="col-md-7">
-        <chart />
+      <div class="col-md-7 d-flex justify-content-center">
+        <chart class="justify-content-center" />
       </div>
     </div>
     <div class="container-fluid w-90">
@@ -31,5 +31,7 @@ export default {
 </script>
 
 <style>
-
+chart {
+  width: 8vh;
+}
 </style>

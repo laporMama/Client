@@ -27,19 +27,19 @@
 export default {
   data () {
     return {
-      sortBy: 'Mata Pelajaran',
+      sortBy: 'Course',
       sortDesc: false,
       fields: [
-        { key: 'Name', sortable: true },
+        { key: 'Course', sortable: true },
         { key: 'Harian', sortable: true },
         { key: 'Ulangan', sortable: true },
         { key: 'UTS', sortable: true },
         { key: 'UAS', sortable: true }
       ],
       report: [
-        { Name: 'Matematika', Harian: '90', Ulangan: '70', UTS: '80', UAS: '80' },
-        { Name: 'Fisika', Harian: '90', Ulangan: '70', UTS: '80', UAS: '80' },
-        { Name: 'Kimia', Harian: '90', Ulangan: '70', UTS: '80', UAS: '80' }
+        { Course: 'Matematika', Harian: '90', Ulangan: '70', UTS: '80', UAS: '80' },
+        { Course: 'Fisika', Harian: '90', Ulangan: '70', UTS: '80', UAS: '80' },
+        { Course: 'Kimia', Harian: '90', Ulangan: '70', UTS: '80', UAS: '80' }
       ]
     }
   },
@@ -59,7 +59,7 @@ export default {
       const products = []
       // this.$store.state.items.forEach(el => {
       //   products.push({
-      //     Name: el.name,
+      //     Course: el.Course,
       //     Harian: el.image_url,
       //     Ulangan: el.price,
       //     UTS: el.stock,
