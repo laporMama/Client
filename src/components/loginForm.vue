@@ -20,10 +20,10 @@
         ></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-      <b-input type="password" id="text-password" aria-describedby="password-help-block"></b-input>
+      <b-input type="password" id="text-password" aria-describedby="password-help-block" v-model="form.password"></b-input>
       </b-form-group>
     </b-form>
-    <b-button variant="primary" :to="{path: '/teacher'}" v-if="(role === 'Guru')">Go somewhere</b-button>
+    <b-button variant="primary" v-if="(role === 'Guru')" @click.prevent="loginGuru({email: form.email, password: form.password })">Go somewhere</b-button>
     <b-button variant="primary" :to="{path: '/mama'}" v-if="(role === 'Mama')">Go somewhere</b-button>
     </b-card>
   </div>
@@ -35,7 +35,7 @@ export default {
     return {
       form: {
         email: '',
-        name: ''
+        password: ''
       },
       show: true
     }
@@ -43,6 +43,11 @@ export default {
   computed: {
     role () {
       return this.$store.state.loginRole
+    }
+  },
+  methods: {
+    loginGuru (payload) {
+      this.$store.dispatch('loginGuru', payload)
     }
   }
 }
