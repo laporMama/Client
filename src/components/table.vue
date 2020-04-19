@@ -4,49 +4,23 @@
     <b-tabs content-class="mt-3">
     <h1>{{mapel.name}}</h1>
       <b-tab title="Nilai" active>
-        <b-table fixed responsive :items="murid" :fields="fields" style="{display:flex; flex-direction:row}">
+        <b-table fixed responsive  :items="murid" :fields="fields" style="{display:flex; flex-direction:row}">
           <template v-slot:cell(inputnilai)="i">
-            <div class="test">
-              <b-form-input type="number" max="100" min="0" debounce="500"
-              v-model="nilai"
-              ></b-form-input>
-              <b-button>update</b-button>
-              <b-button @click.prevent="addNilai({score: nilai, reportDate:date, type: 'nilai', StudentId: i.item.id, CourseId: mapel.id})">submit</b-button>
-            </div>
+            <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" />
           </template>
         </b-table>
       </b-tab>
       <b-tab title="Nilai UTS" active>
         <b-table fixed responsive :items="murid" :fields="fieldsUts">
           <template v-slot:cell(inputnilai)="i">
-            <div class="test">
-              <b-form-input type="number" max="100" min="0" debounce="500"
-              v-model="nilai"
-              ></b-form-input>
-              <b-button>update</b-button>
-              <b-button @click.prevent="addNilai({score: nilai, reportDate:date, type: 'uts', StudentId: i.item.id, CourseId: mapel.id})">submit</b-button>
-            </div>
+            <Input :data="i" :date="date" :type="'uts'" :CourseId="mapel.id" />
           </template>
         </b-table>
       </b-tab>
       <b-tab title="Nilai UAS" active>
         <b-table fixed responsive :items="murid" :fields="fieldsUas">
           <template v-slot:cell(inputnilai)="i">
-            <div class="test">
-              <b-form-input type="number" max="100" min="0" debounce="500"
-              v-model="nilai"
-              ></b-form-input>
-              <b-button v-b-modal.modal-prevent-closing >update</b-button>
-              <b-button @click.prevent="addNilai({score: nilai, reportDate:date, type: 'uas', StudentId: i.item.id, CourseId: mapel.id})">submit</b-button>
-            </div>
-                <b-modal
-                  id="modal-prevent-closing"
-                  ref="modal"
-                  title="Submit Your Name"
-                  @show="resetModal"
-                  @hidden="resetModal"
-                  @ok="handleOk"
-                ></b-modal>
+            <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" />
           </template>
         </b-table>
       </b-tab>
@@ -81,6 +55,7 @@
 </template>
 
 <script>
+import Input from './input'
 var moment = require('moment')
 export default {
   data () {
@@ -98,9 +73,6 @@ export default {
     absensi (payload) {
       payload.item.status = payload.field.key
       this.$store.commit('SET_ABSENSI', payload.item)
-    },
-    addNilai (payload) {
-      this.$store.dispatch('setNilai', payload)
     },
     updateNilai (payload) {
       this.$store.dispatch('UpdateNilai', payload)
@@ -131,6 +103,9 @@ export default {
   created () {
     this.fetchTeacher()
     this.fetchclass()
+  },
+  components: {
+    Input
   }
   // watch: {
   //   kelas: (val) => {

@@ -50,6 +50,7 @@ export default new Vuex.Store({
   },
   actions: {
     loginGuru ({ commit }, { email, password }) {
+      console.log(email)
       commit('SET_LOADING', true)
       axios({
         url: 'http://localhost:3000/login',
@@ -82,8 +83,8 @@ export default new Vuex.Store({
         headers: { token: localStorage.getItem('token') }
       })
         .then(({ data }) => {
-          // console.log(data.classes)
-          commit('SET_KELAS', data.classes)
+          console.log(data.data, 'ini class')
+          commit('SET_KELAS', data.data)
         })
         .catch(err => {
           console.log(err)
