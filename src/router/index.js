@@ -5,10 +5,11 @@ import home from '../views/Home.vue'
 import landingPage from '../views/landingPage.vue'
 import table from '../components/table.vue'
 import admin from '../views/admin.vue'
-import registerTeacher from '../components/registerGuru.vue'
-import registerMama from '../components/registerMama.vue'
+import course from '../components/course.vue'
+import register from '../components/register.vue'
 import parent from '../views/parent.vue'
 import tambahMurid from '../components/registerMurid.vue'
+import Class from '../components/class.vue'
 
 Vue.use(VueRouter)
 
@@ -43,19 +44,29 @@ const routes = [
     component: admin,
     children: [
       {
-        path: 'teacher',
-        name: 'registerTeacher',
-        component: registerTeacher
+        path: 'login',
+        name: 'login',
+        component: loginForm
       },
       {
-        path: 'mama',
-        name: 'registerMama',
-        component: registerMama
+        path: 'course',
+        name: 'course',
+        component: course
       },
       {
-        path: 'TambahMurid',
-        name: 'tambahMurid',
+        path: 'register',
+        name: 'register',
+        component: register
+      },
+      {
+        path: 'student',
+        name: 'student',
         component: tambahMurid
+      },
+      {
+        path: 'class',
+        name: 'class',
+        component: Class
       }
     ]
   },

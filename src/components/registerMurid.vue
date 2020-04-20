@@ -1,26 +1,33 @@
 <template>
   <div class="formCard">
     <b-card
-    title="Mama Register"
+    title="Student Register"
     style="max-width: 30rem; width: 30rem;"
     >
       <b-form>
         <b-form-group label="Mama">
           <b-form-select
-          :options="options"
-          v-model="nama"
+          :options="teacher"
+          v-model="parent"
+          required
+          />
+        </b-form-group>
+        <b-form-group label="Mama">
+          <b-form-select
+          :options="kelas"
+          v-model="kelasId"
           required
           />
         </b-form-group>
         <b-form-group label="NamaMurid">
           <b-form-input
           placeholder="NamaMurid"
-          v-model="email"
+          v-model="name"
           required
           />
         </b-form-group>
         <div class="btn-submit">
-          <b-button>Submit</b-button>
+          <b-button @click="addStudent({name: name, ClassId: kelasId, ParentId:parent})">Submit</b-button>
         </div>
       </b-form>
     </b-card>
@@ -29,7 +36,33 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      name: '',
+      kelasId: '',
+      parent: ''
+    }
+  },
+  methods: {
+    getParent () {
+      this.$store.dispatch('getMama')
+      this.$store.dispatch('Fetchclass')
+    },
+    addStudent (payload) {
+      this.$store.dispatch('addStudent', payload)
+    }
+  },
+  computed: {
+    teacher () {
+      return this.$store.getters.getParent
+    },
+    kelas () {
+      return this.$store.getters.getKelas
+    }
+  },
+  created () {
+    this.getParent()
+  }
 }
 </script>
 

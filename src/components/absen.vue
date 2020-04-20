@@ -1,0 +1,48 @@
+<template>
+  <div>
+    <b-form-checkbox
+      v-for="option in options"
+      v-model="absen"
+      :key="option.value"
+      :value="option.value"
+      @change="status"
+      name="flavour-3a"
+    >
+    </b-form-checkbox>
+  </div>
+</template>
+
+<script>
+export default {
+  props: [
+    'data'
+  ],
+  data () {
+    return {
+      statusAbsen: false,
+      absen: [],
+      options: [
+        { text: 'hadir', value: 'hadir', notEnabled: false },
+        { text: 'izin', value: 'izin', notEnabled: false },
+        { text: 'sakit', value: 'sakit', notEnabled: false },
+        { text: 'alpha', value: 'alpha', notEnabled: false }
+      ]
+    }
+  },
+  methods: {
+    test () {
+      console.log(this.absen, 'ini')
+    },
+    status () {
+      console.log(this.absen)
+    }
+  },
+  created () {
+    this.test()
+  }
+}
+</script>
+
+<style>
+
+</style>
