@@ -45,13 +45,13 @@ export default {
   data () {
     return {
       absen: [],
-      date: moment().format(),
+      date: moment().format('L'),
       nilai: 0,
       statusAbsen: false,
       fields: ['id', 'name', 'Nilai', 'inputnilai'],
       fieldsUas: ['id', 'name', 'NilaiUas', 'inputnilai'],
       fieldsUts: ['id', 'name', 'NilaiUts', 'inputnilai'],
-      fields2: ['id', 'name', { key: 'hadir', label: 'hadir' }, { key: 'izin', label: 'Izin' }, { key: 'sakit', label: 'sakit' }, { key: 'aplha', label: 'aplha' }]
+      fields2: ['id', 'name', { key: 'hadir', label: 'absen' }]
     }
   },
   methods: {

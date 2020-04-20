@@ -15,7 +15,9 @@ export default new Vuex.Store({
     room: '',
     mapel: '',
     allMapel: [],
-    parent: []
+    parent: [],
+    parentStudentName: [],
+    parentReport: []
   },
   mutations: {
     SET_LOGINROLE (state, payload) {
@@ -54,6 +56,12 @@ export default new Vuex.Store({
     },
     SET_PARENT (state, payload) {
       state.parent = payload
+    },
+    SET_PARENTSTUDENT (state, payload) {
+      state.parentStudentName = payload
+    },
+    SET_REPORTPARENT (state, payload) {
+      state.parentReport = payload
     }
   },
   actions: {
@@ -69,7 +77,6 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
           localStorage.setItem('id', data.data.id)
           localStorage.setItem('teacher', data.data.name)
           commit('SET_GURU', data.data.name)
@@ -83,6 +90,40 @@ export default new Vuex.Store({
           this.commit('SET_LOADING', false)
         })
     },
+    loginAdmin ({ commit }, { email, password }) {
+      axios({
+        url: 'http://localhost:3000/login',
+        method: 'post',
+        data: {
+          email,
+          password
+        }
+      })
+        .then(({ data }) => {
+          localStorage.setItem('TokenAdmin', data.token)
+          router.push('/admin')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    loginParent ({ commit }, { email, password }) {
+      axios({
+        url: 'http://localhost:3000/login',
+        method: 'post',
+        data: {
+          email,
+          password
+        }
+      })
+        .then(({ data }) => {
+          localStorage.setItem('TokenParent', data.token)
+          router.push('/Mama')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     Fetchclass ({ commit }) {
       commit('SET_LOADING', true)
       axios({
@@ -91,7 +132,7 @@ export default new Vuex.Store({
         headers: { token: localStorage.getItem('token') }
       })
         .then(({ data }) => {
-          console.log(data.data, 'ini class')
+          console.log(data, 'ini class')
           commit('SET_KELAS', data.data)
         })
         .catch(err => {
@@ -126,8 +167,35 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          console.log(data.students)
           commit('SET_STUDENT', data.students)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    fetchReportByParent ({ commit }) {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/reports/parent',
+        headers: {
+          token: localStorage.getItem('TokenParent')
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_REPORTPARENT', data.data)
+        })
+    },
+    fetchStudent ({ commit }) {
+      axios({
+        method: 'get',
+        headers: {
+          token: localStorage.getItem('TokenParent')
+        },
+        url: 'http://localhost:3000/attendances/parent'
+      })
+        .then(({ data }) => {
+          commit('SET_PARENTSTUDENT', data.data)
         })
         .catch(err => {
           console.log(err)
@@ -168,23 +236,6 @@ export default new Vuex.Store({
       })
         .then(data => {
           console.log(data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    loginAdmin ({ commit }, { email, password }) {
-      axios({
-        url: 'http://localhost:3000/login',
-        method: 'post',
-        data: {
-          email,
-          password
-        }
-      })
-        .then(({ data }) => {
-          localStorage.setItem('TokenAdmin', data.token)
-          router.push('/admin')
         })
         .catch(err => {
           console.log(err)
@@ -321,33 +372,28 @@ export default new Vuex.Store({
     },
     filterStudent: state => {
       const data = state.student.forEach((el) => {
-        let resultNilai = 0
-        let resultUas = 0
-        let resultUts = 0
-        let tamp = 0
-        let counter = 0
+        el.Nilai = 0
+        el.NilaiUas = 0
+        el.NilaiUts = 0
+        let cN = 0
+        let cUa = 0
+        let cUt = 0
         el.Reports.forEach((ek, i) => {
-          if (ek.type === 'uas') {
-            counter++
-            tamp += ek.score
-            resultUas = tamp / counter
+          if (ek.type === 'nilai') {
+            cN++
+            el.Nilai += ek.score
+            el.Nilai /= cN
           } else if (ek.type === 'uts') {
-            counter++
-            tamp += ek.score
-            resultUts = tamp / counter
-          } else {
-            counter++
-            tamp += ek.score
-            resultNilai = tamp / counter
+            cUt++
+            el.NilaiUts += ek.score
+            el.NilaiUts /= cUt
+          } else if (ek.type === 'uas') {
+            cUa++
+            el.NilaiUas += ek.score
+            el.NilaiUas /= cUa
           }
         })
-        tamp = 0
-        counter = 0
-        el.Nilai = resultNilai
-        el.NilaiUas = resultUas
-        el.NilaiUts = resultUts
       })
-      console.log(data)
       return data
     },
     getMapel: state => {
@@ -370,6 +416,70 @@ export default new Vuex.Store({
       state.kelas.forEach(el => {
         tamp.push({ value: el.id, text: el.name })
       })
+      return tamp
+    },
+    getStudentByParent: state => {
+      const tamp = []
+      let hadir = 0
+      let izin = 0
+      let sakit = 0
+      let aplha = 0
+      state.parentStudentName.forEach(el => {
+        let absen = []
+        if (el.StudentAttendances.length === 0) {
+          absen = [0, 0, 0, 0]
+        }
+        el.StudentAttendances.forEach(ek => {
+          if (ek.status === 'hadir') {
+            hadir++
+          } else if (ek.status === 'izin') {
+            izin++
+          } else if (ek.status === 'sakit') {
+            sakit++
+          } else {
+            aplha++
+          }
+          absen.push(Number(hadir), Number(aplha), Number(sakit), Number(izin))
+        })
+        tamp.push({ value: { name: el.name, class: el.Class.name, absen }, text: el.name })
+      })
+      return tamp
+    },
+    getReportByParent: (state) => (payload) => {
+      console.log(payload)
+      let tamp = []
+      state.parentReport.forEach(el => {
+        el.mapel = []
+        state.allMapel.forEach(ek => {
+          el.mapel.push({ name: ek.name, id: ek.id })
+        })
+      })
+      state.parentReport.forEach(el => {
+        el.mapel.forEach(ek => {
+          let cN = 0
+          let cUa = 0
+          let cUt = 0
+          ek.nilai = 0
+          ek.uas = 0
+          ek.uts = 0
+          el.Reports.forEach(e => {
+            if (e.CourseId === ek.id && e.type === 'nilai') {
+              cN++
+              ek.nilai += (e.score)
+              ek.nilai /= cN
+            } else if (e.CourseId === ek.id && e.type === 'uas') {
+              cUa++
+              ek.uas += (e.score)
+              ek.uas /= cUa
+            } else if (e.CourseId === ek.id && e.type === 'uts') {
+              cUt++
+              ek.uts += (e.score)
+              ek.uts /= cUt
+            }
+          })
+        })
+      })
+      tamp = state.parentReport.filter(el => el.name === payload)
       return tamp
     }
   },

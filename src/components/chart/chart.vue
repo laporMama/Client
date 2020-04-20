@@ -1,11 +1,16 @@
 <template>
+<div>
   <pie-chart :data="chartData" :options="chartOptions" :styles="myStyles" ></pie-chart>
+</div>
 </template>
 
 <script>
 import PieChart from './PieChart.js'
 export default {
   name: 'Chart',
+  props: [
+    'data'
+  ],
   components: {
     PieChart
   },
@@ -23,7 +28,7 @@ export default {
           {
             label: 'Data One',
             backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#2c3e50'],
-            data: [10, 10, 5, 3]
+            data: this.data
           }
         ]
       }
@@ -35,6 +40,9 @@ export default {
         width: `${this.width}vw`,
         position: 'relative'
       }
+    },
+    test () {
+      return this.data
     }
   }
 }

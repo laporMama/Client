@@ -24,8 +24,8 @@
       </b-form-group>
     </b-form>
     <b-button variant="primary" v-if="(role === 'Guru')" @click.prevent="loginGuru({email: form.email, password: form.password })">Go somewhere</b-button>
-    <b-button variant="primary" v-if="(role === 'Admin')" @click.prevent="loginAdmin({email: form.email, password: form.password })">Go somewhere</b-button>
-    <b-button variant="primary" :to="{path: '/mama'}" v-if="(role === 'Mama')">Go somewhere</b-button>
+    <b-button variant="primary" v-else-if="(role === 'Admin')" @click.prevent="loginAdmin({email: form.email, password: form.password })">Go somewhere</b-button>
+    <b-button variant="primary" v-if="(role === 'Mama')" @click.prevent="loginParent({email: form.email, password: form.password })">Go somewhere</b-button>
     </b-card>
   </div>
 </template>
@@ -52,6 +52,9 @@ export default {
     },
     loginAdmin (payload) {
       this.$store.dispatch('loginAdmin', payload)
+    },
+    loginParent (payload) {
+      this.$store.dispatch('loginParent', payload)
     }
   }
 }

@@ -7,7 +7,9 @@
       :value="option.value"
       @change="status"
       name="flavour-3a"
+      inline
     >
+    {{option.text}}
     </b-form-checkbox>
   </div>
 </template>
