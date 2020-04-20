@@ -13,7 +13,7 @@
           <b-navbar-nav>
             <b-collapse :id="room.key" is-nav>
               <div v-for="(subkelas, i) in room.kelas" :key="i">
-                <b-dropdown-item @click="next(subkelas)">{{subkelas}}</b-dropdown-item>
+                <b-dropdown-item @click="next((subkelas))">{{subkelas}}</b-dropdown-item>
               </div>
             </b-collapse>
           </b-navbar-nav>

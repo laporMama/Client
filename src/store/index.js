@@ -6,14 +6,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    loginRole: 'Adam',
+    loginRole: 'Admin',
     absen: [],
     loading: false,
     kelas: [],
     guru: '',
     student: [],
     room: '',
-    mapel: ''
+    mapel: '',
+    allMapel: [],
+    parent: []
   },
   mutations: {
     SET_LOGINROLE (state, payload) {
@@ -46,6 +48,12 @@ export default new Vuex.Store({
     },
     SET_MAPEL (state, payload) {
       state.mapel = payload
+    },
+    SET_COURSE (state, payload) {
+      state.allMapel = payload
+    },
+    SET_PARENT (state, payload) {
+      state.parent = payload
     }
   },
   actions: {
@@ -146,6 +154,151 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    updateNilai ({ commit }, { id, score }) {
+      axios({
+        method: 'put',
+        url: 'http://localhost:3000/reports/' + id,
+        data: {
+          score
+        },
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(data => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    loginAdmin ({ commit }, { email, password }) {
+      axios({
+        url: 'http://localhost:3000/login',
+        method: 'post',
+        data: {
+          email,
+          password
+        }
+      })
+        .then(({ data }) => {
+          localStorage.setItem('TokenAdmin', data.token)
+          router.push('/admin')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    registerMama ({ commit }, { name, email, password, phoneNumber, CourseId, role }) {
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/register',
+        data: {
+          name,
+          password,
+          email,
+          phoneNumber,
+          CourseId,
+          role
+        },
+        headers: {
+          token: localStorage.getItem('TokenAdmin')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getCourse ({ commit }) {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/course',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_COURSE', data.courses)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getMama ({ commit }) {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/parent',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          commit('SET_PARENT', data.parents)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    addStudent ({ commit }, { name, ClassId, ParentId }) {
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/students',
+        headers: {
+          token: localStorage.getItem('TokenAdmin')
+        },
+        data: {
+          name,
+          ClassId,
+          ParentId
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    setMapel ({ commit }, payload) {
+      axios({
+        method: 'post',
+        data: {
+          name: payload
+        },
+        headers: {
+          token: localStorage.getItem('TokenAdmin')
+        },
+        url: 'http://localhost:3000/course'
+      })
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    setClass ({ commit }, payload) {
+      axios({
+        method: 'post',
+        data: {
+          name: payload
+        },
+        headers: {
+          token: localStorage.getItem('TokenAdmin')
+        },
+        url: 'http://localhost:3000/class'
+      })
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   getters: {
@@ -196,6 +349,28 @@ export default new Vuex.Store({
       })
       console.log(data)
       return data
+    },
+    getMapel: state => {
+      const tamp = []
+      // state.allMapel.courses
+      state.allMapel.forEach(el => {
+        tamp.push({ value: el.id, text: el.name })
+      })
+      return tamp
+    },
+    getParent: state => {
+      const tamp = []
+      state.parent.forEach(el => {
+        tamp.push({ value: el.id, text: el.name })
+      })
+      return tamp
+    },
+    getKelas: state => {
+      const tamp = []
+      state.kelas.forEach(el => {
+        tamp.push({ value: el.id, text: el.name })
+      })
+      return tamp
     }
   },
   modules: {

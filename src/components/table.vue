@@ -26,25 +26,8 @@
       </b-tab>
       <b-tab title="absen">
         <b-table fixed responsive :items="murid" :fields="fields2">
-          <template v-slot:cell(Hadir)="i">
-            <b-form-checkbox
-            @change="absensi(i)"
-            >{{i.field.key}}</b-form-checkbox>
-          </template>
-          <template v-slot:cell(izin)="i">
-            <b-form-checkbox
-            @change="absensi(i)"
-            >{{i.field.key}}</b-form-checkbox>
-          </template>
-          <template v-slot:cell(sakit)="i">
-            <b-form-checkbox
-            @change="absensi(i)"
-            >{{i.field.key}}</b-form-checkbox>
-          </template>
-          <template v-slot:cell(aplha)="i">
-            <b-form-checkbox
-            @change="absensi(i)"
-            >{{i.field.key}}</b-form-checkbox>
+          <template v-slot:cell(hadir)="i">
+            <Check :data="i" v-model="statusAbsen" />
           </template>
         </b-table>
         </b-tab>
@@ -56,6 +39,7 @@
 
 <script>
 import Input from './input'
+import Check from './absen'
 var moment = require('moment')
 export default {
   data () {
@@ -63,10 +47,11 @@ export default {
       absen: [],
       date: moment().format(),
       nilai: 0,
+      statusAbsen: false,
       fields: ['id', 'name', 'Nilai', 'inputnilai'],
       fieldsUas: ['id', 'name', 'NilaiUas', 'inputnilai'],
       fieldsUts: ['id', 'name', 'NilaiUts', 'inputnilai'],
-      fields2: ['id', 'name', { key: 'Hadir', label: 'Hadir' }, { key: 'izin', label: 'Izin' }, { key: 'sakit', label: 'sakit' }, { key: 'aplha', label: 'aplha' }]
+      fields2: ['id', 'name', { key: 'hadir', label: 'hadir' }, { key: 'izin', label: 'Izin' }, { key: 'sakit', label: 'sakit' }, { key: 'aplha', label: 'aplha' }]
     }
   },
   methods: {
@@ -82,8 +67,10 @@ export default {
     },
     fetchTeacher () {
       this.$store.dispatch('fetchTeacher', localStorage.getItem('id'))
-      this.$store.commit('SET_ROOM')
       this.$store.dispatch('fetchStudentInClass')
+    },
+    changeStatus () {
+      this.changeStatus = !this.changeStatus
     }
   },
   computed: {
@@ -105,7 +92,8 @@ export default {
     this.fetchclass()
   },
   components: {
-    Input
+    Input,
+    Check
   }
   // watch: {
   //   kelas: (val) => {

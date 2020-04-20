@@ -24,6 +24,7 @@
       </b-form-group>
     </b-form>
     <b-button variant="primary" v-if="(role === 'Guru')" @click.prevent="loginGuru({email: form.email, password: form.password })">Go somewhere</b-button>
+    <b-button variant="primary" v-if="(role === 'Admin')" @click.prevent="loginAdmin({email: form.email, password: form.password })">Go somewhere</b-button>
     <b-button variant="primary" :to="{path: '/mama'}" v-if="(role === 'Mama')">Go somewhere</b-button>
     </b-card>
   </div>
@@ -48,6 +49,9 @@ export default {
   methods: {
     loginGuru (payload) {
       this.$store.dispatch('loginGuru', payload)
+    },
+    loginAdmin (payload) {
+      this.$store.dispatch('loginAdmin', payload)
     }
   }
 }
