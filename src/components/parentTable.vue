@@ -2,19 +2,18 @@
   <div>
     <!-- table -->
     <b-table
-      :items="report"
+      :items="dataStudent[0].mapel"
       :fields="fields"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       responsive="sm"
     >
-      <template v-slot:cell(Harian)="data">{{printScore(data.value)}}</template>
-      <template v-slot:cell(Ulangan)="data">{{printScore(data.value)}}</template>
-      <template v-slot:cell(UTS)="data">{{printScore(data.value)}}</template>
-      <template v-slot:cell(UAS)="data">{{printScore(data.value)}}</template>
+      <template v-slot:cell(nilai)="data">{{printScore(data.value)}}</template>
+      <template v-slot:cell(uts)="data">{{printScore(data.value)}}</template>
+      <template v-slot:cell(uas)="data">{{printScore(data.value)}}</template>
 
     </b-table>
-
+      <!-- <p disabled>{{test}}</p> -->
     <div>
       Sorting By:
       <b>{{ sortBy }}</b>, Sort Direction:
@@ -25,16 +24,18 @@
 
 <script>
 export default {
+  props: [
+    'student'
+  ],
   data () {
     return {
       sortBy: 'Course',
       sortDesc: false,
       fields: [
-        { key: 'Course', sortable: true },
-        { key: 'Harian', sortable: true },
-        { key: 'Ulangan', sortable: true },
-        { key: 'UTS', sortable: true },
-        { key: 'UAS', sortable: true }
+        { key: 'name', sortable: true },
+        { key: 'nilai', sortable: true },
+        { key: 'uts', sortable: true },
+        { key: 'uas', sortable: true }
       ],
       report: [
         { Course: 'Matematika', Harian: '90', Ulangan: '70', UTS: '80', UAS: '80' },
@@ -52,6 +53,11 @@ export default {
       } else {
         return `${value}`
       }
+    },
+    fetchStudent () {
+      this.$store.dispatch('fetchStudent')
+      this.$store.dispatch('fetchReportByParent')
+      this.$store.dispatch('getCourse')
     }
   },
   computed: {
@@ -67,9 +73,19 @@ export default {
       //   })
       // })
       return products
+    },
+    course () {
+      return this.$store.state.allMapel
+    },
+    test () {
+      return this.$store.getters.getReportByParent
+    },
+    dataStudent () {
+      return this.$store.getters.getReportByParent(this.student)
     }
   },
   created () {
+    this.fetchStudent()
   }
 }
 </script>
