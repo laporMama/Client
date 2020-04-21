@@ -9,7 +9,7 @@ import PieChart from './PieChart.js'
 export default {
   name: 'Chart',
   props: [
-    'data'
+    'absensi'
   ],
   components: {
     PieChart
@@ -20,7 +20,15 @@ export default {
       chartOptions: {
         hoverBorderWidth: 8
       },
-      chartData: {
+      chartData: null
+    }
+  },
+  mounted () {
+    this.fillData()
+  },
+  methods: {
+    fillData () {
+      this.chartData = {
         hoverBackgroundColor: 'red',
         hoverBorderWidth: 10,
         labels: ['Hadir', 'Absen', 'Sakit', 'Izin'],
@@ -28,7 +36,7 @@ export default {
           {
             label: 'Data One',
             backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#2c3e50'],
-            data: this.data
+            data: this.absensi
           }
         ]
       }
@@ -42,7 +50,7 @@ export default {
       }
     },
     test () {
-      return this.data
+      return this.absensi
     }
   }
 }

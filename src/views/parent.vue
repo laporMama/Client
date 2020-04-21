@@ -16,7 +16,7 @@
         <h4 class="text-center"> Study Report </h4>
       </div>
       <div class="col-md-7 d-flex justify-content-center">
-        <chart class="justify-content-center" :data="name.absen" />
+        <chart class="justify-content-center" :absensi="name.absen" />
       </div>
     </div>
     <div class="container-fluid w-90">
