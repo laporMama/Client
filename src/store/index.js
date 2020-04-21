@@ -17,7 +17,8 @@ export default new Vuex.Store({
     allMapel: [],
     parent: [],
     parentStudentName: [],
-    parentReport: []
+    parentReport: [],
+    mapelId: 0
   },
   mutations: {
     SET_LOGINROLE (state, payload) {
@@ -62,6 +63,9 @@ export default new Vuex.Store({
     },
     SET_REPORTPARENT (state, payload) {
       state.parentReport = payload
+    },
+    SET_MAPELID (state, payload) {
+      state.mapelId = payload
     }
   },
   actions: {
@@ -77,7 +81,6 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
           localStorage.setItem('id', data.data.id)
           localStorage.setItem('teacher', data.data.name)
           commit('SET_GURU', data.data.name)
@@ -154,6 +157,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data, 'oakwdokwda')
+          commit('SET_MAPELID', data.teacher.CourseId)
           commit('SET_MAPEL', data.teacher.Course)
         })
         .catch(err => {
@@ -169,7 +173,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data.students)
+          console.log(data.students, 'ini data student')
           commit('SET_STUDENT', data.students)
         })
         .catch(err => {
@@ -391,28 +395,34 @@ export default new Vuex.Store({
       return data
     },
     filterStudent: state => {
+      const reducer = (accumulator, currentValue) => accumulator + currentValue
       const data = state.student.forEach((el) => {
         el.Nilai = 0
         el.NilaiUas = 0
         el.NilaiUts = 0
-        let cN = 0
-        let cUa = 0
-        let cUt = 0
+        const tempNilai = []
+        const tempNilaiUas = []
+        const tempNilaiUts = []
         el.Reports.forEach((ek, i) => {
-          if (ek.type === 'nilai') {
-            cN++
-            el.Nilai += ek.score
-            el.Nilai /= cN
-          } else if (ek.type === 'uts') {
-            cUt++
-            el.NilaiUts += ek.score
-            el.NilaiUts /= cUt
-          } else if (ek.type === 'uas') {
-            cUa++
-            el.NilaiUas += ek.score
-            el.NilaiUas /= cUa
+          console.log(state.mapelId)
+          if (ek.type === 'nilai' && ek.CourseId === state.mapelId) {
+            tempNilai.push(ek.score)
+          } else if (ek.type === 'uts' && ek.CourseId === state.mapelId) {
+            tempNilaiUts.push(ek.score)
+          } else if (ek.type === 'uas' && ek.CourseId === state.mapelId) {
+            tempNilaiUas.push(ek.score)
           }
         })
+        if (tempNilai.length >= 1) {
+          el.Nilai = tempNilai.reduce(reducer) / tempNilai.length
+        }
+        if (tempNilaiUas.length >= 1) {
+          el.NilaiUas = tempNilaiUas.reduce(reducer) / tempNilaiUas.length
+        }
+        if (tempNilaiUts.length >= 1) {
+          el.NilaiUts = tempNilaiUts.reduce(reducer) / tempNilaiUts.length
+        }
+        console.log(el, 'ini nilai')
       })
       return data
     },
@@ -461,7 +471,7 @@ export default new Vuex.Store({
       return tamp
     },
     getReportByParent: (state) => (payload) => {
-      console.log(payload)
+      const reducer = (accumulator, currentValue) => accumulator + currentValue
       let tamp = []
       state.parentReport.forEach(el => {
         el.mapel = []
@@ -471,27 +481,31 @@ export default new Vuex.Store({
       })
       state.parentReport.forEach(el => {
         el.mapel.forEach(ek => {
-          let cN = 0
-          let cUa = 0
-          let cUt = 0
           ek.nilai = 0
           ek.uas = 0
           ek.uts = 0
+          const tempNilai = []
+          const tempNilaiUas = []
+          const tempNilaiUts = []
           el.Reports.forEach(e => {
             if (e.CourseId === ek.id && e.type === 'nilai') {
-              cN++
-              ek.nilai += (e.score)
-              ek.nilai /= cN
+              tempNilai.push(e.score)
             } else if (e.CourseId === ek.id && e.type === 'uas') {
-              cUa++
-              ek.uas += (e.score)
-              ek.uas /= cUa
+              tempNilaiUas.push(e.score)
             } else if (e.CourseId === ek.id && e.type === 'uts') {
-              cUt++
-              ek.uts += (e.score)
-              ek.uts /= cUt
+              tempNilaiUts.push(e.score)
             }
           })
+          if (tempNilai.length >= 1) {
+            console.log('masokk')
+            ek.nilai = tempNilai.reduce(reducer) / tempNilai.length
+          }
+          if (tempNilaiUas.length >= 1) {
+            ek.uas = tempNilaiUas.reduce(reducer) / tempNilaiUas.length
+          }
+          if (tempNilaiUts.length >= 1) {
+            ek.uts = tempNilaiUts.reduce(reducer) / tempNilaiUts.length
+          }
         })
       })
       tamp = state.parentReport.filter(el => el.name === payload)

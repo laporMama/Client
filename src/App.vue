@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navbar />
+    <navbar :login="isLogin" />
     <div id="content">
       <vue-page-transition>
         <router-view />
@@ -19,6 +19,17 @@ export default {
     navbar,
     Footer
     // login
+  },
+  data () {
+    return {
+      isLogin: false
+    }
+  },
+  isLogin () {
+    this.isLogin = localStorage.getItem('token')
+  },
+  created () {
+    this.isLogin()
   }
 }
 </script>
@@ -31,7 +42,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   height: 100%;
-  background-color: aliceblue;
 }
 
 #nav {
