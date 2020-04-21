@@ -3,6 +3,12 @@
   <b-col  cols="2">
     <div class="sidenav">
       <b-navbar-brand>Kelas</b-navbar-brand>
+      <div v-for="(room, i) in kelas" :key="i">
+          <b-navbar-nav>
+            <b-dropdown-item @click="next(({name: room.name, id: room.id}))">{{room.name}}</b-dropdown-item>
+          </b-navbar-nav>
+      </div>
+      <!-- <b-navbar-brand>Kelas</b-navbar-brand>
       <div  v-for="(room, i) in kelas" :key="i">
         <b-navbar-toggle :target="room.key" class="kelas">
           <template v-slot:default="{ expanded }">
@@ -10,14 +16,8 @@
             <b-icon v-else icon="chevron-bar-down"></b-icon>
           </template>
         </b-navbar-toggle>
-          <b-navbar-nav>
-            <b-collapse :id="room.key" is-nav>
-              <div v-for="(subkelas, i) in room.kelas" :key="i">
-                <b-dropdown-item @click="next((subkelas))">{{subkelas}}</b-dropdown-item>
-              </div>
-            </b-collapse>
-          </b-navbar-nav>
-      </div>
+
+      </div> -->
     </div>
   </b-col>
   <b-col cols="10">
@@ -42,14 +42,15 @@ export default {
     },
     next (payload) {
       localStorage.setItem('roomId', payload)
-      this.$router.push({ path: `/teacher/kelas/${payload}` })
+      this.$router.push({ path: `/teacher/kelas/${payload.name}` })
+      localStorage.setItem('idRoom', payload.id)
       this.$store.commit('SET_ROOM')
       this.$store.dispatch('fetchStudentInClass')
     }
   },
   computed: {
     kelas () {
-      return this.$store.getters.allKelas
+      return this.$store.state.kelas
     },
     guru () {
       return localStorage.getItem('teacher')

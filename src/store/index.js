@@ -101,7 +101,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          localStorage.setItem('TokenAdmin', data.token)
+          localStorage.setItem('token', data.token)
           router.push('/admin')
         })
         .catch(err => {
@@ -118,7 +118,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          localStorage.setItem('TokenParent', data.token)
+          localStorage.setItem('token', data.token)
           router.push('/Mama')
         })
         .catch(err => {
@@ -163,7 +163,7 @@ export default new Vuex.Store({
     fetchStudentInClass ({ commit }) {
       return axios({
         method: 'get',
-        url: 'http://localhost:3000/students/' + localStorage.getItem('roomId'),
+        url: 'http://localhost:3000/students/' + localStorage.getItem('idRoom'),
         headers: {
           token: localStorage.getItem('token')
         }
@@ -181,7 +181,7 @@ export default new Vuex.Store({
         method: 'get',
         url: 'http://localhost:3000/reports/parent',
         headers: {
-          token: localStorage.getItem('TokenParent')
+          token: localStorage.getItem('token')
         }
       })
         .then(({ data }) => {
@@ -192,7 +192,7 @@ export default new Vuex.Store({
       axios({
         method: 'get',
         headers: {
-          token: localStorage.getItem('TokenParent')
+          token: localStorage.getItem('token')
         },
         url: 'http://localhost:3000/attendances/parent'
       })
@@ -256,7 +256,7 @@ export default new Vuex.Store({
           role
         },
         headers: {
-          token: localStorage.getItem('TokenAdmin')
+          token: localStorage.getItem('token')
         }
       })
         .then(({ data }) => {
@@ -302,7 +302,7 @@ export default new Vuex.Store({
         method: 'post',
         url: 'http://localhost:3000/students',
         headers: {
-          token: localStorage.getItem('TokenAdmin')
+          token: localStorage.getItem('token')
         },
         data: {
           name,
@@ -324,7 +324,7 @@ export default new Vuex.Store({
           name: payload
         },
         headers: {
-          token: localStorage.getItem('TokenAdmin')
+          token: localStorage.getItem('token')
         },
         url: 'http://localhost:3000/course'
       })
@@ -342,7 +342,7 @@ export default new Vuex.Store({
           name: payload
         },
         headers: {
-          token: localStorage.getItem('TokenAdmin')
+          token: localStorage.getItem('token')
         },
         url: 'http://localhost:3000/class'
       })
