@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <navbar />
+    <ErrorMessage v-if="error" class="container w-50 mt-3" />
+    <Spinner v-if="loading" />
     <div id="content">
       <vue-page-transition>
         <router-view />
@@ -13,12 +15,23 @@
 <script>
 import navbar from './components/Navbar'
 import Footer from './components/Footer'
+import Spinner from './components/spinner'
+import ErrorMessage from './components/errorMessage'
 // import login from './views/Home'
 export default {
   components: {
     navbar,
-    Footer
-    // login
+    Footer,
+    Spinner,
+    ErrorMessage
+  },
+  computed: {
+    loading() {
+      return this.$store.state.loading;
+    },
+    error() {
+      return this.$store.state.error;
+    }
   }
 }
 </script>

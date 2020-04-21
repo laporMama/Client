@@ -17,7 +17,9 @@ export default new Vuex.Store({
     allMapel: [],
     parent: [],
     parentStudentName: [],
-    parentReport: []
+    parentReport: [],
+    errorMessages: [],
+    error: false
   },
   mutations: {
     SET_LOGINROLE (state, payload) {
@@ -62,6 +64,17 @@ export default new Vuex.Store({
     },
     SET_REPORTPARENT (state, payload) {
       state.parentReport = payload
+    },
+    SET_ERROR_STATUS (state, payload) {
+      state.error = payload
+    },
+    SET_ERROR_MESSAGE (state, payload) {
+      if (!Array.isArray(payload)) {
+        state.errorMessages = [payload]
+      } else {
+        state.errorMessages = payload
+      }
+      state.error = true
     }
   },
   actions: {
@@ -77,10 +90,10 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
           localStorage.setItem('id', data.data.id)
           localStorage.setItem('teacher', data.data.name)
           commit('SET_GURU', data.data.name)
+          commit('SET_ERROR_STATUS', false)
           localStorage.setItem('token', data.token)
           router.push('/teacher')
         })
@@ -88,10 +101,11 @@ export default new Vuex.Store({
           console.log(err)
         })
         .finally(_ => {
-          this.commit('SET_LOADING', false)
+          commit('SET_LOADING', false)
         })
     },
     loginAdmin ({ commit }, { email, password }) {
+      commit('SET_LOADING', true)
       axios({
         url: 'http://localhost:3000/login',
         method: 'post',
@@ -107,8 +121,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     loginParent ({ commit }, { email, password }) {
+      commit('SET_LOADING', true)
       axios({
         url: 'http://localhost:3000/login',
         method: 'post',
@@ -123,6 +141,9 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+        })
+        .finally(_ => {
+          commit('SET_LOADING', false)
         })
     },
     Fetchclass ({ commit }) {
@@ -144,7 +165,7 @@ export default new Vuex.Store({
         })
     },
     fetchTeacher ({ commit }, payload) {
-      console.log(payload, 'ini teacher')
+      commit('SET_LOADING', true)
       axios({
         method: 'get',
         url: 'http://localhost:3000/teachers/' + payload,
@@ -153,14 +174,18 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data, 'oakwdokwda')
+          console.log(data)
           commit('SET_MAPEL', data.teacher.Course)
         })
         .catch(err => {
           console.log(err, 'ini')
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     fetchStudentInClass ({ commit }) {
+      commit('SET_LOADING', true)
       return axios({
         method: 'get',
         url: 'http://localhost:3000/students/' + localStorage.getItem('roomId'),
@@ -175,8 +200,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     fetchReportByParent ({ commit }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'get',
         url: 'http://localhost:3000/reports/parent',
@@ -187,8 +216,15 @@ export default new Vuex.Store({
         .then(({ data }) => {
           commit('SET_REPORTPARENT', data.data)
         })
+        .catch(err => {
+          console.log(err)
+        })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     fetchStudent ({ commit }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'get',
         headers: {
@@ -202,8 +238,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     setNilai ({ commit }, { score, reportDate, StudentId, CourseId, type }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'POST',
         url: 'http://localhost:3000/reports',
@@ -224,8 +264,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     updateNilai ({ commit }, { id, score }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'put',
         url: 'http://localhost:3000/reports/' + id,
@@ -242,8 +286,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     registerMama ({ commit }, { name, email, password, phoneNumber, CourseId, role }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'post',
         url: 'http://localhost:3000/register',
@@ -265,8 +313,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     getCourse ({ commit }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'get',
         url: 'http://localhost:3000/course',
@@ -280,8 +332,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     getMama ({ commit }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'get',
         url: 'http://localhost:3000/parent',
@@ -296,8 +352,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     addStudent ({ commit }, { name, ClassId, ParentId }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'post',
         url: 'http://localhost:3000/students',
@@ -316,8 +376,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     setMapel ({ commit }, payload) {
+      commit('SET_LOADING', true)
       axios({
         method: 'post',
         data: {
@@ -334,8 +398,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     setClass ({ commit }, payload) {
+      commit('SET_LOADING', true)
       axios({
         method: 'post',
         data: {
@@ -352,23 +420,8 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
-    },
-    setAttendance ({ commit }, payload) {
-      axios({
-        url: 'http://localhost:3000/attendances',
-        method: 'post',
-        headers: {
-          token: localStorage.getItem('token')
-        },
-        data: {
-          data: payload
-        }
-      })
-        .then(({ data }) => {
-          console.log(data)
-        })
-        .catch(err => {
-          console.log(err)
+        .finally(_ => {
+          commit('SET_LOADING', false)
         })
     }
   },
@@ -376,8 +429,8 @@ export default new Vuex.Store({
     allKelas: state => {
       const data = [
         { kelas: [], key: 'IX' },
-        { kelas: [], key: 'VII' },
-        { kelas: [], key: 'VI' }
+        { kelas: [], key: 'VI' },
+        { kelas: [], key: 'VII' }
       ]
       state.kelas.forEach(el => {
         console.log(el.name)
@@ -440,23 +493,28 @@ export default new Vuex.Store({
     },
     getStudentByParent: state => {
       const tamp = []
+      let hadir = 0
+      let izin = 0
+      let sakit = 0
+      let aplha = 0
       state.parentStudentName.forEach(el => {
-        el.absen = [0, 0, 0, 0]
+        let absen = []
         if (el.StudentAttendances.length === 0) {
-          el.absen = [0, 0, 0, 0]
+          absen = [0, 0, 0, 0]
         }
         el.StudentAttendances.forEach(ek => {
           if (ek.status === 'hadir') {
-            el.absen[0]++
+            hadir++
           } else if (ek.status === 'izin') {
-            el.absen[1]++
+            izin++
           } else if (ek.status === 'sakit') {
-            el.absen[2]++
+            sakit++
           } else {
-            el.absen[3]++
+            aplha++
           }
+          absen.push(Number(hadir), Number(aplha), Number(sakit), Number(izin))
         })
-        tamp.push({ value: { name: el.name, class: el.Class.name, absen: el.absen }, text: el.name })
+        tamp.push({ value: { name: el.name, class: el.Class.name, absen }, text: el.name })
       })
       return tamp
     },
@@ -495,34 +553,6 @@ export default new Vuex.Store({
         })
       })
       tamp = state.parentReport.filter(el => el.name === payload)
-      return tamp
-    },
-    getStudentByParentfilter: (state) => (payload) => {
-      const tamp = []
-      let hadir = 0
-      let izin = 0
-      let sakit = 0
-      let aplha = 0
-      state.parentStudentName.forEach(el => {
-        let absen = []
-        if (el.StudentAttendances.length === 0) {
-          absen = [0, 0, 0, 0]
-        }
-        el.StudentAttendances.forEach(ek => {
-          if (ek.status === 'hadir') {
-            hadir++
-          } else if (ek.status === 'izin') {
-            izin++
-          } else if (ek.status === 'sakit') {
-            sakit++
-          } else {
-            aplha++
-          }
-          absen.push(Number(hadir), Number(aplha), Number(sakit), Number(izin))
-        })
-        tamp.push({ value: { name: el.name, class: el.Class.name, absen }, text: el.name })
-      })
-      tamp.filter(el => el.value.name === payload)
       return tamp
     }
   },

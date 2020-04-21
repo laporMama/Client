@@ -35,8 +35,8 @@ export default {
     test () {
       console.log(this.absen, 'ini')
     },
-    status (a) {
-      this.$emit('absensis', { type: a, id: this.data.item.id })
+    status () {
+      console.log(this.absen)
     }
   },
   created () {
