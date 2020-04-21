@@ -440,28 +440,23 @@ export default new Vuex.Store({
     },
     getStudentByParent: state => {
       const tamp = []
-      let hadir = 0
-      let izin = 0
-      let sakit = 0
-      let aplha = 0
       state.parentStudentName.forEach(el => {
-        let absen = []
+        el.absen = [0, 0, 0, 0]
         if (el.StudentAttendances.length === 0) {
-          absen = [0, 0, 0, 0]
+          el.absen = [0, 0, 0, 0]
         }
         el.StudentAttendances.forEach(ek => {
           if (ek.status === 'hadir') {
-            hadir++
+            el.absen[0]++
           } else if (ek.status === 'izin') {
-            izin++
+            el.absen[1]++
           } else if (ek.status === 'sakit') {
-            sakit++
+            el.absen[2]++
           } else {
-            aplha++
+            el.absen[3]++
           }
-          absen.push(Number(hadir), Number(aplha), Number(sakit), Number(izin))
         })
-        tamp.push({ value: { name: el.name, class: el.Class.name, absen }, text: el.name })
+        tamp.push({ value: { name: el.name, class: el.Class.name, absen: el.absen }, text: el.name })
       })
       return tamp
     },
