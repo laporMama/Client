@@ -19,9 +19,17 @@ export default new Vuex.Store({
     parentStudentName: [],
     parentReport: [],
     errorMessages: [],
-    error: false
+    error: false,
+    isAuth: false,
+    mapelId: 0
   },
   mutations: {
+    SUCCESS_AUTH (state) {
+      state.isAuth = true
+    },
+    LOGOUT (state) {
+      state.isAuth = false;
+    },
     SET_LOGINROLE (state, payload) {
       state.loginRole = payload
     },
@@ -75,6 +83,9 @@ export default new Vuex.Store({
         state.errorMessages = payload
       }
       state.error = true
+    },
+    SET_MAPELID (state, payload) {
+      state.mapelId = payload
     }
   },
   actions: {
@@ -94,11 +105,12 @@ export default new Vuex.Store({
           localStorage.setItem('teacher', data.data.name)
           commit('SET_GURU', data.data.name)
           commit('SET_ERROR_STATUS', false)
+          commit('SUCCESS_AUTH', data.token)
           localStorage.setItem('token', data.token)
           router.push('/teacher')
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -115,11 +127,13 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          localStorage.setItem('TokenAdmin', data.token)
+          localStorage.setItem('token', data.token)
+          commit('SET_ERROR_STATUS', false)
+          commit('SUCCESS_AUTH', data.token)
           router.push('/admin')
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -136,11 +150,13 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          localStorage.setItem('TokenParent', data.token)
+          localStorage.setItem('token', data.token)
+          commit('SET_ERROR_STATUS', false)
+          commit('SUCCESS_AUTH', data.token)
           router.push('/Mama')
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -154,11 +170,11 @@ export default new Vuex.Store({
         headers: { token: localStorage.getItem('token') }
       })
         .then(({ data }) => {
-          console.log(data, 'ini class')
+          commit('SET_ERROR_STATUS', false)
           commit('SET_KELAS', data.data)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -174,11 +190,12 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          commit('SET_ERROR_STATUS', false)
+          commit('SET_MAPELID', data.teacher.CourseId)
           commit('SET_MAPEL', data.teacher.Course)
         })
         .catch(err => {
-          console.log(err, 'ini')
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -188,17 +205,17 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       return axios({
         method: 'get',
-        url: 'http://localhost:3000/students/' + localStorage.getItem('roomId'),
+        url: 'http://localhost:3000/students/' + localStorage.getItem('idRoom'),
         headers: {
           token: localStorage.getItem('token')
         }
       })
         .then(({ data }) => {
-          console.log(data.students)
+          commit('SET_ERROR_STATUS', false)
           commit('SET_STUDENT', data.students)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -210,14 +227,15 @@ export default new Vuex.Store({
         method: 'get',
         url: 'http://localhost:3000/reports/parent',
         headers: {
-          token: localStorage.getItem('TokenParent')
+          token: localStorage.getItem('token')
         }
       })
         .then(({ data }) => {
           commit('SET_REPORTPARENT', data.data)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -228,15 +246,16 @@ export default new Vuex.Store({
       axios({
         method: 'get',
         headers: {
-          token: localStorage.getItem('TokenParent')
+          token: localStorage.getItem('token')
         },
         url: 'http://localhost:3000/attendances/parent'
       })
         .then(({ data }) => {
           commit('SET_PARENTSTUDENT', data.data)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -259,10 +278,10 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -281,10 +300,10 @@ export default new Vuex.Store({
         }
       })
         .then(data => {
-          console.log(data)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -304,14 +323,14 @@ export default new Vuex.Store({
           role
         },
         headers: {
-          token: localStorage.getItem('TokenAdmin')
+          token: localStorage.getItem('token')
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -328,9 +347,10 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           commit('SET_COURSE', data.courses)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -346,11 +366,11 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
           commit('SET_PARENT', data.parents)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -362,7 +382,7 @@ export default new Vuex.Store({
         method: 'post',
         url: 'http://localhost:3000/students',
         headers: {
-          token: localStorage.getItem('TokenAdmin')
+          token: localStorage.getItem('token')
         },
         data: {
           name,
@@ -371,10 +391,10 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -388,15 +408,15 @@ export default new Vuex.Store({
           name: payload
         },
         headers: {
-          token: localStorage.getItem('TokenAdmin')
+          token: localStorage.getItem('token')
         },
         url: 'http://localhost:3000/course'
       })
         .then(({ data }) => {
-          console.log(data)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -410,15 +430,15 @@ export default new Vuex.Store({
           name: payload
         },
         headers: {
-          token: localStorage.getItem('TokenAdmin')
+          token: localStorage.getItem('token')
         },
         url: 'http://localhost:3000/class'
       })
         .then(({ data }) => {
-          console.log(data)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -433,7 +453,6 @@ export default new Vuex.Store({
         { kelas: [], key: 'VII' }
       ]
       state.kelas.forEach(el => {
-        console.log(el.name)
         const temp = el.name.split('-')
         data.forEach(ek => {
           if (ek.key === temp[0]) {
@@ -444,28 +463,33 @@ export default new Vuex.Store({
       return data
     },
     filterStudent: state => {
+      const reducer = (accumulator, currentValue) => accumulator + currentValue
       const data = state.student.forEach((el) => {
         el.Nilai = 0
         el.NilaiUas = 0
         el.NilaiUts = 0
-        let cN = 0
-        let cUa = 0
-        let cUt = 0
+        const tempNilai = []
+        const tempNilaiUas = []
+        const tempNilaiUts = []
         el.Reports.forEach((ek, i) => {
-          if (ek.type === 'nilai') {
-            cN++
-            el.Nilai += ek.score
-            el.Nilai /= cN
-          } else if (ek.type === 'uts') {
-            cUt++
-            el.NilaiUts += ek.score
-            el.NilaiUts /= cUt
-          } else if (ek.type === 'uas') {
-            cUa++
-            el.NilaiUas += ek.score
-            el.NilaiUas /= cUa
+          console.log(state.mapelId)
+          if (ek.type === 'nilai' && ek.CourseId === state.mapelId) {
+            tempNilai.push(ek.score)
+          } else if (ek.type === 'uts' && ek.CourseId === state.mapelId) {
+            tempNilaiUts.push(ek.score)
+          } else if (ek.type === 'uas' && ek.CourseId === state.mapelId) {
+            tempNilaiUas.push(ek.score)
           }
         })
+        if (tempNilai.length >= 1) {
+          el.Nilai = tempNilai.reduce(reducer) / tempNilai.length
+        }
+        if (tempNilaiUas.length >= 1) {
+          el.NilaiUas = tempNilaiUas.reduce(reducer) / tempNilaiUas.length
+        }
+        if (tempNilaiUts.length >= 1) {
+          el.NilaiUts = tempNilaiUts.reduce(reducer) / tempNilaiUts.length
+        }
       })
       return data
     },
@@ -519,7 +543,7 @@ export default new Vuex.Store({
       return tamp
     },
     getReportByParent: (state) => (payload) => {
-      console.log(payload)
+      const reducer = (accumulator, currentValue) => accumulator + currentValue
       let tamp = []
       state.parentReport.forEach(el => {
         el.mapel = []
@@ -529,27 +553,31 @@ export default new Vuex.Store({
       })
       state.parentReport.forEach(el => {
         el.mapel.forEach(ek => {
-          let cN = 0
-          let cUa = 0
-          let cUt = 0
           ek.nilai = 0
           ek.uas = 0
           ek.uts = 0
+          const tempNilai = []
+          const tempNilaiUas = []
+          const tempNilaiUts = []
           el.Reports.forEach(e => {
             if (e.CourseId === ek.id && e.type === 'nilai') {
-              cN++
-              ek.nilai += (e.score)
-              ek.nilai /= cN
+              tempNilai.push(e.score)
             } else if (e.CourseId === ek.id && e.type === 'uas') {
-              cUa++
-              ek.uas += (e.score)
-              ek.uas /= cUa
+              tempNilaiUas.push(e.score)
             } else if (e.CourseId === ek.id && e.type === 'uts') {
-              cUt++
-              ek.uts += (e.score)
-              ek.uts /= cUt
+              tempNilaiUts.push(e.score)
             }
           })
+          if (tempNilai.length >= 1) {
+            console.log('masokk')
+            ek.nilai = tempNilai.reduce(reducer) / tempNilai.length
+          }
+          if (tempNilaiUas.length >= 1) {
+            ek.uas = tempNilaiUas.reduce(reducer) / tempNilaiUas.length
+          }
+          if (tempNilaiUts.length >= 1) {
+            ek.uts = tempNilaiUts.reduce(reducer) / tempNilaiUts.length
+          }
         })
       })
       tamp = state.parentReport.filter(el => el.name === payload)

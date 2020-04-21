@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navbar />
+    <navbar :login="isLogin" />
     <ErrorMessage v-if="error" class="container w-50 mt-3" />
     <Spinner v-if="loading" />
     <div id="content">
@@ -25,12 +25,17 @@ export default {
     Spinner,
     ErrorMessage
   },
+  data () {
+    return {
+      isLogin: false
+    }
+  },
   computed: {
-    loading() {
-      return this.$store.state.loading;
+    loading () {
+      return this.$store.state.loading
     },
-    error() {
-      return this.$store.state.error;
+    error () {
+      return this.$store.state.error
     }
   }
 }
@@ -44,7 +49,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   height: 100%;
-  background-color: aliceblue;
 }
 
 #nav {

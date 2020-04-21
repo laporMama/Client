@@ -17,9 +17,10 @@
           type="email"
           required
           placeholder="Enter email"
+          :autocomplete="false"
         ></b-form-input>
       </b-form-group>
-      <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
+      <b-form-group id="input-group-2" label="Password:" label-for="input-2">
       <b-input type="password" id="text-password" aria-describedby="password-help-block" v-model="form.password"></b-input>
       </b-form-group>
     </b-form>
