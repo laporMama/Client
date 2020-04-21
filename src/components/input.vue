@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="test">
-      <b-form-input type="number" max="100" min="0" debounce="500"
+      <b-form-input type="number" max="100" min="0" debounce="500" autocomplete="false"
       v-model="nilai"
       ></b-form-input>
       <b-button @click="model = !model">update</b-button>

@@ -2,11 +2,13 @@
   <div class="container-fluid w-75">
     <h1 class="text-center"> Student Report </h1>
     <hr>
-    <div class="select">
-      <b-form-select
-      :options="studentByParent"
-      v-model="name"
-      />
+    <div class="d-flex">
+      <div class="select justify-content-center">
+        <b-form-select
+        :options="studentByParent"
+        v-model="name"
+        />
+      </div>
     </div>
     <div class="row">
       <div class="col-md-5">
@@ -66,8 +68,5 @@ chart {
   width: 300% !important;
   margin-bottom: 25px;
 }
-.select {
-  width: 70px;
-  margin-left: 75px;
-}
+
 </style>
