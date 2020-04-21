@@ -18,12 +18,11 @@
         <h4 class="text-center"> Study Report </h4>
       </div>
       <div class="col-md-7 d-flex justify-content-center">
-        <chart class="justify-content-center" :absensi="name.absen" v-if="name.absen"/>
-        <!-- <chart class="justify-content-center" :absensi="name.absen" v-if="name.absen" v-model="a"/> -->
+        <chart class="justify-content-center" :absensi="name.absen" />
       </div>
     </div>
     <div class="container-fluid w-90">
-      <Table :student="name.name" v-if="name.name" />
+      <Table :student="name.name" />
     </div>
   </div>
 </template>
@@ -39,23 +38,15 @@ export default {
   computed: {
     studentByParent () {
       return this.$store.getters.getStudentByParent
+    },
+    test () {
+      return this.$store.getters.getReportByParent
     }
   },
   data () {
     return {
-      name: {},
-      a: false
+      name: {}
     }
-  },
-  methods: {
-    fetchStudent () {
-      this.$store.dispatch('fetchStudent')
-      this.$store.dispatch('fetchReportByParent')
-      this.$store.dispatch('getCourse')
-    }
-  },
-  created () {
-    this.fetchStudent()
   }
 }
 </script>

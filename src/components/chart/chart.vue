@@ -20,18 +20,7 @@ export default {
       chartOptions: {
         hoverBorderWidth: 8
       },
-      chartData: {
-        hoverBackgroundColor: 'red',
-        hoverBorderWidth: 10,
-        labels: ['Hadir', 'Absen', 'Sakit', 'Izin'],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#2c3e50'],
-            data: this.absensi
-          }
-        ]
-      }
+      chartData: null
     }
   },
   mounted () {
@@ -59,13 +48,9 @@ export default {
         width: `${this.width}vw`,
         position: 'relative'
       }
-    }
-  },
-  watch: {
-    absensi: function (newFile) {
-      if (newFile) {
-        this.fillData()
-      }
+    },
+    test () {
+      return this.absensi
     }
   }
 }
