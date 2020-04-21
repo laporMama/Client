@@ -24,10 +24,10 @@ export default {
       statusAbsen: false,
       absen: [],
       options: [
-        { text: 'hadir', value: 'hadir', notEnabled: false },
-        { text: 'izin', value: 'izin', notEnabled: false },
-        { text: 'sakit', value: 'sakit', notEnabled: false },
-        { text: 'alpha', value: 'alpha', notEnabled: false }
+        { text: 'absent', value: 'hadir', notEnabled: false },
+        { text: 'permit', value: 'izin', notEnabled: false },
+        { text: 'sick', value: 'sakit', notEnabled: false },
+        { text: 'not present', value: 'alpha', notEnabled: false }
       ]
     }
   },

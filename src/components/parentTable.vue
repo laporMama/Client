@@ -17,7 +17,7 @@
     <div>
       Sorting By:
       <b>{{ sortBy }}</b>, Sort Direction:
-      <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
+      <b>{{ sortDesc ? 'A-Z' : 'Z-A' }}</b>
     </div>
   </div>
 </template>

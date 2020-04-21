@@ -414,13 +414,13 @@ export default new Vuex.Store({
           }
         })
         if (tempNilai.length >= 1) {
-          el.Nilai = tempNilai.reduce(reducer) / tempNilai.length
+          el.Nilai = (tempNilai.reduce(reducer) / tempNilai.length).toFixed(2)
         }
         if (tempNilaiUas.length >= 1) {
-          el.NilaiUas = tempNilaiUas.reduce(reducer) / tempNilaiUas.length
+          el.NilaiUas = (tempNilaiUas.reduce(reducer) / tempNilaiUas.length).toFixed(2)
         }
         if (tempNilaiUts.length >= 1) {
-          el.NilaiUts = tempNilaiUts.reduce(reducer) / tempNilaiUts.length
+          el.NilaiUts = (tempNilaiUts.reduce(reducer) / tempNilaiUts.length).toFixed(2)
         }
         console.log(el, 'ini nilai')
       })
@@ -498,13 +498,13 @@ export default new Vuex.Store({
           })
           if (tempNilai.length >= 1) {
             console.log('masokk')
-            ek.nilai = tempNilai.reduce(reducer) / tempNilai.length
+            ek.nilai = (tempNilai.reduce(reducer) / tempNilai.length).toFixed(2)
           }
           if (tempNilaiUas.length >= 1) {
-            ek.uas = tempNilaiUas.reduce(reducer) / tempNilaiUas.length
+            ek.uas = (tempNilaiUas.reduce(reducer) / tempNilaiUas.length).toFixed(2)
           }
           if (tempNilaiUts.length >= 1) {
-            ek.uts = tempNilaiUts.reduce(reducer) / tempNilaiUts.length
+            ek.uts = (tempNilaiUts.reduce(reducer) / tempNilaiUts.length).toFixed(2)
           }
         })
       })

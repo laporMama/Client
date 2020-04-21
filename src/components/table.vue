@@ -3,28 +3,32 @@
   <div>
     <b-tabs content-class="mt-3">
     <h1>{{mapel.name}}</h1>
-      <b-tab title="Nilai" active>
+      <b-input
+      v-model="filters"
+      debounce="500"
+      ></b-input>
+      <b-tab title="Score" active>
         <b-table fixed responsive  :items="murid" :fields="fields" style="{display:flex; flex-direction:row}">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" />
           </template>
         </b-table>
       </b-tab>
-      <b-tab title="Nilai UTS" active>
+      <b-tab title="Score UTS" active>
         <b-table fixed responsive :items="murid" :fields="fieldsUts">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'uts'" :CourseId="mapel.id" />
           </template>
         </b-table>
       </b-tab>
-      <b-tab title="Nilai UAS" active>
+      <b-tab title="Score UAS" active>
         <b-table fixed responsive :items="murid" :fields="fieldsUas">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" />
           </template>
         </b-table>
       </b-tab>
-      <b-tab title="absen">
+      <b-tab title="Attendance">
         <b-table fixed responsive :items="murid" :fields="fields2">
           <template v-slot:cell(hadir)="i">
             <Check :data="i" v-model="statusAbsen" />
@@ -48,10 +52,12 @@ export default {
       date: moment().format('L'),
       nilai: 0,
       statusAbsen: false,
-      fields: ['id', 'name', 'Nilai', 'inputnilai'],
-      fieldsUas: ['id', 'name', 'NilaiUas', 'inputnilai'],
-      fieldsUts: ['id', 'name', 'NilaiUts', 'inputnilai'],
-      fields2: ['id', 'name', { key: 'hadir', label: 'absen' }]
+      fields: ['name', 'Nilai', 'inputnilai'],
+      fieldsUas: ['name', 'NilaiUas', 'inputnilai'],
+      fieldsUts: ['name', 'NilaiUts', 'inputnilai'],
+      fields2: ['name', { key: 'hadir', label: 'absen' }],
+      filters: '',
+      items: this.murid
     }
   },
   methods: {
@@ -78,12 +84,16 @@ export default {
       return this.$store.state.absen
     },
     murid () {
-      return this.$store.state.student
+      if (this.filters) {
+        return this.$store.state.student.filter(el => el.name.includes(this.filters))
+      } else {
+        return this.$store.state.student
+      }
     },
     hasilMurid () {
       return this.$store.getters.filterStudent
     },
-    mapel () {
+    mapel (payload) {
       return this.$store.state.mapel
     }
   },
