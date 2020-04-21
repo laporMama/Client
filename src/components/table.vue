@@ -27,12 +27,14 @@
       <b-tab title="absen">
         <b-table fixed responsive :items="murid" :fields="fields2">
           <template v-slot:cell(hadir)="i">
-            <Check :data="i" v-model="statusAbsen" />
+            <Check :data="i"  @absensis="absensis" />
           </template>
         </b-table>
+    <b-button @click.prevent="pushAttendance">submit</b-button>
         </b-tab>
     </b-tabs>
   </div>
+  <!-- {{hasilMurid}} -->
   {{hasilMurid}}
 </div>
 </template>
@@ -71,6 +73,17 @@ export default {
     },
     changeStatus () {
       this.changeStatus = !this.changeStatus
+    },
+    absensis (event) {
+      this.absen.forEach((el, id) => {
+        if (el.id === event.id) {
+          this.absen.splice(id, 1)
+        }
+      })
+      this.absen.push(event)
+    },
+    pushAttendance () {
+      this.$store.dispatch('setAttendance', this.absen)
     }
   },
   computed: {
@@ -94,12 +107,12 @@ export default {
   components: {
     Input,
     Check
+  },
+  watch: {
+    murid: function (val) {
+      console.log(val, 'ini')
+    }
   }
-  // watch: {
-  //   kelas: (val) => {
-  //     this.fecthStudent()
-  //   }
-  // }
 }
 </script>
 

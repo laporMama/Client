@@ -77,6 +77,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data)
           localStorage.setItem('id', data.data.id)
           localStorage.setItem('teacher', data.data.name)
           commit('SET_GURU', data.data.name)
@@ -143,6 +144,7 @@ export default new Vuex.Store({
         })
     },
     fetchTeacher ({ commit }, payload) {
+      console.log(payload, 'ini teacher')
       axios({
         method: 'get',
         url: 'http://localhost:3000/teachers/' + payload,
@@ -151,7 +153,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          console.log(data, 'oakwdokwda')
           commit('SET_MAPEL', data.teacher.Course)
         })
         .catch(err => {
@@ -350,14 +352,32 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    setAttendance ({ commit }, payload) {
+      axios({
+        url: 'http://localhost:3000/attendances',
+        method: 'post',
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          data: payload
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   getters: {
     allKelas: state => {
       const data = [
         { kelas: [], key: 'IX' },
-        { kelas: [], key: 'VI' },
-        { kelas: [], key: 'VII' }
+        { kelas: [], key: 'VII' },
+        { kelas: [], key: 'VI' }
       ]
       state.kelas.forEach(el => {
         console.log(el.name)
@@ -480,6 +500,34 @@ export default new Vuex.Store({
         })
       })
       tamp = state.parentReport.filter(el => el.name === payload)
+      return tamp
+    },
+    getStudentByParentfilter: (state) => (payload) => {
+      const tamp = []
+      let hadir = 0
+      let izin = 0
+      let sakit = 0
+      let aplha = 0
+      state.parentStudentName.forEach(el => {
+        let absen = []
+        if (el.StudentAttendances.length === 0) {
+          absen = [0, 0, 0, 0]
+        }
+        el.StudentAttendances.forEach(ek => {
+          if (ek.status === 'hadir') {
+            hadir++
+          } else if (ek.status === 'izin') {
+            izin++
+          } else if (ek.status === 'sakit') {
+            sakit++
+          } else {
+            aplha++
+          }
+          absen.push(Number(hadir), Number(aplha), Number(sakit), Number(izin))
+        })
+        tamp.push({ value: { name: el.name, class: el.Class.name, absen }, text: el.name })
+      })
+      tamp.filter(el => el.value.name === payload)
       return tamp
     }
   },
