@@ -28,7 +28,7 @@ export default new Vuex.Store({
       state.isAuth = true
     },
     LOGOUT (state) {
-      state.isAuth = false;
+      state.isAuth = false
     },
     SET_LOGINROLE (state, payload) {
       state.loginRole = payload
