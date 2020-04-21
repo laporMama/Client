@@ -23,7 +23,6 @@
   <b-col cols="10">
     <div class="main">
       <div>
-        {{kelas}}
         <h1>Selamat datang {{guru}} </h1>
       </div>
       <router-view />

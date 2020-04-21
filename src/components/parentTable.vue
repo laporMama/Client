@@ -53,11 +53,6 @@ export default {
       } else {
         return `${value}`
       }
-    },
-    fetchStudent () {
-      this.$store.dispatch('fetchStudent')
-      this.$store.dispatch('fetchReportByParent')
-      this.$store.dispatch('getCourse')
     }
   },
   computed: {
@@ -83,9 +78,6 @@ export default {
     dataStudent () {
       return this.$store.getters.getReportByParent(this.student)
     }
-  },
-  created () {
-    this.fetchStudent()
   }
 }
 </script>
