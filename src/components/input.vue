@@ -57,9 +57,7 @@ export default {
   ],
   methods: {
     addNilai (payload) {
-      this.$store.dispatch('setNilai', payload)
-      // this.$store.dispatch('fetchStudentInClass')
-      // this.$emit('added', payload)
+      this.$emit('setNilai', payload)
     },
     updateNilai (payload) {
       this.$store.dispatch('updateNilai', payload)

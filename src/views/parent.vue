@@ -1,4 +1,3 @@
-
 <template>
   <div class="container-fluid w-75">
     <h1 class="text-center"> Student Report </h1>

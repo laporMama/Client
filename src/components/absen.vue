@@ -26,7 +26,7 @@ export default {
       statusAbsen: false,
       absen: [],
       options: [
-        { text: 'absent', value: 'hadir', notEnabled: false },
+        { text: 'present', value: 'hadir', notEnabled: false },
         { text: 'permit', value: 'izin', notEnabled: false },
         { text: 'sick', value: 'sakit', notEnabled: false },
         { text: 'not present', value: 'alpha', notEnabled: false }
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     status (a) {
-      this.$emit('absensis', { type: a, id: this.data.item.id })
+      this.$emit('absensis', { status: a, StudentId: this.data.item.id })
     }
   }
 }

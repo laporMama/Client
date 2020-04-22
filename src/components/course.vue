@@ -7,8 +7,9 @@
       <b-form>
         <b-form-group label="Course">
           <b-form-input
-          placeholder="NamaGuru"
+          placeholder="CourseName"
           v-model="nama"
+          autocomplete="off"
           required
           />
         </b-form-group>

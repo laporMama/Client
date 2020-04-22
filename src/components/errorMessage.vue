@@ -9,7 +9,7 @@ export default {
   name: 'ErrorMessage',
   computed: {
     errorMessages () {
-      return this.$store.state.errorMessages.join('and')
+      return this.$store.state.errorMessages.join(' and ')
     }
   }
 }
