@@ -6,13 +6,13 @@
 
 <script>
 export default {
-  name: "ErrorMessage",
+  name: 'ErrorMessage',
   computed: {
-    errorMessages() {
-      return this.$store.state.errorMessages.join(" and ");
+    errorMessages () {
+      return this.$store.state.errorMessages.join('and')
     }
   }
-};
+}
 </script>
 
 <style></style>

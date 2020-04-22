@@ -31,10 +31,12 @@
       <b-tab title="Attendance">
         <b-table fixed responsive :items="murid" :fields="fields2">
           <template v-slot:cell(hadir)="i">
-            <Check :data="i" v-model="statusAbsen" />
+            <Check :data="i"  @absensis="absensis" />
           </template>
         </b-table>
+    <b-button @click.prevent="pushAttendance">submit</b-button>
         </b-tab>
+
     </b-tabs>
   </div>
   {{hasilMurid}}
@@ -52,12 +54,11 @@ export default {
       date: moment().format('L'),
       nilai: 0,
       statusAbsen: false,
-      fields: ['name', 'Nilai', 'inputnilai'],
-      fieldsUas: ['name', 'NilaiUas', 'inputnilai'],
-      fieldsUts: ['name', 'NilaiUts', 'inputnilai'],
-      fields2: ['name', { key: 'hadir', label: 'absen' }],
-      filters: '',
-      items: this.murid
+      fields: ['name', { key: 'Nilai', label: 'Score' }, { key: 'inputnilai', label: 'InputScore' }],
+      fieldsUas: ['name', { key: 'NilaiUas', label: 'Score Uas' }, { key: 'inputnilai', label: 'InputScore' }],
+      fieldsUts: ['name', { key: 'NilaiUts', label: 'Score Uts' }, { key: 'inputnilai', label: 'InputScore' }],
+      fields2: ['name', { key: 'hadir', label: 'Attendance' }],
+      filters: ''
     }
   },
   methods: {
@@ -77,6 +78,18 @@ export default {
     },
     changeStatus () {
       this.changeStatus = !this.changeStatus
+    },
+    absensis (event) {
+      console.log(event)
+      this.absen.forEach((el, id) => {
+        if (el.id === event.id) {
+          this.absen.splice(id, 1)
+        }
+      })
+      this.absen.push(event)
+    },
+    pushAttendance () {
+      this.$store.dispatch('setAttendance', this.absen)
     }
   },
   computed: {
@@ -85,7 +98,7 @@ export default {
     },
     murid () {
       if (this.filters) {
-        return this.$store.state.student.filter(el => el.name.includes(this.filters))
+        return this.$store.state.student.filter(el => el.name.toLowerCase().includes(this.filters))
       } else {
         return this.$store.state.student
       }
