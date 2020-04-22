@@ -3,12 +3,14 @@
   <div>
     <b-tabs content-class="mt-3">
     <h1>{{mapel.name}}</h1>
+    <br>
       <b-input
       v-model="filters"
       debounce="500"
       placeholder="Search.... "
       class="container-fluid w-50"
       ></b-input>
+      <br>
       <b-tab title="Score" active>
         <b-table fixed responsive  :items="check" :fields="fields" style="{display:flex; flex-direction:row}">
           <template v-slot:cell(inputnilai)="i">
