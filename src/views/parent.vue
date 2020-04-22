@@ -2,15 +2,18 @@
   <div class="container-fluid w-75">
     <h1 class="text-center"> Student Report </h1>
     <hr>
-    <div class="d-flex">
-      <div class="select justify-content-left">
+    <div class="container-fluid w-75">
+
+      <div class="select container-fluid">
         <b-form-select
+        class="select"
         :options="studentByParent"
         v-model="name"
         />
       </div>
     </div>
-    <div class="row">
+    <br>
+    <div class="row" v-if="name.name">
       <div class="col-md-5">
         <h4> Name : {{name.name}}</h4>
         <h4> Kelas : {{name.class}} </h4>
@@ -64,8 +67,7 @@ export default {
 chart {
   width: 8vh;
 }
-.custom-select {
-  width: 300% !important;
-  margin-bottom: 25px;
-}
+/* .select {
+  width: 50% !important;
+} */
 </style>
