@@ -21,7 +21,8 @@ export default new Vuex.Store({
     errorMessages: [],
     error: false,
     isAuth: false,
-    mapelId: 0
+    mapelId: 0,
+    successMessage: null
   },
   mutations: {
     SUCCESS_AUTH (state) {
@@ -86,6 +87,9 @@ export default new Vuex.Store({
     },
     SET_MAPELID (state, payload) {
       state.mapelId = payload
+    },
+    SET_SUCCESS_MESSAGE (state, payload) {
+      state.successMessage = payload
     }
   },
   actions: {
@@ -109,7 +113,7 @@ export default new Vuex.Store({
           router.push('/teacher')
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -132,7 +136,7 @@ export default new Vuex.Store({
           router.push('/admin')
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -155,7 +159,7 @@ export default new Vuex.Store({
           router.push('/Mama')
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -173,7 +177,7 @@ export default new Vuex.Store({
           commit('SET_KELAS', data.data)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -194,7 +198,7 @@ export default new Vuex.Store({
           commit('SET_MAPEL', data.teacher.Course)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -214,7 +218,7 @@ export default new Vuex.Store({
           commit('SET_STUDENT', data.students)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -234,7 +238,7 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -254,7 +258,7 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -280,7 +284,8 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          console.log(err.response)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -302,7 +307,7 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -329,7 +334,7 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -349,7 +354,7 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -369,7 +374,7 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -393,7 +398,7 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -415,7 +420,7 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -437,7 +442,29 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
+        })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
+    },
+    setAttendance ({ commit }, payload) {
+      axios({
+        url: 'http://localhost:3000/attendances',
+        method: 'post',
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          data: payload
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_ERROR_STATUS', false)
+        })
+        .catch(err => {
+          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -448,8 +475,8 @@ export default new Vuex.Store({
     allKelas: state => {
       const data = [
         { kelas: [], key: 'IX' },
-        { kelas: [], key: 'VI' },
-        { kelas: [], key: 'VII' }
+        { kelas: [], key: 'VII' },
+        { kelas: [], key: 'VI' }
       ]
       state.kelas.forEach(el => {
         const temp = el.name.split('-')
@@ -480,13 +507,13 @@ export default new Vuex.Store({
           }
         })
         if (tempNilai.length >= 1) {
-          el.Nilai = tempNilai.reduce(reducer) / tempNilai.length
+          el.Nilai = (tempNilai.reduce(reducer) / tempNilai.length).toFixed(2)
         }
         if (tempNilaiUas.length >= 1) {
-          el.NilaiUas = tempNilaiUas.reduce(reducer) / tempNilaiUas.length
+          el.NilaiUas = (tempNilaiUas.reduce(reducer) / tempNilaiUas.length).toFixed(2)
         }
         if (tempNilaiUts.length >= 1) {
-          el.NilaiUts = tempNilaiUts.reduce(reducer) / tempNilaiUts.length
+          el.NilaiUts = (tempNilaiUts.reduce(reducer) / tempNilaiUts.length).toFixed(2)
         }
       })
       return data
@@ -515,28 +542,23 @@ export default new Vuex.Store({
     },
     getStudentByParent: state => {
       const tamp = []
-      let hadir = 0
-      let izin = 0
-      let sakit = 0
-      let aplha = 0
       state.parentStudentName.forEach(el => {
-        let absen = []
+        el.absen = [0, 0, 0, 0]
         if (el.StudentAttendances.length === 0) {
-          absen = [0, 0, 0, 0]
+          el.absen = [0, 0, 0, 0]
         }
         el.StudentAttendances.forEach(ek => {
           if (ek.status === 'hadir') {
-            hadir++
+            el.absen[0]++
           } else if (ek.status === 'izin') {
-            izin++
+            el.absen[1]++
           } else if (ek.status === 'sakit') {
-            sakit++
+            el.absen[2]++
           } else {
-            aplha++
+            el.absen[3]++
           }
-          absen.push(Number(hadir), Number(aplha), Number(sakit), Number(izin))
         })
-        tamp.push({ value: { name: el.name, class: el.Class.name, absen }, text: el.name })
+        tamp.push({ value: { name: el.name, class: el.Class.name, absen: el.absen }, text: el.name })
       })
       return tamp
     },
@@ -567,17 +589,45 @@ export default new Vuex.Store({
             }
           })
           if (tempNilai.length >= 1) {
-            ek.nilai = tempNilai.reduce(reducer) / tempNilai.length
+            ek.nilai = (tempNilai.reduce(reducer) / tempNilai.length).toFixed(2)
           }
           if (tempNilaiUas.length >= 1) {
-            ek.uas = tempNilaiUas.reduce(reducer) / tempNilaiUas.length
+            ek.uas = (tempNilaiUas.reduce(reducer) / tempNilaiUas.length).toFixed(2)
           }
           if (tempNilaiUts.length >= 1) {
-            ek.uts = tempNilaiUts.reduce(reducer) / tempNilaiUts.length
+            ek.uts = (tempNilaiUts.reduce(reducer) / tempNilaiUts.length).toFixed(2)
           }
         })
       })
       tamp = state.parentReport.filter(el => el.name === payload)
+      return tamp
+    },
+    getStudentByParentfilter: (state) => (payload) => {
+      const tamp = []
+      let hadir = 0
+      let izin = 0
+      let sakit = 0
+      let aplha = 0
+      state.parentStudentName.forEach(el => {
+        let absen = []
+        if (el.StudentAttendances.length === 0) {
+          absen = [0, 0, 0, 0]
+        }
+        el.StudentAttendances.forEach(ek => {
+          if (ek.status === 'hadir') {
+            hadir++
+          } else if (ek.status === 'izin') {
+            izin++
+          } else if (ek.status === 'sakit') {
+            sakit++
+          } else {
+            aplha++
+          }
+          absen.push(Number(hadir), Number(aplha), Number(sakit), Number(izin))
+        })
+        tamp.push({ value: { name: el.name, class: el.Class.name, absen }, text: el.name })
+      })
+      tamp.filter(el => el.value.name === payload)
       return tamp
     }
   },

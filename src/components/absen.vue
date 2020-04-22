@@ -1,16 +1,18 @@
 <template>
   <div>
-    <b-form-checkbox
-      v-for="option in options"
-      v-model="absen"
-      :key="option.value"
-      :value="option.value"
-      @change="status"
-      name="flavour-3a"
-      inline
-    >
-    {{option.text}}
-    </b-form-checkbox>
+    <b-form-radio-group>
+      <b-form-radio
+        v-for="option in options"
+        v-model="absen"
+        :key="option.value"
+        :value="option.value"
+        @change="status"
+        name="flavour-3a"
+        inline
+      >
+      {{option.text}}
+      </b-form-radio>
+    </b-form-radio-group>
   </div>
 </template>
 
@@ -24,23 +26,17 @@ export default {
       statusAbsen: false,
       absen: [],
       options: [
-        { text: 'hadir', value: 'hadir', notEnabled: false },
-        { text: 'izin', value: 'izin', notEnabled: false },
-        { text: 'sakit', value: 'sakit', notEnabled: false },
-        { text: 'alpha', value: 'alpha', notEnabled: false }
+        { text: 'absent', value: 'hadir', notEnabled: false },
+        { text: 'permit', value: 'izin', notEnabled: false },
+        { text: 'sick', value: 'sakit', notEnabled: false },
+        { text: 'not present', value: 'alpha', notEnabled: false }
       ]
     }
   },
   methods: {
-    test () {
-      console.log(this.absen, 'ini')
-    },
-    status () {
-      console.log(this.absen)
+    status (a) {
+      this.$emit('absensis', { type: a, id: this.data.item.id })
     }
-  },
-  created () {
-    this.test()
   }
 }
 </script>

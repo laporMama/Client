@@ -17,7 +17,7 @@
     <div>
       Sorting By:
       <b>{{ sortBy }}</b>, Sort Direction:
-      <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
+      <b>{{ sortDesc ? 'Z-A' : 'A-Z' }}</b>
     </div>
   </div>
 </template>
@@ -29,18 +29,13 @@ export default {
   ],
   data () {
     return {
-      sortBy: 'Course',
+      sortBy: 'Course Name',
       sortDesc: false,
       fields: [
-        { key: 'name', sortable: true },
-        { key: 'nilai', sortable: true },
-        { key: 'uts', sortable: true },
-        { key: 'uas', sortable: true }
-      ],
-      report: [
-        { Course: 'Matematika', Harian: '90', Ulangan: '70', UTS: '80', UAS: '80' },
-        { Course: 'Fisika', Harian: '90', Ulangan: '70', UTS: '80', UAS: '80' },
-        { Course: 'Kimia', Harian: '90', Ulangan: '70', UTS: '80', UAS: '80' }
+        { key: 'name', label: 'Name', sortable: true },
+        { key: 'nilai', label: 'Score', sortable: true },
+        { key: 'uts', label: 'Score UTS', sortable: true },
+        { key: 'uas', label: 'Score UAS', sortable: true }
       ]
     }
   },

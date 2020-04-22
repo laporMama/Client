@@ -8,10 +8,10 @@
       <b-col><b-button variant="outline-primary" id="tooltip-target-1" size="lg" :to="{path: '/login'}"  @click.prevent="role('Mama')">Mama</b-button></b-col>
     </b-row>
       <b-tooltip target="tooltip-target-1" triggers="hover" placement="topleft">
-        Masuk Sebagai Mama
+        Login As Mama
       </b-tooltip>
       <b-tooltip target="tooltip-target-2" triggers="hover" placement="topright">
-          Masuk Sebagai Guru
+          Login As Guru
       </b-tooltip>
   </div>
 </template>

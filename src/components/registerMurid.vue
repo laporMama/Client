@@ -5,21 +5,21 @@
     style="max-width: 30rem; width: 30rem;"
     >
       <b-form>
-        <b-form-group label="Mama">
+        <b-form-group label="Parent">
           <b-form-select
           :options="teacher"
           v-model="parent"
           required
           />
         </b-form-group>
-        <b-form-group label="Mama">
+        <b-form-group label="Class">
           <b-form-select
           :options="kelas"
           v-model="kelasId"
           required
           />
         </b-form-group>
-        <b-form-group label="NamaMurid">
+        <b-form-group label="NameStudent">
           <b-form-input
           placeholder="NamaMurid"
           v-model="name"
