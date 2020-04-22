@@ -15,6 +15,7 @@
           id="input-1"
           v-model="form.email"
           type="email"
+          autocomplete="off"
           required
           placeholder="Enter email"
         ></b-form-input>
@@ -23,9 +24,9 @@
       <b-input type="password" id="text-password" aria-describedby="password-help-block" v-model="form.password"></b-input>
       </b-form-group>
     </b-form>
-    <b-button variant="primary" v-if="(role === 'Guru')" @click.prevent="loginGuru({email: form.email, password: form.password })">Go somewhere</b-button>
-    <b-button variant="primary" v-else-if="(role === 'Admin')" @click.prevent="loginAdmin({email: form.email, password: form.password })">Go somewhere</b-button>
-    <b-button variant="primary" v-if="(role === 'Mama')" @click.prevent="loginParent({email: form.email, password: form.password })">Go somewhere</b-button>
+    <b-button variant="primary" v-if="(role === 'Guru')" @click.prevent="loginGuru({email: form.email, password: form.password })">Login</b-button>
+    <b-button variant="primary" v-else-if="(role === 'Admin')" @click.prevent="loginAdmin({email: form.email, password: form.password })">Login</b-button>
+    <b-button variant="primary" v-if="(role === 'Mama')" @click.prevent="loginParent({email: form.email, password: form.password })">Login</b-button>
     </b-card>
   </div>
 </template>

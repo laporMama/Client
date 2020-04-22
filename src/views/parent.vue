@@ -1,10 +1,9 @@
-
 <template>
   <div class="container-fluid w-75">
     <h1 class="text-center"> Student Report </h1>
     <hr>
     <div class="d-flex">
-      <div class="select justify-content-right w-15">
+      <div class="select justify-content-left">
         <b-form-select
         :options="studentByParent"
         v-model="name"

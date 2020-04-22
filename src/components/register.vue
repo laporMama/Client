@@ -9,6 +9,7 @@
           <b-form-input
           placeholder="Nama"
           v-model="nama"
+          autocomplete="off"
           required
           />
         </b-form-group>

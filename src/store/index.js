@@ -79,7 +79,6 @@ export default new Vuex.Store({
       state.error = payload
     },
     SET_ERROR_MESSAGE (state, payload) {
-      console.log(payload, 'HIYAHIYA')
       if (!Array.isArray(payload)) {
         state.errorMessages = [payload]
       } else {
@@ -109,6 +108,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.data, 'ini dari login')
           localStorage.setItem('id', data.data.id)
           localStorage.setItem('teacher', data.data.name)
           commit('SET_GURU', data.data.name)
@@ -135,6 +135,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.data, 'ini dari login')
           localStorage.setItem('token', data.token)
           commit('SET_ERROR_STATUS', false)
           commit('SUCCESS_AUTH', data.token)
@@ -158,6 +159,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.data, 'ini dari login')
           localStorage.setItem('token', data.token)
           commit('SET_ERROR_STATUS', false)
           commit('SUCCESS_AUTH', data.token)
@@ -239,6 +241,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data)
           commit('SET_REPORTPARENT', data.data)
           commit('SET_ERROR_STATUS', false)
         })
@@ -286,6 +289,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.data, 'ini dari login')
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -309,6 +313,7 @@ export default new Vuex.Store({
         }
       })
         .then(data => {
+          console.log(data.data, 'ini dari login')
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -336,6 +341,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.data, 'ini dari login')
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -356,8 +362,9 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          commit('SET_COURSE', data.courses)
-          commit('SET_ERROR_STATUS', false)
+          // console.log(data, 'test')
+          commit('SET_COURSE', data.data)
+          // commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
           commit('SET_ERROR_MESSAGE', err.response.data.message)
@@ -376,7 +383,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          commit('SET_PARENT', data.parents)
+          commit('SET_PARENT', data.data)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -401,6 +408,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.data, 'ini dari login')
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -423,6 +431,7 @@ export default new Vuex.Store({
         url: 'http://localhost:3000/course'
       })
         .then(({ data }) => {
+          console.log(data.data)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -445,6 +454,7 @@ export default new Vuex.Store({
         url: 'http://localhost:3000/class'
       })
         .then(({ data }) => {
+          console.log(data.data, 'ini dari login')
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -455,6 +465,7 @@ export default new Vuex.Store({
         })
     },
     setAttendance ({ commit }, payload) {
+      console.log(payload, 'okokoo')
       axios({
         url: 'http://localhost:3000/attendances',
         method: 'post',
@@ -466,6 +477,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -571,9 +583,11 @@ export default new Vuex.Store({
     getReportByParent: (state) => (payload) => {
       const reducer = (accumulator, currentValue) => accumulator + currentValue
       let tamp = []
+      console.log(state.allMapel)
       state.parentReport.forEach(el => {
         el.mapel = []
         state.allMapel.forEach(ek => {
+          console.log('kkkk')
           el.mapel.push({ name: ek.name, id: ek.id })
         })
       })

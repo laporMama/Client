@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="title">
-      <h1>Selamat datang di Lapor Mama</h1>
+      <h1>Welcome to Lapor Mama</h1>
     </div>
     <b-row class="chooseLogin">
       <b-col><b-button variant="outline-primary" id="tooltip-target-2" size="lg" :to="{path: '/login'}" @click.prevent="role('Guru')">Guru</b-button></b-col>
