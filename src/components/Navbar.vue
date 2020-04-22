@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-navbar toggleable='lg' variant='dark' type="dark">
-      <b-navbar-brand>LaporMama</b-navbar-brand>
+    <b-navbar toggleable='lg' style="background-color:cornflowerblue">
+      <b-navbar-brand><img src="../assets/logo.png" alt=""></b-navbar-brand>
 
       <b-navbar-toggle target='nav-collapse'></b-navbar-toggle>
 
@@ -36,8 +36,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .logout {
   cursor: pointer;
+}
+img {
+  width: 10vw;
 }
 </style>

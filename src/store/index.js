@@ -231,6 +231,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data)
           commit('SET_REPORTPARENT', data.data)
           commit('SET_ERROR_STATUS', false)
         })
@@ -348,8 +349,9 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          commit('SET_COURSE', data.courses)
-          commit('SET_ERROR_STATUS', false)
+          // console.log(data, 'test')
+          commit('SET_COURSE', data.data)
+          // commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
           commit('SET_ERROR_MESSAGE', err.response.data.message)
@@ -415,6 +417,7 @@ export default new Vuex.Store({
         url: 'http://localhost:3000/course'
       })
         .then(({ data }) => {
+          console.log(data)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -563,14 +566,19 @@ export default new Vuex.Store({
     getReportByParent: (state) => (payload) => {
       const reducer = (accumulator, currentValue) => accumulator + currentValue
       let tamp = []
+      console.log(state.allMapel)
       state.parentReport.forEach(el => {
+        console.log(el, 'owkdokwad11')
         el.mapel = []
         state.allMapel.forEach(ek => {
+          console.log('kkkk')
           el.mapel.push({ name: ek.name, id: ek.id })
         })
       })
       state.parentReport.forEach(el => {
+        console.log(el, 'owkdokwad')
         el.mapel.forEach(ek => {
+          console.log(ek, 'owkdok111wad')
           ek.nilai = 0
           ek.uas = 0
           ek.uts = 0
@@ -578,6 +586,7 @@ export default new Vuex.Store({
           const tempNilaiUas = []
           const tempNilaiUts = []
           el.Reports.forEach(e => {
+            console.log(e, 'asdasowkdokwad')
             if (e.CourseId === ek.id && e.type === 'nilai') {
               tempNilai.push(e.score)
             } else if (e.CourseId === ek.id && e.type === 'uas') {
