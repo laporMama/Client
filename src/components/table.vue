@@ -37,6 +37,9 @@
           </template>
         </b-table>
           <b-button @click.prevent="pushAttendance">submit</b-button>
+          <br>
+          <br>
+          <b-button variant="danger" @click.prevent="demo">Demo</b-button>
         </b-tab>
 
     </b-tabs>
@@ -97,6 +100,9 @@ export default {
     },
     pushAttendance () {
       this.$store.dispatch('setAttendance', this.absen)
+    },
+    demo () {
+      console.log('demo')
     }
   },
   computed: {
