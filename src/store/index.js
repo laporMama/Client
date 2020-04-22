@@ -272,7 +272,7 @@ export default new Vuex.Store({
           commit('SET_LOADING', false)
         })
     },
-    setNilai ({ commit }, { score, reportDate, StudentId, CourseId, type }) {
+    setNilai ({ commit, dispatch }, { score, reportDate, StudentId, CourseId, type }) {
       commit('SET_LOADING', true)
       axios({
         method: 'POST',
@@ -289,7 +289,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data.data, 'ini dari login')
+          dispatch('fetchStudentInClass')
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {

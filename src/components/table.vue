@@ -10,28 +10,28 @@
       class="container-fluid w-50"
       ></b-input>
       <b-tab title="Score" active>
-        <b-table fixed responsive  :items="murid" :fields="fields" style="{display:flex; flex-direction:row}">
+        <b-table fixed responsive  :items="check" :fields="fields" style="{display:flex; flex-direction:row}">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" @setNilai="setNilai" />
           </template>
         </b-table>
       </b-tab>
       <b-tab title="Score UTS" active>
-        <b-table fixed responsive :items="murid" :fields="fieldsUts">
+        <b-table fixed responsive :items="check" :fields="fieldsUts">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'uts'" :CourseId="mapel.id" @setNilai="setNilai" />
           </template>
         </b-table>
       </b-tab>
       <b-tab title="Score UAS" active>
-        <b-table fixed responsive :items="murid" :fields="fieldsUas">
+        <b-table fixed responsive :items="check" :fields="fieldsUas">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" @setNilai="setNilai" />
           </template>
         </b-table>
       </b-tab>
       <b-tab title="Attendance">
-        <b-table fixed responsive :items="murid" :fields="fields2">
+        <b-table fixed responsive :items="check" :fields="fields2">
           <template v-slot:cell(hadir)="i">
             <Check :data="i"  @absensis="absensis" />
           </template>
@@ -60,7 +60,8 @@ export default {
       fieldsUas: ['name', { key: 'NilaiUas', label: 'Score Uas' }, { key: 'inputnilai', label: 'InputScore' }],
       fieldsUts: ['name', { key: 'NilaiUts', label: 'Score Uts' }, { key: 'inputnilai', label: 'InputScore' }],
       fields2: ['name', { key: 'hadir', label: 'Attendance' }],
-      filters: ''
+      filters: '',
+      check: null
     }
   },
   methods: {
@@ -73,9 +74,7 @@ export default {
     },
     setNilai (payload) {
       this.$store.dispatch('setNilai', payload)
-      this.$store.dispatch('fetchTeacher', localStorage.getItem('id'))
       this.$store.dispatch('fetchStudentInClass')
-      this.$store.dispatch('Fetchclass')
     },
     fetchclass () {
       this.$store.dispatch('Fetchclass')
@@ -97,6 +96,9 @@ export default {
     },
     pushAttendance () {
       this.$store.dispatch('setAttendance', this.absen)
+    },
+    lol () {
+      this.check = this.murid
     }
   },
   computed: {
@@ -120,16 +122,17 @@ export default {
   created () {
     this.fetchTeacher()
     this.fetchclass()
+    this.lol()
   },
   components: {
     Input,
     Check
+  },
+  watch: {
+    murid (val, oldCount) {
+      this.lol()
+    }
   }
-  // watch: {
-  //   kelas: (val) => {
-  //     this.fecthStudent()
-  //   }
-  // }
 }
 </script>
 
