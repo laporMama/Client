@@ -14,7 +14,4 @@ export default {
 </script>
 
 <style>
-#content {
-  margin-bottom: 25%;
-}
 </style>

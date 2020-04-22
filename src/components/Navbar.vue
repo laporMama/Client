@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-navbar toggleable='lg' variant='dark' type="dark">
-      <b-navbar-brand class='clickable' @click='home'>LaporMama</b-navbar-brand>
+    <b-navbar toggleable='lg' style="background-color:cornflowerblue">
+      <b-navbar-brand class='clickable' @click='home'><img src="../assets/logo.png" alt=""></b-navbar-brand>
 
       <b-navbar-toggle target='nav-collapse'></b-navbar-toggle>
 
@@ -21,7 +21,8 @@ import { mapState } from 'vuex'
 export default {
   name: 'Navbar',
   data () {
-    return {}
+    return {
+    }
   },
   methods: {
     home () {
@@ -43,5 +44,8 @@ export default {
 <style>
 .clickable {
   cursor: pointer;
+}
+img {
+  width: 10vw;
 }
 </style>

@@ -21,7 +21,6 @@
         </b-form-group>
         <b-form-group label="NameStudent">
           <b-form-input
-          placeholder="NamaMurid"
           v-model="name"
           required
           />

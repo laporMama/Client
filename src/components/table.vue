@@ -12,21 +12,21 @@
       <b-tab title="Score" active>
         <b-table fixed responsive  :items="murid" :fields="fields" style="{display:flex; flex-direction:row}">
           <template v-slot:cell(inputnilai)="i">
-            <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" />
+            <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" @setNilai="setNilai" />
           </template>
         </b-table>
       </b-tab>
       <b-tab title="Score UTS" active>
         <b-table fixed responsive :items="murid" :fields="fieldsUts">
           <template v-slot:cell(inputnilai)="i">
-            <Input :data="i" :date="date" :type="'uts'" :CourseId="mapel.id" />
+            <Input :data="i" :date="date" :type="'uts'" :CourseId="mapel.id" @setNilai="setNilai" />
           </template>
         </b-table>
       </b-tab>
       <b-tab title="Score UAS" active>
         <b-table fixed responsive :items="murid" :fields="fieldsUas">
           <template v-slot:cell(inputnilai)="i">
-            <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" />
+            <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" @setNilai="setNilai" />
           </template>
         </b-table>
       </b-tab>
@@ -36,7 +36,7 @@
             <Check :data="i"  @absensis="absensis" />
           </template>
         </b-table>
-    <b-button @click.prevent="pushAttendance">submit</b-button>
+          <b-button @click.prevent="pushAttendance">submit</b-button>
         </b-tab>
 
     </b-tabs>
@@ -71,6 +71,12 @@ export default {
     updateNilai (payload) {
       this.$store.dispatch('UpdateNilai', payload)
     },
+    setNilai (payload) {
+      this.$store.dispatch('setNilai', payload)
+      this.$store.dispatch('fetchTeacher', localStorage.getItem('id'))
+      this.$store.dispatch('fetchStudentInClass')
+      this.$store.dispatch('Fetchclass')
+    },
     fetchclass () {
       this.$store.dispatch('Fetchclass')
     },
@@ -82,9 +88,8 @@ export default {
       this.changeStatus = !this.changeStatus
     },
     absensis (event) {
-      console.log(event)
       this.absen.forEach((el, id) => {
-        if (el.id === event.id) {
+        if (el.StudentId === event.StudentId) {
           this.absen.splice(id, 1)
         }
       })

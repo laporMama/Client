@@ -11,6 +11,7 @@
           <b-form-input
           placeholder="class"
           v-model="nama"
+          autocomplete="off"
           required
           />
         </b-form-group>
