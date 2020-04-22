@@ -370,7 +370,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          commit('SET_PARENT', data.parents)
+          commit('SET_PARENT', data.data)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
