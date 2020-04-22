@@ -11,8 +11,8 @@
 
 <script>
 export default {
-  name: "Spinner"
-};
+  name: 'Spinner'
+}
 </script>
 
 <style>

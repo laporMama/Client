@@ -28,7 +28,7 @@ export default new Vuex.Store({
       state.isAuth = true
     },
     LOGOUT (state) {
-      state.isAuth = false;
+      state.isAuth = false
     },
     SET_LOGINROLE (state, payload) {
       state.loginRole = payload
@@ -90,7 +90,6 @@ export default new Vuex.Store({
   },
   actions: {
     loginGuru ({ commit }, { email, password }) {
-      console.log(email)
       commit('SET_LOADING', true)
       axios({
         url: 'http://localhost:3000/login',
@@ -472,7 +471,6 @@ export default new Vuex.Store({
         const tempNilaiUas = []
         const tempNilaiUts = []
         el.Reports.forEach((ek, i) => {
-          console.log(state.mapelId)
           if (ek.type === 'nilai' && ek.CourseId === state.mapelId) {
             tempNilai.push(ek.score)
           } else if (ek.type === 'uts' && ek.CourseId === state.mapelId) {
@@ -569,7 +567,6 @@ export default new Vuex.Store({
             }
           })
           if (tempNilai.length >= 1) {
-            console.log('masokk')
             ek.nilai = tempNilai.reduce(reducer) / tempNilai.length
           }
           if (tempNilaiUas.length >= 1) {
