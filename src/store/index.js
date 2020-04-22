@@ -362,9 +362,8 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          // console.log(data, 'test')
           commit('SET_COURSE', data.data)
-          // commit('SET_ERROR_STATUS', false)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
           commit('SET_ERROR_MESSAGE', err.response.data.message)
