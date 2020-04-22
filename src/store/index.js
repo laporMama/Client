@@ -21,7 +21,9 @@ export default new Vuex.Store({
     errorMessages: [],
     error: false,
     isAuth: false,
-    mapelId: 0
+    mapelId: 0,
+    successMessage: null,
+    success: false
   },
   mutations: {
     SUCCESS_AUTH (state) {
@@ -87,6 +89,12 @@ export default new Vuex.Store({
     },
     SET_MAPELID (state, payload) {
       state.mapelId = payload
+    },
+    SET_SUCCESS_MESSAGE (state, payload) {
+      state.successMessage = payload
+    },
+    SET_SUCCESS (state, payload) {
+      state.success = payload
     }
   },
   actions: {

@@ -4,7 +4,7 @@
     <h1 class="text-center"> Student Report </h1>
     <hr>
     <div class="d-flex">
-      <div class="select justify-content-center">
+      <div class="select justify-content-right w-15">
         <b-form-select
         :options="studentByParent"
         v-model="name"

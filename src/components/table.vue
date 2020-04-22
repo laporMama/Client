@@ -6,6 +6,8 @@
       <b-input
       v-model="filters"
       debounce="500"
+      placeholder="Search.... "
+      class="container-fluid w-50"
       ></b-input>
       <b-tab title="Score" active>
         <b-table fixed responsive  :items="murid" :fields="fields" style="{display:flex; flex-direction:row}">
