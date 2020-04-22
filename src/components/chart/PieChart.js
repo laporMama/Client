@@ -11,5 +11,14 @@ export default {
       hoverBackgroundColor: 'red',
       hoverBorderWidth: '10px'
     })
+  },
+  watch: {
+    data: function (news) {
+      this.renderChart(this.data, {
+        borderWidth: '10px',
+        hoverBackgroundColor: 'red',
+        hoverBorderWidth: '10px'
+      })
+    }
   }
 }

@@ -20,7 +20,18 @@ export default {
       chartOptions: {
         hoverBorderWidth: 8
       },
-      chartData: null
+      chartData: {
+        hoverBackgroundColor: 'red',
+        hoverBorderWidth: 10,
+        labels: ['Hadir', 'Absen', 'Sakit', 'Izin'],
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#2c3e50'],
+            data: this.absensi
+          }
+        ]
+      }
     }
   },
   mounted () {
@@ -31,7 +42,7 @@ export default {
       this.chartData = {
         hoverBackgroundColor: 'red',
         hoverBorderWidth: 10,
-        labels: ['Hadir', 'Absen', 'Sakit', 'Izin'],
+        labels: ['Attend', 'Not present', 'Sick', 'Permit'],
         datasets: [
           {
             label: 'Data One',
@@ -48,14 +59,17 @@ export default {
         width: `${this.width}vw`,
         position: 'relative'
       }
-    },
-    test () {
-      return this.absensi
+    }
+  },
+  watch: {
+    absensi: function (newFile) {
+      if (newFile) {
+        this.fillData()
+      }
     }
   }
 }
 </script>
 
 <style>
-
 </style>

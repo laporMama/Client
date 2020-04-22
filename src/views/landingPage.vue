@@ -2,29 +2,18 @@
 <div class="outer">
   <b-col  cols="2">
     <div class="sidenav">
-      <b-navbar-brand>Kelas</b-navbar-brand>
+      <b-navbar-brand>Class</b-navbar-brand>
       <div v-for="(room, i) in kelas" :key="i">
           <b-navbar-nav>
             <b-dropdown-item @click="next(({name: room.name, id: room.id}))">{{room.name}}</b-dropdown-item>
           </b-navbar-nav>
       </div>
-      <!-- <b-navbar-brand>Kelas</b-navbar-brand>
-      <div  v-for="(room, i) in kelas" :key="i">
-        <b-navbar-toggle :target="room.key" class="kelas">
-          <template v-slot:default="{ expanded }">
-            <b>{{room.key}} </b><b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
-            <b-icon v-else icon="chevron-bar-down"></b-icon>
-          </template>
-        </b-navbar-toggle>
-
-      </div> -->
     </div>
   </b-col>
   <b-col cols="10">
     <div class="main">
       <div>
-        {{kelas}}
-        <h1>Selamat datang {{guru}} </h1>
+        <h1>Welcome {{guru}} teacher </h1>
       </div>
       <router-view />
     </div>

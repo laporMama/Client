@@ -17,7 +17,6 @@
           type="email"
           required
           placeholder="Enter email"
-          :autocomplete="false"
         ></b-form-input>
       </b-form-group>
       <b-form-group id="input-group-2" label="Password:" label-for="input-2">

@@ -3,34 +3,40 @@
   <div>
     <b-tabs content-class="mt-3">
     <h1>{{mapel.name}}</h1>
-      <b-tab title="Nilai" active>
+      <b-input
+      v-model="filters"
+      debounce="500"
+      ></b-input>
+      <b-tab title="Score" active>
         <b-table fixed responsive  :items="murid" :fields="fields" style="{display:flex; flex-direction:row}">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" />
           </template>
         </b-table>
       </b-tab>
-      <b-tab title="Nilai UTS" active>
+      <b-tab title="Score UTS" active>
         <b-table fixed responsive :items="murid" :fields="fieldsUts">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'uts'" :CourseId="mapel.id" />
           </template>
         </b-table>
       </b-tab>
-      <b-tab title="Nilai UAS" active>
+      <b-tab title="Score UAS" active>
         <b-table fixed responsive :items="murid" :fields="fieldsUas">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" />
           </template>
         </b-table>
       </b-tab>
-      <b-tab title="absen">
+      <b-tab title="Attendance">
         <b-table fixed responsive :items="murid" :fields="fields2">
           <template v-slot:cell(hadir)="i">
-            <Check :data="i" v-model="statusAbsen" />
+            <Check :data="i"  @absensis="absensis" />
           </template>
         </b-table>
+    <b-button @click.prevent="pushAttendance">submit</b-button>
         </b-tab>
+
     </b-tabs>
   </div>
   {{hasilMurid}}
@@ -48,10 +54,11 @@ export default {
       date: moment().format('L'),
       nilai: 0,
       statusAbsen: false,
-      fields: ['id', 'name', 'Nilai', 'inputnilai'],
-      fieldsUas: ['id', 'name', 'NilaiUas', 'inputnilai'],
-      fieldsUts: ['id', 'name', 'NilaiUts', 'inputnilai'],
-      fields2: ['id', 'name', { key: 'hadir', label: 'absen' }]
+      fields: ['name', { key: 'Nilai', label: 'Score' }, { key: 'inputnilai', label: 'InputScore' }],
+      fieldsUas: ['name', { key: 'NilaiUas', label: 'Score Uas' }, { key: 'inputnilai', label: 'InputScore' }],
+      fieldsUts: ['name', { key: 'NilaiUts', label: 'Score Uts' }, { key: 'inputnilai', label: 'InputScore' }],
+      fields2: ['name', { key: 'hadir', label: 'Attendance' }],
+      filters: ''
     }
   },
   methods: {
@@ -71,6 +78,18 @@ export default {
     },
     changeStatus () {
       this.changeStatus = !this.changeStatus
+    },
+    absensis (event) {
+      console.log(event)
+      this.absen.forEach((el, id) => {
+        if (el.id === event.id) {
+          this.absen.splice(id, 1)
+        }
+      })
+      this.absen.push(event)
+    },
+    pushAttendance () {
+      this.$store.dispatch('setAttendance', this.absen)
     }
   },
   computed: {
@@ -78,12 +97,16 @@ export default {
       return this.$store.state.absen
     },
     murid () {
-      return this.$store.state.student
+      if (this.filters) {
+        return this.$store.state.student.filter(el => el.name.toLowerCase().includes(this.filters))
+      } else {
+        return this.$store.state.student
+      }
     },
     hasilMurid () {
       return this.$store.getters.filterStudent
     },
-    mapel () {
+    mapel (payload) {
       return this.$store.state.mapel
     }
   },
