@@ -33,8 +33,7 @@
 export default {
   data () {
     return {
-      aspect: '16:9',
-      aspects: { text: '3:1 (APS-P)', value: '3:1' }
+      aspect: '16:9'
     }
   },
   methods: {
