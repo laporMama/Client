@@ -5,6 +5,7 @@
     <div class="container-fluid w-75">
 
       <div class="select container-fluid">
+        <label for="Children">Student List </label>
         <b-form-select
         class="select"
         :options="studentByParent"
@@ -25,6 +26,11 @@
         <!-- <chart class="justify-content-center" :absensi="name.absen" v-if="name.absen" v-model="a"/> -->
       </div>
     </div>
+    <b-card v-else>
+      <b-aspect :aspect="aspect">
+        <b-img src="https://i.ibb.co/47f0L3X/Whats-App-Image-2020-04-22-at-21-25-33.jpg" fluid-grow alt="Responsive image"></b-img>
+      </b-aspect>
+    </b-card>
     <div class="container-fluid w-90">
       <Table :student="name.name" v-if="name.name" />
     </div>
@@ -46,6 +52,7 @@ export default {
   },
   data () {
     return {
+      aspect: '21:9',
       name: {},
       a: false
     }
