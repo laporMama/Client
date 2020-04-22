@@ -77,6 +77,7 @@ export default new Vuex.Store({
       state.error = payload
     },
     SET_ERROR_MESSAGE (state, payload) {
+      console.log(payload, 'HIYAHIYA')
       if (!Array.isArray(payload)) {
         state.errorMessages = [payload]
       } else {
@@ -330,6 +331,7 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
+          console.log(err.response)
           commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
