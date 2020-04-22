@@ -43,6 +43,18 @@ export default {
     success () {
       return this.$store.state.success
     }
+  },
+  watch: {
+    success (newVal) {
+      setTimeout(() => {
+        this.$store.commit('SET_SUCCESS', false)
+      }, 3000)
+    },
+    error (newval) {
+      setTimeout(() => {
+        this.$store.commit('SET_ERROR_STATUS', false)
+      }, 3000)
+    }
   }
 }
 </script>

@@ -108,12 +108,14 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data.data, 'ini dari login')
+          console.log(data.message, 'ini dari login')
           localStorage.setItem('id', data.data.id)
           localStorage.setItem('teacher', data.data.name)
+          commit('SET_SUCCESS', true)
           commit('SET_GURU', data.data.name)
           commit('SET_ERROR_STATUS', false)
           commit('SUCCESS_AUTH', data.token)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           localStorage.setItem('token', data.token)
           router.push('/teacher')
         })
@@ -135,10 +137,12 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data.data, 'ini dari login')
+          console.log(data.message, 'ini dari login')
           localStorage.setItem('token', data.token)
           commit('SET_ERROR_STATUS', false)
+          commit('SET_SUCCESS', true)
           commit('SUCCESS_AUTH', data.token)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           router.push('/admin')
         })
         .catch(err => {
@@ -159,10 +163,12 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data.data, 'ini dari login')
+          console.log(data.message, 'ini dari login')
           localStorage.setItem('token', data.token)
           commit('SET_ERROR_STATUS', false)
+          commit('SET_SUCCESS', true)
           commit('SUCCESS_AUTH', data.token)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           router.push('/Mama')
         })
         .catch(err => {
@@ -289,7 +295,10 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.message)
           dispatch('fetchStudentInClass')
+          commit('SET_SUCCESS', true)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -341,8 +350,10 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data.data, 'ini dari login')
+          console.log(data.message, 'ini dari login')
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
+          commit('SET_SUCCESS', true)
         })
         .catch(err => {
           console.log(err.response)
@@ -408,7 +419,9 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data.data, 'ini dari login')
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
+          commit('SET_SUCCESS', true)
         })
         .catch(err => {
           commit('SET_ERROR_MESSAGE', err.response.data.message)
@@ -430,8 +443,10 @@ export default new Vuex.Store({
         url: 'http://localhost:3000/course'
       })
         .then(({ data }) => {
-          console.log(data.data)
+          console.log(data.message)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
+          commit('SET_SUCCESS', true)
         })
         .catch(err => {
           commit('SET_ERROR_MESSAGE', err.response.data.message)
@@ -453,7 +468,9 @@ export default new Vuex.Store({
         url: 'http://localhost:3000/class'
       })
         .then(({ data }) => {
-          console.log(data.data, 'ini dari login')
+          commit('SET_SUCCESS', true)
+          console.log(data.message, 'ini dari login')
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
@@ -476,7 +493,9 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          console.log(data.message)
+          commit('SET_SUCCESS', true)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
