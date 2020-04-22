@@ -2,6 +2,7 @@
   <div id="app">
     <navbar :login="isLogin" />
     <ErrorMessage v-if="error" class="container w-50 mt-3" />
+    <SuccessMessage v-if="success" class="container w-50 mt-3" />
     <Spinner v-if="loading" />
     <div id="content">
       <vue-page-transition>
@@ -17,13 +18,15 @@ import navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Spinner from './components/spinner'
 import ErrorMessage from './components/errorMessage'
+import SuccessMessage from './components/successMessage'
 // import login from './views/Home'
 export default {
   components: {
     navbar,
     Footer,
     Spinner,
-    ErrorMessage
+    ErrorMessage,
+    SuccessMessage
   },
   data () {
     return {
@@ -36,6 +39,9 @@ export default {
     },
     error () {
       return this.$store.state.error
+    },
+    success () {
+      return this.$store.state.success
     }
   }
 }

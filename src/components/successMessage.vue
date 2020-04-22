@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'ErrorMessage',
+  name: 'SuccessMessage',
   computed: {
     successMessage () {
       return this.$store.state.successMessage
