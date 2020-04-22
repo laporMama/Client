@@ -362,9 +362,8 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          // console.log(data, 'test')
           commit('SET_COURSE', data.data)
-          // commit('SET_ERROR_STATUS', false)
+          commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
           commit('SET_ERROR_MESSAGE', err.response.data.message)
@@ -465,7 +464,7 @@ export default new Vuex.Store({
         })
     },
     setAttendance ({ commit }, payload) {
-      console.log(payload, 'okokoo')
+      commit('SET_LOADING', true)
       axios({
         url: 'http://localhost:3000/attendances',
         method: 'post',
@@ -475,6 +474,44 @@ export default new Vuex.Store({
         data: {
           data: payload
         }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          commit('SET_ERROR_STATUS', false)
+        })
+        .catch(err => {
+          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
+        })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
+    },
+    demoSMS ({ commit }, { id, student }) {
+      console.log(student)
+      commit('SET_LOADING', true)
+      axios({
+        url: 'http://localhost:3000/demo/sms/' + id,
+        method: 'get'
+      })
+        .then(({ data }) => {
+          console.log(data)
+          commit('SET_ERROR_STATUS', false)
+        })
+        .catch(err => {
+          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
+        })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
+    },
+    demoEmail ({ commit }, { id, student }) {
+      console.log(student)
+      commit('SET_LOADING', true)
+      axios({
+        url: 'http://localhost:3000/demo/email/' + id,
+        method: 'get'
       })
         .then(({ data }) => {
           console.log(data)

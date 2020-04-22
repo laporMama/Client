@@ -9,13 +9,13 @@
         <router-view />
       </vue-page-transition>
     </div>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
 <script>
 import navbar from './components/Navbar'
-import Footer from './components/Footer'
+// import Footer from './components/Footer'
 import Spinner from './components/spinner'
 import ErrorMessage from './components/errorMessage'
 import SuccessMessage from './components/successMessage'
@@ -23,7 +23,7 @@ import SuccessMessage from './components/successMessage'
 export default {
   components: {
     navbar,
-    Footer,
+    // Footer,
     Spinner,
     ErrorMessage,
     SuccessMessage
