@@ -3,10 +3,26 @@
     <b-col cols="2">
       <div class="sidenav">
       <b-navbar-nav>
-        <b-nav-item :to="{path: '/admin/register'}">Register</b-nav-item>
-        <b-nav-item :to="{path: '/admin/course'}">Course</b-nav-item>
-        <b-nav-item :to="{path: '/admin/student'}">Student</b-nav-item>
-        <b-nav-item :to="{path: '/admin/class'}">class</b-nav-item>
+        <b-nav-item :to="{path: '/admin/register'}">
+          <b-card>
+          Register
+          </b-card>
+        </b-nav-item>
+        <b-nav-item :to="{path: '/admin/course'}">
+        <b-card>
+          Course
+        </b-card>
+        </b-nav-item>
+        <b-nav-item :to="{path: '/admin/student'}">
+          <b-card>
+            Student
+          </b-card>
+          </b-nav-item>
+        <b-nav-item :to="{path: '/admin/class'}">
+          <b-card>
+           class
+          </b-card>
+        </b-nav-item>
       </b-navbar-nav>
       </div>
     </b-col>

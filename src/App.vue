@@ -63,12 +63,4 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
-#content {
-  flex: 1 0 auto;
-}
-
-Footer {
-  flex-shrink: none;
-}
 </style>
