@@ -9,6 +9,7 @@
       placeholder="Search.... "
       class="container-fluid w-50"
       ></b-input>
+      <br>
       <b-tab title="Score" active>
         <b-table fixed responsive  :items="check" :fields="fields" style="{display:flex; flex-direction:row}">
           <template v-slot:cell(inputnilai)="i">
@@ -36,7 +37,7 @@
             <Check :data="i"  @absensis="absensis" />
           </template>
         </b-table>
-          <b-button @click.prevent="pushAttendance">submit</b-button>
+          <b-button @click.prevent="pushAttendance">Submit</b-button>
           <br>
           <br>
           <b-button variant="danger" @click.prevent="demo">Demo</b-button>
@@ -59,9 +60,9 @@ export default {
       date: moment().format('L'),
       nilai: 0,
       statusAbsen: false,
-      fields: ['name', { key: 'Nilai', label: 'Score' }, { key: 'inputnilai', label: 'InputScore' }],
-      fieldsUas: ['name', { key: 'NilaiUas', label: 'Score Uas' }, { key: 'inputnilai', label: 'InputScore' }],
-      fieldsUts: ['name', { key: 'NilaiUts', label: 'Score Uts' }, { key: 'inputnilai', label: 'InputScore' }],
+      fields: ['name', { key: 'Nilai', label: 'Score' }, { key: 'inputnilai', label: 'Input Score' }],
+      fieldsUas: ['name', { key: 'NilaiUas', label: 'Score UAS' }, { key: 'inputnilai', label: 'Input Score' }],
+      fieldsUts: ['name', { key: 'NilaiUts', label: 'Score UTS' }, { key: 'inputnilai', label: 'Input Score' }],
       fields2: ['name', { key: 'hadir', label: 'Attendance' }],
       filters: '',
       check: null
@@ -102,6 +103,10 @@ export default {
     },
     lol () {
       this.check = this.murid
+    },
+    demo () {
+      this.$store.dispatch('demoEmail', 1)
+      this.$store.dispatch('demoSMS', 1)
     }
   },
   computed: {

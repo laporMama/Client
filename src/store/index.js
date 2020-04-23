@@ -23,7 +23,8 @@ export default new Vuex.Store({
     isAuth: false,
     mapelId: 0,
     successMessage: null,
-    success: false
+    success: false,
+    absensi: []
   },
   mutations: {
     SUCCESS_AUTH (state) {
@@ -94,6 +95,9 @@ export default new Vuex.Store({
     },
     SET_SUCCESS (state, payload) {
       state.success = payload
+    },
+    SET_ALL_ATTENDANCE (state, payload) {
+      state.absensi = payload
     }
   },
   actions: {
@@ -506,11 +510,10 @@ export default new Vuex.Store({
           commit('SET_LOADING', false)
         })
     },
-    demoSMS ({ commit }, { id, student }) {
-      console.log(student)
+    demoSMS ({ commit }, payload) {
       commit('SET_LOADING', true)
       axios({
-        url: 'http://localhost:3000/demo/sms/' + id,
+        url: 'http://localhost:3000/demo/sms/' + payload,
         method: 'get'
       })
         .then(({ data }) => {
@@ -525,11 +528,10 @@ export default new Vuex.Store({
           commit('SET_LOADING', false)
         })
     },
-    demoEmail ({ commit }, { id, student }) {
-      console.log(student)
+    demoEmail ({ commit }, payload) {
       commit('SET_LOADING', true)
       axios({
-        url: 'http://localhost:3000/demo/email/' + id,
+        url: 'http://localhost:3000/demo/email/' + payload,
         method: 'get'
       })
         .then(({ data }) => {
@@ -542,6 +544,24 @@ export default new Vuex.Store({
         })
         .finally(_ => {
           commit('SET_LOADING', false)
+        })
+    },
+    fecthAttendance ({ commit }) {
+      axios({
+        url: 'http://localhost:3000/attendances',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          commit('SET_ALL_ATTENDANCE')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        .finally(_ => {
+          console.log(_)
         })
     }
   },
@@ -705,6 +725,9 @@ export default new Vuex.Store({
       })
       tamp.filter(el => el.value.name === payload)
       return tamp
+    },
+    getAbsensi: (state) => {
+      state.absensi.filter()
     }
   },
   modules: {

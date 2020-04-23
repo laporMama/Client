@@ -13,6 +13,7 @@
       {{option.text}}
       </b-form-radio>
     </b-form-radio-group>
+    <!-- {{data}} -->
   </div>
 </template>
 
@@ -26,17 +27,26 @@ export default {
       statusAbsen: false,
       absen: [],
       options: [
-        { text: 'present', value: 'hadir', notEnabled: false },
-        { text: 'permit', value: 'izin', notEnabled: false },
-        { text: 'sick', value: 'sakit', notEnabled: false },
-        { text: 'not present', value: 'alpha', notEnabled: false }
+        { text: 'Present', value: 'hadir', notEnabled: false },
+        { text: 'Permit', value: 'izin', notEnabled: false },
+        { text: 'Sick', value: 'sakit', notEnabled: false },
+        { text: 'Not Present', value: 'alpha', notEnabled: false }
       ]
     }
   },
   methods: {
     status (a) {
       this.$emit('absensis', { status: a, StudentId: this.data.item.id })
+    },
+    test () {
+      console.log(this.data)
+      // this.data.forEach(el => {
+      //   console.log(el)
+      // })
     }
+  },
+  created () {
+    this.test()
   }
 }
 </script>
