@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable='lg' style="background-color:cornflowerblue">
+    <b-navbar toggleable='lg' style="background-color: rgb(121,85,72)">
       <b-navbar-brand class='clickable' @click='home'><img src="../assets/logo.png" alt=""></b-navbar-brand>
 
       <b-navbar-toggle target='nav-collapse'></b-navbar-toggle>
@@ -8,7 +8,7 @@
       <b-collapse id='nav-collapse' is-nav>
         <b-navbar-nav class='ml-auto'>
           <b-nav-item v-if='isAuth' class='clickable' @click='logout'
-            >Logout</b-nav-item
+            ><button class="btn btn-outline-danger">Logout</button></b-nav-item
           >
         </b-navbar-nav>
       </b-collapse>
