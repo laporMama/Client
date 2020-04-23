@@ -57,8 +57,8 @@ export default {
     }
   },
   created () {
-    if (!localStorage.token) {
-      localStorage.setItem('isAuth', false)
+    if (localStorage.token) {
+      this.$store.commit('SUCCESS_AUTH')
     }
   }
 }

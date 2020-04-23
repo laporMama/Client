@@ -75,8 +75,9 @@ export default {
   computed: {
     tanggal () {
       const tamp = []
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
       this.data.item.Reports.forEach(el => {
-        tamp.push({ value: el.id, text: new Date(el.reportDate).toLocaleDateString() })
+        tamp.push({ value: el.id, text: new Date(el.reportDate).toLocaleDateString('en-US', options) })
       })
       return tamp
     }

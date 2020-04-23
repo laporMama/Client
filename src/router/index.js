@@ -40,7 +40,6 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (!localStorage.token) {
         router.push('/login')
-        this.$store.commit('SET_ERROR_STATUS', false)
       } else {
         next()
       }
@@ -80,7 +79,6 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (!localStorage.token) {
         router.push('/login')
-        this.$store.commit('SET_ERROR_STATUS', false)
       } else {
         next()
       }
