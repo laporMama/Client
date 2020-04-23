@@ -1,8 +1,16 @@
 <template>
 <div class="outer">
+  <!-- {{mapel.name}} -->
+  <br>
+  <br>
+  <h3>{{mapel.name}}</h3>
+  <br>
+  <br>
   <div>
-    <b-tabs content-class="mt-3">
-    <h1>{{mapel.name}}</h1>
+    <b-tabs content-class="mt-3"
+    active-nav-item-class="font-weight-bold text-uppercase"
+    active-tab-class="font-weight-bold text-success"
+    >
     <br>
     <b-row>
       <b-col>
@@ -25,7 +33,7 @@
     </b-row>
       <br>
       <b-tab title="Score" active>
-        <b-table fixed responsive  :items="check" :fields="fields" style="{display:flex; flex-direction:row}">
+        <b-table fixed="true" responsive  :items="check" :fields="fields" style="{display:flex; flex-direction:row}" font-weight-bold :outlined="true">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" @setNilai="setNilai" @updateNilais="updateNilais" />
           </template>
@@ -40,8 +48,11 @@
       </b-tab>
       <b-tab title="Score UAS" active>
         <b-table fixed responsive :items="check" :fields="fieldsUas">
+          <!-- <template v-slot:cell(NilaiUas) v-if="statusSubmit">
+            <b-input type="number" max="100" min="0" v-model="nilai"></b-input>
+          </template> -->
           <template v-slot:cell(inputnilai)="i">
-            <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" @setNilai="setNilai"  @updateNilais="updateNilais"/>
+            <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" @setNilai="setNilai" @updateNilais="updateNilais" @status="status"/>
           </template>
         </b-table>
       </b-tab>
@@ -79,7 +90,8 @@ export default {
       fieldsUts: ['name', { key: 'NilaiUts', label: 'Score UTS' }, { key: 'inputnilai', label: 'Input Score' }],
       fields2: ['name', { key: 'hadir', label: 'Attendance' }],
       filters: '',
-      check: null
+      check: null,
+      statusSubmit: false
     }
   },
   methods: {
@@ -88,6 +100,7 @@ export default {
       this.$store.commit('SET_ABSENSI', payload.item)
     },
     updateNilais (payload) {
+      payload.score = this.nilai
       this.$store.dispatch('setUpdateNilai', payload)
       this.$store.dispatch('fetchStudentInClass')
     },
@@ -128,6 +141,9 @@ export default {
     },
     fecthAttendance () {
       this.$store.dispatch('fecthAttendance')
+    },
+    status (event) {
+      this.statusSubmit = event
     }
   },
   computed: {

@@ -8,7 +8,8 @@
         </b-col>
         <b-col>
           <div class="teacher">
-            <b-card style="height: 10rem;">
+            <b-card style="height: 10rem;"
+            border-variant="info">
               <div class="section-teacher">
                 <h3>Teacher</h3>
                 <h4>mapel</h4>
@@ -22,7 +23,7 @@
         <b-col style="padding-top:10px">
           <div >
           <h4>Class</h4>
-          <b-card>
+          <b-card border-variant="warning">
             <div class="container link-kelas">
               <div v-for="(room, id) in kelas" :key="id">
                 <b-navbar-nav>
@@ -39,7 +40,6 @@
     <b-col md="9" >
       <div class="main">
         <div class="pt-3">
-          <h1>{{mapels}}</h1>
         </div>
         <div class="table">
         <Table @mapel="mapel"/>
@@ -53,6 +53,11 @@
 <script>
 import Table from '../components/table'
 export default {
+  data () {
+    return {
+      mapels: ''
+    }
+  },
   methods: {
     fetchclass () {
       this.$store.dispatch('Fetchclass')
@@ -68,7 +73,10 @@ export default {
       this.$store.dispatch('fetchStudentInClass')
     },
     mapel (event) {
-      this.mapel = event
+      if (event) {
+        console.log(event, 'aowkdowdkaowk')
+        this.mapels = event
+      }
     }
   },
   computed: {
@@ -82,11 +90,7 @@ export default {
   created () {
     this.fetchclass()
     this.fetchTeacher()
-  },
-  data () {
-    return {
-      mapels: ''
-    }
+    this.mapel()
   },
   components: {
     Table

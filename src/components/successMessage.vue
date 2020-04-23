@@ -1,6 +1,6 @@
 <template>
   <div class="success">
-    <b-alert show variant="success">{{ successMessage }}</b-alert>
+    <b-b-toast show variant="success">{{ successMessage }}</b-b-toast>
   </div>
 </template>
 

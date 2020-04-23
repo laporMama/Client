@@ -1,17 +1,21 @@
 <template>
   <div>
     <div class="test">
-      <b-form-input type="number" max="100" min="0" debounce="500" autocomplete="false"
-      v-model="nilai"
-      ></b-form-input>
       <div class="btn">
-        <b-button @click="model = !model">update</b-button>
-        <b-button  :disabled="!button"  @click.prevent="addNilai({score: nilai, type, reportDate: date,  StudentId: data.item.id, CourseId: CourseId })">submit</b-button>
+        <b-form-input type="number" max="100" min="0" debounce="500" autocomplete="off"
+          style="width:100px"
+          v-model="nilai"
+          :disabled="!setNilai"
+          v-if="setNilai"
+          >
+        </b-form-input>
+        <b-button @click="statusSubmit(!setNilai)" v-if="!setNilai && button">update</b-button>
+        <b-button v-if="setNilai" :disabled="!button"  @click.prevent="addNilai({score:nilai, type, reportDate: date,  StudentId: data.item.id, CourseId: CourseId })">submit</b-button>
       </div>
       <b-modal
-      v-model="model"
-      @ok="handleOk"
-      >
+        v-model="model"
+        @ok="handleOk"
+        >
         <form @submit.stop.prevent="updateNilai({id: NilaiId, score: nilaiUpdate})">
           <b-form-group
           >
@@ -36,7 +40,6 @@
         </form>
       </b-modal>
     </div>
-    <!-- {{data}} -->
   </div>
 </template>
 
@@ -48,7 +51,8 @@ export default {
       model: false,
       NilaiId: null,
       nilaiUpdate: null,
-      button: true
+      button: true,
+      setNilai: false
     }
   },
   props: [
@@ -60,7 +64,9 @@ export default {
   methods: {
     addNilai (payload) {
       this.$emit('setNilai', payload)
+      this.$emit('status', false)
       this.nilai = 0
+      this.setNilai = false
       // this.$store.dispatch('fetchStudentInClass')
     },
     updateNilai (payload) {
@@ -72,6 +78,10 @@ export default {
       // console.log(data)
       this.$emit('updateNilais', data)
       this.$store.dispatch('fetchStudentInClass')
+    },
+    statusSubmit (payload) {
+      this.setNilai = payload
+      this.$emit('status', payload)
     }
   },
   computed: {
@@ -105,7 +115,7 @@ export default {
   }
   .btn {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     text-transform: capitalize;
   }
 </style>
