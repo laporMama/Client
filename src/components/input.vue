@@ -6,7 +6,7 @@
       ></b-form-input>
       <div class="btn">
         <b-button @click="model = !model">update</b-button>
-        <b-button @click.prevent="addNilai({score: nilai, type, reportDate: date,  StudentId: data.item.id, CourseId: CourseId })">submit</b-button>
+        <b-button  :disabled="!button"  @click.prevent="addNilai({score: nilai, type, reportDate: date,  StudentId: data.item.id, CourseId: CourseId })">submit</b-button>
       </div>
       <b-modal
       v-model="model"
@@ -47,7 +47,8 @@ export default {
       nilai: 0,
       model: false,
       NilaiId: null,
-      nilaiUpdate: null
+      nilaiUpdate: null,
+      button: true
     }
   },
   props: [
@@ -81,7 +82,18 @@ export default {
       })
       return tamp
     }
+  },
+  watch: {
+    nilai: function (newVal) {
+      if (newVal > 100) {
+        this.$store.commit('SET_ERROR_MESSAGE', 'Max Input Score 100')
+        this.button = false
+      } else {
+        this.button = true
+      }
+    }
   }
+
 }
 </script>
 
