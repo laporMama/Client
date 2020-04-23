@@ -5,10 +5,11 @@
     style="max-width: 30rem; width: 30rem;"
     >
       <b-form >
-        <b-form-group label="Nama">
+        <b-form-group label="Name">
           <b-form-input
           placeholder="Nama"
           v-model="nama"
+          autocomplete="off"
           required
           />
         </b-form-group>
@@ -38,14 +39,14 @@
           />
         </b-form-group>
 
-        <b-form-group>
+        <b-form-group label="Role">
           <b-form-select
           :options="options"
           v-model="role"
           ></b-form-select>
         </b-form-group>
         <div v-if="role === 'teacher'" disabled>
-          <b-form-group >
+          <b-form-group label="Course">
             <b-form-select
             :options="AllMapel"
             v-model="mapel"

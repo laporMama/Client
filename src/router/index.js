@@ -36,7 +36,14 @@ const routes = [
         name: 'kelas',
         component: table
       }
-    ]
+    ],
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.token) {
+        router.push('/login')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/admin',
@@ -68,12 +75,26 @@ const routes = [
         name: 'class',
         component: Class
       }
-    ]
+    ],
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.token) {
+        router.push('/login')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/mama',
     name: 'Parent',
-    component: parent
+    component: parent,
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.token) {
+        router.push('/login')
+      } else {
+        next()
+      }
+    }
   }
 ]
 

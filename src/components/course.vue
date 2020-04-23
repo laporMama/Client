@@ -5,10 +5,11 @@
     style="max-width: 30rem; width: 30rem;"
     >
       <b-form>
-        <b-form-group label="Mapel">
+        <b-form-group label="Course">
           <b-form-input
-          placeholder="NamaGuru"
+          placeholder="CourseName"
           v-model="nama"
+          autocomplete="off"
           required
           />
         </b-form-group>

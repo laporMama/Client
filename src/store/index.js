@@ -21,14 +21,19 @@ export default new Vuex.Store({
     errorMessages: [],
     error: false,
     isAuth: false,
-    mapelId: 0
+    mapelId: 0,
+    successMessage: null,
+    success: false,
+    absensi: []
   },
   mutations: {
     SUCCESS_AUTH (state) {
       state.isAuth = true
+      localStorage.setItem('isAuth', true)
     },
     LOGOUT (state) {
       state.isAuth = false
+      localStorage.setItem('isAuth', false)
     },
     SET_LOGINROLE (state, payload) {
       state.loginRole = payload
@@ -86,11 +91,19 @@ export default new Vuex.Store({
     },
     SET_MAPELID (state, payload) {
       state.mapelId = payload
+    },
+    SET_SUCCESS_MESSAGE (state, payload) {
+      state.successMessage = payload
+    },
+    SET_SUCCESS (state, payload) {
+      state.success = payload
+    },
+    SET_ALL_ATTENDANCE (state, payload) {
+      state.absensi = payload
     }
   },
   actions: {
     loginGuru ({ commit }, { email, password }) {
-      console.log(email)
       commit('SET_LOADING', true)
       axios({
         url: 'http://localhost:3000/login',
@@ -101,16 +114,19 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.message, 'ini dari login')
           localStorage.setItem('id', data.data.id)
           localStorage.setItem('teacher', data.data.name)
+          commit('SET_SUCCESS', true)
           commit('SET_GURU', data.data.name)
           commit('SET_ERROR_STATUS', false)
           commit('SUCCESS_AUTH', data.token)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           localStorage.setItem('token', data.token)
           router.push('/teacher')
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -127,13 +143,16 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.message, 'ini dari login')
           localStorage.setItem('token', data.token)
           commit('SET_ERROR_STATUS', false)
+          commit('SET_SUCCESS', true)
           commit('SUCCESS_AUTH', data.token)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           router.push('/admin')
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -150,13 +169,16 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.message, 'ini dari login')
           localStorage.setItem('token', data.token)
           commit('SET_ERROR_STATUS', false)
+          commit('SET_SUCCESS', true)
           commit('SUCCESS_AUTH', data.token)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           router.push('/Mama')
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -174,7 +196,7 @@ export default new Vuex.Store({
           commit('SET_KELAS', data.data)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -195,7 +217,7 @@ export default new Vuex.Store({
           commit('SET_MAPEL', data.teacher.Course)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -215,7 +237,7 @@ export default new Vuex.Store({
           commit('SET_STUDENT', data.students)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -231,11 +253,12 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data)
           commit('SET_REPORTPARENT', data.data)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -255,13 +278,13 @@ export default new Vuex.Store({
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
         })
     },
-    setNilai ({ commit }, { score, reportDate, StudentId, CourseId, type }) {
+    setNilai ({ commit, dispatch }, { score, reportDate, StudentId, CourseId, type }) {
       commit('SET_LOADING', true)
       axios({
         method: 'POST',
@@ -278,16 +301,22 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.message)
+          dispatch('fetchStudentInClass')
+          commit('SET_SUCCESS', true)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          console.log(err.response)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
         })
     },
-    updateNilai ({ commit }, { id, score }) {
+    setUpdateNilai ({ commit }, { id, score }) {
+      console.log(id)
       commit('SET_LOADING', true)
       axios({
         method: 'put',
@@ -300,10 +329,11 @@ export default new Vuex.Store({
         }
       })
         .then(data => {
+          console.log(data.data, 'ini dari login')
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -327,10 +357,14 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.message, 'ini dari login')
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
+          commit('SET_SUCCESS', true)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          console.log(err.response)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -346,11 +380,11 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          commit('SET_COURSE', data.courses)
+          commit('SET_COURSE', data.data)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -366,11 +400,11 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          commit('SET_PARENT', data.parents)
+          commit('SET_PARENT', data.data)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -391,10 +425,13 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data.data, 'ini dari login')
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
+          commit('SET_SUCCESS', true)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -413,10 +450,13 @@ export default new Vuex.Store({
         url: 'http://localhost:3000/course'
       })
         .then(({ data }) => {
+          console.log(data.message)
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
+          commit('SET_SUCCESS', true)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
@@ -435,13 +475,96 @@ export default new Vuex.Store({
         url: 'http://localhost:3000/class'
       })
         .then(({ data }) => {
+          commit('SET_SUCCESS', true)
+          console.log(data.message, 'ini dari login')
+          commit('SET_SUCCESS_MESSAGE', data.message)
           commit('SET_ERROR_STATUS', false)
         })
         .catch(err => {
-          commit('SET_ERROR_MESSAGE', err.data.message)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
         })
         .finally(_ => {
           commit('SET_LOADING', false)
+        })
+    },
+    setAttendance ({ commit }, payload) {
+      commit('SET_LOADING', true)
+      axios({
+        url: 'http://localhost:3000/attendances',
+        method: 'post',
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          data: payload
+        }
+      })
+        .then(({ data }) => {
+          console.log(data.message)
+          commit('SET_SUCCESS', true)
+          commit('SET_SUCCESS_MESSAGE', data.message)
+          commit('SET_ERROR_STATUS', false)
+        })
+        .catch(err => {
+          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
+        })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
+    },
+    demoSMS ({ commit }, payload) {
+      commit('SET_LOADING', true)
+      axios({
+        url: 'http://localhost:3000/demo/sms/' + payload,
+        method: 'get'
+      })
+        .then(({ data }) => {
+          console.log(data)
+          commit('SET_ERROR_STATUS', false)
+        })
+        .catch(err => {
+          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
+        })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
+    },
+    demoEmail ({ commit }, payload) {
+      commit('SET_LOADING', true)
+      axios({
+        url: 'http://localhost:3000/demo/email/' + payload,
+        method: 'get'
+      })
+        .then(({ data }) => {
+          console.log(data)
+          commit('SET_ERROR_STATUS', false)
+        })
+        .catch(err => {
+          console.log(err)
+          commit('SET_ERROR_MESSAGE', err.response.data.message)
+        })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
+    },
+    fecthAttendance ({ commit }) {
+      axios({
+        url: 'http://localhost:3000/attendances',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          commit('SET_ALL_ATTENDANCE', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        .finally(_ => {
+          console.log(_)
         })
     }
   },
@@ -449,8 +572,8 @@ export default new Vuex.Store({
     allKelas: state => {
       const data = [
         { kelas: [], key: 'IX' },
-        { kelas: [], key: 'VI' },
-        { kelas: [], key: 'VII' }
+        { kelas: [], key: 'VII' },
+        { kelas: [], key: 'VI' }
       ]
       state.kelas.forEach(el => {
         const temp = el.name.split('-')
@@ -472,7 +595,6 @@ export default new Vuex.Store({
         const tempNilaiUas = []
         const tempNilaiUts = []
         el.Reports.forEach((ek, i) => {
-          console.log(state.mapelId)
           if (ek.type === 'nilai' && ek.CourseId === state.mapelId) {
             tempNilai.push(ek.score)
           } else if (ek.type === 'uts' && ek.CourseId === state.mapelId) {
@@ -482,13 +604,13 @@ export default new Vuex.Store({
           }
         })
         if (tempNilai.length >= 1) {
-          el.Nilai = tempNilai.reduce(reducer) / tempNilai.length
+          el.Nilai = (tempNilai.reduce(reducer) / tempNilai.length).toFixed(2)
         }
         if (tempNilaiUas.length >= 1) {
-          el.NilaiUas = tempNilaiUas.reduce(reducer) / tempNilaiUas.length
+          el.NilaiUas = (tempNilaiUas.reduce(reducer) / tempNilaiUas.length).toFixed(2)
         }
         if (tempNilaiUts.length >= 1) {
-          el.NilaiUts = tempNilaiUts.reduce(reducer) / tempNilaiUts.length
+          el.NilaiUts = (tempNilaiUts.reduce(reducer) / tempNilaiUts.length).toFixed(2)
         }
       })
       return data
@@ -517,6 +639,70 @@ export default new Vuex.Store({
     },
     getStudentByParent: state => {
       const tamp = []
+      state.parentStudentName.forEach(el => {
+        el.absen = [0, 0, 0, 0]
+        if (el.StudentAttendances.length === 0) {
+          el.absen = [0, 0, 0, 0]
+        }
+        el.StudentAttendances.forEach(ek => {
+          if (ek.status === 'hadir') {
+            el.absen[0]++
+          } else if (ek.status === 'izin') {
+            el.absen[1]++
+          } else if (ek.status === 'sakit') {
+            el.absen[2]++
+          } else {
+            el.absen[3]++
+          }
+        })
+        tamp.push({ value: { name: el.name, class: el.Class.name, absen: el.absen }, text: el.name })
+      })
+      return tamp
+    },
+    getReportByParent: (state) => (payload) => {
+      const reducer = (accumulator, currentValue) => accumulator + currentValue
+      let tamp = []
+      console.log(state.allMapel)
+      state.parentReport.forEach(el => {
+        el.mapel = []
+        state.allMapel.forEach(ek => {
+          console.log('kkkk')
+          el.mapel.push({ name: ek.name, id: ek.id })
+        })
+      })
+      state.parentReport.forEach(el => {
+        el.mapel.forEach(ek => {
+          ek.nilai = 0
+          ek.uas = 0
+          ek.uts = 0
+          const tempNilai = []
+          const tempNilaiUas = []
+          const tempNilaiUts = []
+          el.Reports.forEach(e => {
+            if (e.CourseId === ek.id && e.type === 'nilai') {
+              tempNilai.push(e.score)
+            } else if (e.CourseId === ek.id && e.type === 'uas') {
+              tempNilaiUas.push(e.score)
+            } else if (e.CourseId === ek.id && e.type === 'uts') {
+              tempNilaiUts.push(e.score)
+            }
+          })
+          if (tempNilai.length >= 1) {
+            ek.nilai = (tempNilai.reduce(reducer) / tempNilai.length).toFixed(2)
+          }
+          if (tempNilaiUas.length >= 1) {
+            ek.uas = (tempNilaiUas.reduce(reducer) / tempNilaiUas.length).toFixed(2)
+          }
+          if (tempNilaiUts.length >= 1) {
+            ek.uts = (tempNilaiUts.reduce(reducer) / tempNilaiUts.length).toFixed(2)
+          }
+        })
+      })
+      tamp = state.parentReport.filter(el => el.name === payload)
+      return tamp
+    },
+    getStudentByParentfilter: (state) => (payload) => {
+      const tamp = []
       let hadir = 0
       let izin = 0
       let sakit = 0
@@ -540,48 +726,17 @@ export default new Vuex.Store({
         })
         tamp.push({ value: { name: el.name, class: el.Class.name, absen }, text: el.name })
       })
+      tamp.filter(el => el.value.name === payload)
       return tamp
     },
-    getReportByParent: (state) => (payload) => {
-      const reducer = (accumulator, currentValue) => accumulator + currentValue
-      let tamp = []
-      state.parentReport.forEach(el => {
-        el.mapel = []
-        state.allMapel.forEach(ek => {
-          el.mapel.push({ name: ek.name, id: ek.id })
-        })
-      })
-      state.parentReport.forEach(el => {
-        el.mapel.forEach(ek => {
-          ek.nilai = 0
-          ek.uas = 0
-          ek.uts = 0
-          const tempNilai = []
-          const tempNilaiUas = []
-          const tempNilaiUts = []
-          el.Reports.forEach(e => {
-            if (e.CourseId === ek.id && e.type === 'nilai') {
-              tempNilai.push(e.score)
-            } else if (e.CourseId === ek.id && e.type === 'uas') {
-              tempNilaiUas.push(e.score)
-            } else if (e.CourseId === ek.id && e.type === 'uts') {
-              tempNilaiUts.push(e.score)
-            }
-          })
-          if (tempNilai.length >= 1) {
-            console.log('masokk')
-            ek.nilai = tempNilai.reduce(reducer) / tempNilai.length
-          }
-          if (tempNilaiUas.length >= 1) {
-            ek.uas = tempNilaiUas.reduce(reducer) / tempNilaiUas.length
-          }
-          if (tempNilaiUts.length >= 1) {
-            ek.uts = tempNilaiUts.reduce(reducer) / tempNilaiUts.length
-          }
-        })
-      })
-      tamp = state.parentReport.filter(el => el.name === payload)
-      return tamp
+    getAbsensi: (state) => {
+      if (state.absensi.length === 0) {
+        return 0
+      }
+      let temp = null
+      temp = state.absensi.data.filter(el => new Date(el.Attendance.attendanceDate).toLocaleDateString() === new Date().toLocaleDateString())
+      console.log(temp)
+      return temp
     }
   },
   modules: {

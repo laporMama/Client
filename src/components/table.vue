@@ -3,33 +3,44 @@
   <div>
     <b-tabs content-class="mt-3">
     <h1>{{mapel.name}}</h1>
-      <b-tab title="Nilai" active>
-        <b-table fixed responsive  :items="murid" :fields="fields" style="{display:flex; flex-direction:row}">
+      <b-input
+      v-model="filters"
+      debounce="500"
+      placeholder="Search.... "
+      class="container-fluid w-50"
+      ></b-input>
+      <br>
+      <b-tab title="Score" active>
+        <b-table fixed responsive  :items="check" :fields="fields" style="{display:flex; flex-direction:row}">
           <template v-slot:cell(inputnilai)="i">
-            <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" />
+            <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" @setNilai="setNilai" @updateNilais="updateNilais" />
           </template>
         </b-table>
       </b-tab>
-      <b-tab title="Nilai UTS" active>
-        <b-table fixed responsive :items="murid" :fields="fieldsUts">
+      <b-tab title="Score UTS" active>
+        <b-table fixed responsive :items="check" :fields="fieldsUts">
           <template v-slot:cell(inputnilai)="i">
-            <Input :data="i" :date="date" :type="'uts'" :CourseId="mapel.id" />
+            <Input :data="i" :date="date" :type="'uts'" :CourseId="mapel.id" @setNilai="setNilai" @updateNilais="updateNilais" />
           </template>
         </b-table>
       </b-tab>
-      <b-tab title="Nilai UAS" active>
-        <b-table fixed responsive :items="murid" :fields="fieldsUas">
+      <b-tab title="Score UAS" active>
+        <b-table fixed responsive :items="check" :fields="fieldsUas">
           <template v-slot:cell(inputnilai)="i">
-            <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" />
+            <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" @setNilai="setNilai"  @updateNilais="updateNilais"/>
           </template>
         </b-table>
       </b-tab>
-      <b-tab title="absen">
-        <b-table fixed responsive :items="murid" :fields="fields2">
+      <b-tab title="Attendance" :disabled="getAbsensi.length ? true : false" >
+        <b-table fixed responsive :items="check" :fields="fields2">
           <template v-slot:cell(hadir)="i">
-            <Check :data="i" v-model="statusAbsen" />
+            <Check :data="i"  @absensis="absensis" />
           </template>
         </b-table>
+          <b-button @click.prevent="pushAttendance">Submit</b-button>
+          <br>
+          <br>
+          <b-button variant="danger" @click.prevent="demo">Demo</b-button>
         </b-tab>
     </b-tabs>
   </div>
@@ -48,10 +59,12 @@ export default {
       date: moment().format('L'),
       nilai: 0,
       statusAbsen: false,
-      fields: ['id', 'name', 'Nilai', 'inputnilai'],
-      fieldsUas: ['id', 'name', 'NilaiUas', 'inputnilai'],
-      fieldsUts: ['id', 'name', 'NilaiUts', 'inputnilai'],
-      fields2: ['id', 'name', { key: 'hadir', label: 'absen' }]
+      fields: ['name', { key: 'Nilai', label: 'Score' }, { key: 'inputnilai', label: 'Input Score' }],
+      fieldsUas: ['name', { key: 'NilaiUas', label: 'Score UAS' }, { key: 'inputnilai', label: 'Input Score' }],
+      fieldsUts: ['name', { key: 'NilaiUts', label: 'Score UTS' }, { key: 'inputnilai', label: 'Input Score' }],
+      fields2: ['name', { key: 'hadir', label: 'Attendance' }],
+      filters: '',
+      check: null
     }
   },
   methods: {
@@ -59,8 +72,13 @@ export default {
       payload.item.status = payload.field.key
       this.$store.commit('SET_ABSENSI', payload.item)
     },
-    updateNilai (payload) {
-      this.$store.dispatch('UpdateNilai', payload)
+    updateNilais (payload) {
+      this.$store.dispatch('setUpdateNilai', payload)
+      this.$store.dispatch('fetchStudentInClass')
+    },
+    setNilai (payload) {
+      this.$store.dispatch('setNilai', payload)
+      this.$store.dispatch('fetchStudentInClass')
     },
     fetchclass () {
       this.$store.dispatch('Fetchclass')
@@ -71,6 +89,29 @@ export default {
     },
     changeStatus () {
       this.changeStatus = !this.changeStatus
+    },
+    absensis (event) {
+      this.absen.forEach((el, id) => {
+        if (el.StudentId === event.StudentId) {
+          this.absen.splice(id, 1)
+        }
+      })
+      this.absen.push(event)
+    },
+    pushAttendance () {
+      this.$store.dispatch('setAttendance', this.absen)
+      this.$store.dispatch('Fetchclass')
+      this.$store.dispatch('fecthAttendance')
+    },
+    lol () {
+      this.check = this.murid
+    },
+    demo () {
+      this.$store.dispatch('demoEmail', 1)
+      this.$store.dispatch('demoSMS', 1)
+    },
+    fecthAttendance () {
+      this.$store.dispatch('fecthAttendance')
     }
   },
   computed: {
@@ -78,28 +119,37 @@ export default {
       return this.$store.state.absen
     },
     murid () {
-      return this.$store.state.student
+      if (this.filters) {
+        return this.$store.state.student.filter(el => el.name.toLowerCase().includes(this.filters))
+      } else {
+        return this.$store.state.student
+      }
     },
     hasilMurid () {
       return this.$store.getters.filterStudent
     },
-    mapel () {
+    mapel (payload) {
       return this.$store.state.mapel
+    },
+    getAbsensi () {
+      return this.$store.getters.getAbsensi
     }
   },
   created () {
     this.fetchTeacher()
     this.fetchclass()
+    this.lol()
+    this.fecthAttendance()
   },
   components: {
     Input,
     Check
+  },
+  watch: {
+    murid (val, oldCount) {
+      this.lol()
+    }
   }
-  // watch: {
-  //   kelas: (val) => {
-  //     this.fecthStudent()
-  //   }
-  // }
 }
 </script>
 

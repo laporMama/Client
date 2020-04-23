@@ -2,28 +2,31 @@
   <div id="app">
     <navbar :login="isLogin" />
     <ErrorMessage v-if="error" class="container w-50 mt-3" />
+    <SuccessMessage v-if="success" class="container w-50 mt-3" />
     <Spinner v-if="loading" />
     <div id="content">
       <vue-page-transition>
         <router-view />
       </vue-page-transition>
     </div>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
 <script>
 import navbar from './components/Navbar'
-import Footer from './components/Footer'
+// import Footer from './components/Footer'
 import Spinner from './components/spinner'
 import ErrorMessage from './components/errorMessage'
+import SuccessMessage from './components/successMessage'
 // import login from './views/Home'
 export default {
   components: {
     navbar,
-    Footer,
+    // Footer,
     Spinner,
-    ErrorMessage
+    ErrorMessage,
+    SuccessMessage
   },
   data () {
     return {
@@ -36,6 +39,26 @@ export default {
     },
     error () {
       return this.$store.state.error
+    },
+    success () {
+      return this.$store.state.success
+    }
+  },
+  watch: {
+    success (newVal) {
+      setTimeout(() => {
+        this.$store.commit('SET_SUCCESS', false)
+      }, 3000)
+    },
+    error (newval) {
+      setTimeout(() => {
+        this.$store.commit('SET_ERROR_STATUS', false)
+      }, 3000)
+    }
+  },
+  created () {
+    if (localStorage.token) {
+      this.$store.commit('SUCCESS_AUTH')
     }
   }
 }
@@ -62,13 +85,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
-
-#content {
-  flex: 1 0 auto;
-}
-
-Footer {
-  flex-shrink: none;
 }
 </style>
