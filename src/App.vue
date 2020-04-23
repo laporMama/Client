@@ -79,7 +79,7 @@ body, html {
 }
 
 #nav {
-  padding: 30px;
+  padding-top: 30px;
 }
 
 #nav a {

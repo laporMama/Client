@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    loginRole: 'Mama',
+    loginRole: 'Admin',
     absen: [],
     loading: false,
     kelas: [],
