@@ -42,7 +42,7 @@ export default {
       this.chartData = {
         hoverBackgroundColor: 'red',
         hoverBorderWidth: 10,
-        labels: ['Attend', 'Not present', 'Sick', 'Permit'],
+        labels: ['Present', 'Not present', 'Sick', 'Permit'],
         datasets: [
           {
             label: 'Data One',

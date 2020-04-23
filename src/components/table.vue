@@ -150,6 +150,12 @@ export default {
   watch: {
     murid (val, oldCount) {
       this.lol()
+    },
+    hasilMurid () {
+      console.localStorage('hasil murid')
+    },
+    getAbsensi () {
+      console.localStorage('owkdowo')
     }
   }
 }
