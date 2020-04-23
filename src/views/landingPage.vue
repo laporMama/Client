@@ -13,7 +13,7 @@
   <b-col cols="10">
     <div class="main">
       <div>
-        <h1>Welcome {{guru}} teacher </h1>
+        <h1>Welcome {{guru}} </h1>
       </div>
       <router-view />
     </div>

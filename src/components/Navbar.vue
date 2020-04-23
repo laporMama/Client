@@ -22,6 +22,7 @@ export default {
   name: 'Navbar',
   data () {
     return {
+      isLogin: localStorage.getItem('isAuth')
     }
   },
   methods: {
@@ -32,6 +33,7 @@ export default {
       this.$store.commit('LOGOUT')
       this.$store.commit('SET_ERROR_STATUS', false)
       localStorage.removeItem('token')
+      localStorage.setItem('isAuth', false)
       this.$router.push('/')
     }
   },
