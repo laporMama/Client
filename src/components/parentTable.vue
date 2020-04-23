@@ -1,24 +1,41 @@
 <template>
   <div>
     <!-- table -->
-    <b-table
-      :items="dataStudent[0].mapel"
-      :fields="fields"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      responsive="sm"
-    >
-      <template v-slot:cell(nilai)="data">{{printScore(data.value)}}</template>
-      <template v-slot:cell(uts)="data">{{printScore(data.value)}}</template>
-      <template v-slot:cell(uas)="data">{{printScore(data.value)}}</template>
-
-    </b-table>
-      <!-- <p disabled>{{test}}</p> -->
     <div>
       Sorting By:
       <b>{{ sortBy }}</b>, Sort Direction:
       <b>{{ sortDesc ? 'Z-A' : 'A-Z' }}</b>
     </div>
+    <b-table
+      :items="dataStudent[0].mapel"
+      :fields="fields"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      striped
+      bordered
+      hover
+      responsive="sm"
+    >
+      <template v-slot:cell(nilai)="data">
+        <span style="display:block; text-align: center;">{{printScore(data.value)}}</span>
+      </template>
+      <template v-slot:head(nilai)="data">
+        <span style="display:block; text-align: center;">{{ data.label }}</span>
+      </template>
+      <template v-slot:cell(uts)="data">
+        <span style="display:block; text-align: center;">{{printScore(data.value)}}</span>
+      </template>
+      <template v-slot:head(uts)="data">
+        <span style="display:block; text-align: center;">{{ data.label }}</span>
+      </template>
+      <template v-slot:cell(uas)="data">
+        <span style="display:block; text-align: center;">{{printScore(data.value)}}</span>
+      </template>
+      <template v-slot:head(uas)="data">
+        <span style="display:block; text-align: center;">{{ data.label }}</span>
+      </template>
+    </b-table>
+      <!-- <p disabled>{{test}}</p> -->
   </div>
 </template>
 
@@ -32,7 +49,7 @@ export default {
       sortBy: 'Course Name',
       sortDesc: false,
       fields: [
-        { key: 'name', label: 'Name', sortable: true },
+        { key: 'name', label: 'Course Name', sortable: true },
         { key: 'nilai', label: 'Score', sortable: true },
         { key: 'uts', label: 'Score UTS', sortable: true },
         { key: 'uas', label: 'Score UAS', sortable: true }
