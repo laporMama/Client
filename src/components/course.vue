@@ -1,19 +1,21 @@
 <template>
   <div class="formCard">
     <b-card
-    title="register Course"
+    title="Create Course"
     style="max-width: 30rem; width: 30rem;"
     >
-      <b-form>
+      <b-form @submit.prevent="addMapel(nama)">
         <b-form-group label="Course">
           <b-form-input
-          placeholder="CourseName"
-          v-model="nama"
-          autocomplete="off"
-          required
+            placeholder="Course"
+            v-model="nama"
+            autocomplete="off"
+            required
           />
         </b-form-group>
-        <b-button @click="addMapel(nama)">Submit</b-button>
+        <div class="btn-submit" style="display:flex;justify-content:center;align-items:center;">
+          <b-button variant="success" type="submit">Submit</b-button>
+        </div>
       </b-form>
     </b-card>
   </div>
@@ -29,6 +31,7 @@ export default {
   methods: {
     addMapel (payload) {
       this.$store.dispatch('setMapel', payload)
+      this.nama = ''
     }
   }
 }
