@@ -1,12 +1,9 @@
 <template>
-  <b-card>
-    <div class="MainCard">
-      <b-card
-        class="mb-2"
-         style="max-width: 20rem;"
-      >
+  <b-card class="loginForm">
+    <div>
+      <b-card>
       <h1>Login{{role}}</h1>
-      <b-form class="app">
+      <b-form>
         <b-form-group
           id="input-group-1"
           label="Email address:"
@@ -46,7 +43,12 @@ export default {
   },
   computed: {
     role () {
+      // if (!this.$store.state.loginRole) {
       return this.$store.state.loginRole
+      // } else {
+      //   this.$store.commit('SET_LOGINROLE', 'Mama')
+      //   return 'Mama'
+      // }
     }
   },
   methods: {
@@ -64,18 +66,9 @@ export default {
 </script>
 
 <style scoped>
-  .MainCard {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    margin-top: 8%;
-    margin-bottom: 20vh;
-  }
-  .app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: start;
-    color: #2c3e50;
-  }
+.loginForm {
+  font-size: 1.3rem;
+  padding: 10px;
+  margin-bottom: 450px;
+}
 </style>

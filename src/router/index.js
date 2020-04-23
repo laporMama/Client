@@ -13,6 +13,11 @@ import Class from '../components/class.vue'
 
 Vue.use(VueRouter)
 
+const func = function () {
+  console.log('haiii')
+  return this.$store.commit('SET_LOGINROLE', 'Admin')
+}
+
 const routes = [
   {
     path: '/',
@@ -78,6 +83,7 @@ const routes = [
     ],
     beforeEnter: (to, from, next) => {
       if (!localStorage.token) {
+        func()
         router.push('/login')
       } else {
         next()
