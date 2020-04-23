@@ -13,7 +13,7 @@
       {{option.text}}
       </b-form-radio>
     </b-form-radio-group>
-    <!-- {{data}} -->
+    {{data}}
     <!-- {{absenhari}} -->
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navbar :login="isLogin" />
+    <!-- <navbar :login="isLogin" /> -->
     <ErrorMessage v-if="error" class="container w-50 mt-3" />
     <SuccessMessage v-if="success" class="container w-50 mt-3" />
     <Spinner v-if="loading" />
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import navbar from './components/Navbar'
+// import navbar from './components/Navbar'
 // import Footer from './components/Footer'
 import Spinner from './components/spinner'
 import ErrorMessage from './components/errorMessage'
@@ -22,7 +22,7 @@ import SuccessMessage from './components/successMessage'
 // import login from './views/Home'
 export default {
   components: {
-    navbar,
+    // navbar,
     // Footer,
     Spinner,
     ErrorMessage,
