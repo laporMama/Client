@@ -3,6 +3,7 @@
   <div>
     <b-tabs content-class="mt-3">
     <h1>{{mapel.name}}</h1>
+    {{mapel}}
     <br>
       <b-input
       v-model="filters"
