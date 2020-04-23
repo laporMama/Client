@@ -60,6 +60,7 @@ export default {
   methods: {
     addNilai (payload) {
       this.$emit('setNilai', payload)
+      this.nilai = 0
       // this.$store.dispatch('fetchStudentInClass')
     },
     updateNilai (payload) {
