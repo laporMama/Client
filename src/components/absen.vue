@@ -13,6 +13,8 @@
       {{option.text}}
       </b-form-radio>
     </b-form-radio-group>
+    <!-- {{data}} -->
+    <!-- {{absenhari}} -->
   </div>
 </template>
 
@@ -26,10 +28,10 @@ export default {
       statusAbsen: false,
       absen: [],
       options: [
-        { text: 'present', value: 'hadir', notEnabled: false },
-        { text: 'permit', value: 'izin', notEnabled: false },
-        { text: 'sick', value: 'sakit', notEnabled: false },
-        { text: 'not present', value: 'alpha', notEnabled: false }
+        { text: 'Present', value: 'hadir', notEnabled: false },
+        { text: 'Permit', value: 'izin', notEnabled: false },
+        { text: 'Sick', value: 'sakit', notEnabled: false },
+        { text: 'Not Present', value: 'alpha', notEnabled: false }
       ]
     }
   },
@@ -37,6 +39,17 @@ export default {
     status (a) {
       this.$emit('absensis', { status: a, StudentId: this.data.item.id })
     }
+    // test () {
+    //   this.$store.dispatch('fecthAttendance')
+    // }
+  },
+  created () {
+    // this.test()
+  },
+  computed: {
+    // absenhari () {
+    //   return this.$store.getters.getAbsensi
+    // }
   }
 }
 </script>

@@ -55,6 +55,11 @@ export default {
         this.$store.commit('SET_ERROR_STATUS', false)
       }, 3000)
     }
+  },
+  created () {
+    if (localStorage.token) {
+      this.$store.commit('SUCCESS_AUTH')
+    }
   }
 }
 </script>
