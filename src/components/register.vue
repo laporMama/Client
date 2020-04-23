@@ -55,6 +55,7 @@
         </div>
         <div class="btn-submit">
           <b-button @click.prevent="registerMama({name: nama, email: email, password: password, phoneNumber, role, CourseId: mapel})">Submit</b-button>
+          {{mapel}}
         </div>
       </b-form>
     </b-card>

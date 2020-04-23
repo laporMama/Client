@@ -340,6 +340,7 @@ export default new Vuex.Store({
         })
     },
     registerMama ({ commit }, { name, email, password, phoneNumber, CourseId, role }) {
+      console.log(CourseId)
       commit('SET_LOADING', true)
       axios({
         method: 'post',
