@@ -9,7 +9,13 @@ export default {
     this.renderChart(this.data, {
       borderWidth: '10px',
       hoverBackgroundColor: 'red',
-      hoverBorderWidth: '10px'
+      hoverBorderWidth: '10px',
+      legend: {
+        position: 'right',
+        labels: {
+          fontSize: 17
+        }
+      }
     })
   },
   watch: {
@@ -17,7 +23,13 @@ export default {
       this.renderChart(this.data, {
         borderWidth: '10px',
         hoverBackgroundColor: 'red',
-        hoverBorderWidth: '10px'
+        hoverBorderWidth: '10px',
+        legend: {
+          position: 'right',
+          labels: {
+            fontSize: 17
+          }
+        }
       })
     }
   }

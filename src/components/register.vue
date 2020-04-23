@@ -1,16 +1,17 @@
 <template>
   <div class="formCard">
     <b-card
-    title="Register Account"
-    style="max-width: 30rem; width: 30rem;"
+      title="Create User"
+      style="max-width: 30rem; width: 30rem;margin-bottom: 5vh;"
     >
-      <b-form >
+      <b-form @submit.prevent="registerMama({name: nama, email: email, password: password, phoneNumber, role, CourseId: mapel})" >
         <b-form-group label="Name">
           <b-form-input
-          placeholder="Nama"
+          placeholder="Name"
           v-model="nama"
           autocomplete="off"
           required
+          type="text"
           />
         </b-form-group>
         <b-form-group label="Email">
@@ -29,20 +30,20 @@
           required
           />
         </b-form-group>
-
         <b-form-group label="phoneNumber">
           <b-form-input
           placeholder="phoneNumber"
           type="number"
           v-model="phoneNumber"
           required
+          min="0"
           />
         </b-form-group>
-
         <b-form-group label="Role">
           <b-form-select
           :options="options"
           v-model="role"
+          required
           ></b-form-select>
         </b-form-group>
         <div v-if="role === 'teacher'" disabled>
@@ -53,9 +54,8 @@
             ></b-form-select>
           </b-form-group>
         </div>
-        <div class="btn-submit">
-          <b-button @click.prevent="registerMama({name: nama, email: email, password: password, phoneNumber, role, CourseId: mapel})">Submit</b-button>
-          {{mapel}}
+        <div class="btn-submit" style="display:flex;justify-content:center;align-items:center;">
+          <b-button type="submit" variant="success">Submit</b-button>
         </div>
       </b-form>
     </b-card>
@@ -69,9 +69,14 @@ export default {
       nama: '',
       email: '',
       password: '',
-      options: [{ value: 'parent', text: 'parent' }, { value: 'teacher', text: 'teacher' }, { value: 'admin', text: 'admin' }],
+      options: [
+        { value: null, text: 'Select role' },
+        { value: 'parent', text: 'parent' },
+        { value: 'teacher', text: 'teacher' },
+        { value: 'admin', text: 'admin' }
+      ],
       phoneNumber: '',
-      role: '',
+      role: null,
       mapel: ''
     }
   },
@@ -81,6 +86,12 @@ export default {
     },
     registerMama (payload) {
       this.$store.dispatch('registerMama', payload)
+      this.nama = ''
+      this.email = ''
+      this.password = ''
+      this.phoneNumber = ''
+      this.role = null
+      this.mapel = ''
     },
     allMaple () {
       this.$store.dispatch('getCourse')
@@ -102,14 +113,12 @@ export default {
     display: flex;
     justify-content: center;
     align-content: center;
-    margin-top: 2%;
     text-align: start;
   }
   .card-title {
     text-align: center !important;
   }
   .btn-submit {
-    display: flex;
-    justify-content: space-between;
+    display: flex;justify-content: center;align-items: center;
   }
 </style>

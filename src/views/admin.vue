@@ -1,37 +1,36 @@
 <template>
   <div class="home">
-    <b-col cols="2">
+    <b-col style="margin-left: 1vw;margin-top: 2vh;" cols="2">
       <div class="sidenav">
       <b-navbar-nav>
         <b-nav-item :to="{path: '/admin/register'}">
           <b-card>
-          Register
+          Create User
           </b-card>
         </b-nav-item>
         <b-nav-item :to="{path: '/admin/course'}">
         <b-card>
-          Course
+          Create Course
         </b-card>
         </b-nav-item>
         <b-nav-item :to="{path: '/admin/student'}">
           <b-card>
-            Student
+            Create Student
           </b-card>
           </b-nav-item>
         <b-nav-item :to="{path: '/admin/class'}">
           <b-card>
-           class
+           Create Class
           </b-card>
         </b-nav-item>
       </b-navbar-nav>
       </div>
     </b-col>
-    <b-col cols="10">
+    <b-col style="margin-top: 1vh;" cols="9">
       <div class="menu">
         <router-view />
       </div>
     </b-col>
-    <!-- <h1>OKSWODKODK</h1> -->
   </div>
 </template>
 

@@ -69,7 +69,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   height: 100%;
 }
@@ -85,5 +85,11 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+a:active, a:focus {
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
 }
 </style>
