@@ -13,25 +13,25 @@
       <b-tab title="Score" active>
         <b-table fixed responsive  :items="check" :fields="fields" style="{display:flex; flex-direction:row}">
           <template v-slot:cell(inputnilai)="i">
-            <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" @setNilai="setNilai" />
+            <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" @setNilai="setNilai" @updateNilais="updateNilais" />
           </template>
         </b-table>
       </b-tab>
       <b-tab title="Score UTS" active>
         <b-table fixed responsive :items="check" :fields="fieldsUts">
           <template v-slot:cell(inputnilai)="i">
-            <Input :data="i" :date="date" :type="'uts'" :CourseId="mapel.id" @setNilai="setNilai" />
+            <Input :data="i" :date="date" :type="'uts'" :CourseId="mapel.id" @setNilai="setNilai" @updateNilais="updateNilais" />
           </template>
         </b-table>
       </b-tab>
       <b-tab title="Score UAS" active>
         <b-table fixed responsive :items="check" :fields="fieldsUas">
           <template v-slot:cell(inputnilai)="i">
-            <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" @setNilai="setNilai" />
+            <Input :data="i" :date="date" :type="'uas'" :CourseId="mapel.id" @setNilai="setNilai"  @updateNilais="updateNilais"/>
           </template>
         </b-table>
       </b-tab>
-      <b-tab title="Attendance">
+      <b-tab title="Attendance" :disabled="getAbsensi.length ? true : false" >
         <b-table fixed responsive :items="check" :fields="fields2">
           <template v-slot:cell(hadir)="i">
             <Check :data="i"  @absensis="absensis" />
@@ -42,7 +42,6 @@
           <br>
           <b-button variant="danger" @click.prevent="demo">Demo</b-button>
         </b-tab>
-
     </b-tabs>
   </div>
   {{hasilMurid}}
@@ -73,8 +72,9 @@ export default {
       payload.item.status = payload.field.key
       this.$store.commit('SET_ABSENSI', payload.item)
     },
-    updateNilai (payload) {
-      this.$store.dispatch('UpdateNilai', payload)
+    updateNilais (payload) {
+      this.$store.dispatch('setUpdateNilai', payload)
+      this.$store.dispatch('fetchStudentInClass')
     },
     setNilai (payload) {
       this.$store.dispatch('setNilai', payload)
@@ -100,6 +100,8 @@ export default {
     },
     pushAttendance () {
       this.$store.dispatch('setAttendance', this.absen)
+      this.$store.dispatch('Fetchclass')
+      this.$store.dispatch('fecthAttendance')
     },
     lol () {
       this.check = this.murid
@@ -107,6 +109,9 @@ export default {
     demo () {
       this.$store.dispatch('demoEmail', 1)
       this.$store.dispatch('demoSMS', 1)
+    },
+    fecthAttendance () {
+      this.$store.dispatch('fecthAttendance')
     }
   },
   computed: {
@@ -125,12 +130,16 @@ export default {
     },
     mapel (payload) {
       return this.$store.state.mapel
+    },
+    getAbsensi () {
+      return this.$store.getters.getAbsensi
     }
   },
   created () {
     this.fetchTeacher()
     this.fetchclass()
     this.lol()
+    this.fecthAttendance()
   },
   components: {
     Input,

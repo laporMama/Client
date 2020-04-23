@@ -10,7 +10,7 @@
       </div>
       <b-modal
       v-model="model"
-      @ok={handleOk}
+      @ok="handleOk"
       >
         <form @submit.stop.prevent="updateNilai({id: NilaiId, score: nilaiUpdate})">
           <b-form-group
@@ -36,8 +36,7 @@
         </form>
       </b-modal>
     </div>
-    {{NilaiId}}
-    {{nilaiUpdate}}
+    <!-- {{data}} -->
   </div>
 </template>
 
@@ -63,18 +62,21 @@ export default {
       // this.$store.dispatch('fetchStudentInClass')
     },
     updateNilai (payload) {
-      this.$store.dispatch('updateNilai', payload)
+      this.$emit('updateNilai', payload)
+      this.$store.dispatch('fetchStudentInClass')
     },
     handleOk () {
       const data = { id: this.NilaiId, score: this.nilaiUpdate }
-      this.updateNilai(data)
+      // console.log(data)
+      this.$emit('updateNilais', data)
+      this.$store.dispatch('fetchStudentInClass')
     }
   },
   computed: {
     tanggal () {
       const tamp = []
       this.data.item.Reports.forEach(el => {
-        tamp.push({ value: el.id, text: el.reportDate })
+        tamp.push({ value: el.id, text: new Date(el.reportDate).toLocaleDateString() })
       })
       return tamp
     }

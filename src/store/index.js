@@ -29,9 +29,11 @@ export default new Vuex.Store({
   mutations: {
     SUCCESS_AUTH (state) {
       state.isAuth = true
+      localStorage.setItem('isAuth', true)
     },
     LOGOUT (state) {
       state.isAuth = false
+      localStorage.setItem('isAuth', false)
     },
     SET_LOGINROLE (state, payload) {
       state.loginRole = payload
@@ -313,7 +315,8 @@ export default new Vuex.Store({
           commit('SET_LOADING', false)
         })
     },
-    updateNilai ({ commit }, { id, score }) {
+    setUpdateNilai ({ commit }, { id, score }) {
+      console.log(id)
       commit('SET_LOADING', true)
       axios({
         method: 'put',
@@ -555,7 +558,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data)
-          commit('SET_ALL_ATTENDANCE')
+          commit('SET_ALL_ATTENDANCE', data)
         })
         .catch(err => {
           console.log(err)
@@ -727,7 +730,13 @@ export default new Vuex.Store({
       return tamp
     },
     getAbsensi: (state) => {
-      state.absensi.filter()
+      if (state.absensi.length === 0) {
+        return 0
+      }
+      let temp = null
+      temp = state.absensi.data.filter(el => new Date(el.Attendance.attendanceDate).toLocaleDateString() === new Date().toLocaleDateString())
+      console.log(temp)
+      return temp
     }
   },
   modules: {

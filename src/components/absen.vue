@@ -14,6 +14,7 @@
       </b-form-radio>
     </b-form-radio-group>
     <!-- {{data}} -->
+    <!-- {{absenhari}} -->
   </div>
 </template>
 
@@ -37,16 +38,18 @@ export default {
   methods: {
     status (a) {
       this.$emit('absensis', { status: a, StudentId: this.data.item.id })
-    },
-    test () {
-      console.log(this.data)
-      // this.data.forEach(el => {
-      //   console.log(el)
-      // })
     }
+    // test () {
+    //   this.$store.dispatch('fecthAttendance')
+    // }
   },
   created () {
-    this.test()
+    // this.test()
+  },
+  computed: {
+    // absenhari () {
+    //   return this.$store.getters.getAbsensi
+    // }
   }
 }
 </script>
