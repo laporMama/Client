@@ -15,7 +15,7 @@
                 <h4>mapel</h4>
               </div>
               <div style="padding-top:5px">
-                <b-button>logout</b-button>
+                <b-button @click.prevent="logout">logout</b-button>
               </div>
             </b-card>
           </div>
@@ -77,6 +77,13 @@ export default {
         console.log(event, 'aowkdowdkaowk')
         this.mapels = event
       }
+    },
+    logout () {
+      this.$store.commit('LOGOUT')
+      this.$store.commit('SET_ERROR_STATUS', false)
+      localStorage.removeItem('token')
+      localStorage.setItem('isAuth', false)
+      this.$router.push('/')
     }
   },
   computed: {

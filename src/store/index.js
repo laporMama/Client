@@ -233,6 +233,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data)
           commit('SET_ERROR_STATUS', false)
           commit('SET_STUDENT', data.students)
         })

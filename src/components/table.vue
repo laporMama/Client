@@ -3,7 +3,7 @@
   <!-- {{mapel.name}} -->
   <br>
   <br>
-  <h3>{{mapel.name}}</h3>
+  <h3>{{kelas[0].name}}</h3>
   <br>
   <br>
   <div>
@@ -21,19 +21,10 @@
         class="container-fluid w-50"
         ></b-input>
       </b-col>
-      <b-col>
-        <b-input
-        v-model="filters"
-        debounce="500"
-        placeholder="Search.... "
-        class="container-fluid w-50"
-        type="date"
-        ></b-input>
-      </b-col>
     </b-row>
       <br>
       <b-tab title="Score" active>
-        <b-table fixed="true" responsive  :items="check" :fields="fields" style="{display:flex; flex-direction:row}" font-weight-bold :outlined="true">
+        <b-table fixed responsive  :items="check" :fields="fields" style="{display:flex; flex-direction:row}" font-weight-bold :outlined="true">
           <template v-slot:cell(inputnilai)="i">
             <Input :data="i" :date="date" :type="'nilai'" :CourseId="mapel.id" @setNilai="setNilai" @updateNilais="updateNilais" />
           </template>
@@ -141,6 +132,7 @@ export default {
     },
     fecthAttendance () {
       this.$store.dispatch('fecthAttendance')
+      console.log(this.$route.params.pathMatch)
     },
     status (event) {
       this.statusSubmit = event
@@ -165,6 +157,9 @@ export default {
     },
     getAbsensi () {
       return this.$store.getters.getAbsensi
+    },
+    kelas () {
+      return this.$store.state.kelas.filter(el => el.id === Number(localStorage.getItem('idRoom')))
     }
   },
   created () {
