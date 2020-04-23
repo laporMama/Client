@@ -106,7 +106,7 @@ export default new Vuex.Store({
     loginGuru ({ commit }, { email, password }) {
       commit('SET_LOADING', true)
       axios({
-        url: 'http://13.229.222.82/login',
+        url: 'http://localhost:3000/login',
         method: 'post',
         data: {
           email,
@@ -135,7 +135,7 @@ export default new Vuex.Store({
     loginAdmin ({ commit }, { email, password }) {
       commit('SET_LOADING', true)
       axios({
-        url: 'http://13.229.222.82/login',
+        url: 'http://localhost:3000/login',
         method: 'post',
         data: {
           email,
@@ -161,7 +161,7 @@ export default new Vuex.Store({
     loginParent ({ commit }, { email, password }) {
       commit('SET_LOADING', true)
       axios({
-        url: 'http://13.229.222.82/login',
+        url: 'http://localhost:3000/login',
         method: 'post',
         data: {
           email,
@@ -188,7 +188,7 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       axios({
         method: 'get',
-        url: 'http://13.229.222.82/class',
+        url: 'http://localhost:3000/class',
         headers: { token: localStorage.getItem('token') }
       })
         .then(({ data }) => {
@@ -206,7 +206,7 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       axios({
         method: 'get',
-        url: 'http://13.229.222.82/teachers/' + payload,
+        url: 'http://localhost:3000/teachers/' + payload,
         headers: {
           token: localStorage.getItem('token')
         }
@@ -227,7 +227,7 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       return axios({
         method: 'get',
-        url: 'http://13.229.222.82/students/' + localStorage.getItem('idRoom'),
+        url: 'http://localhost:3000/students/' + localStorage.getItem('idRoom'),
         headers: {
           token: localStorage.getItem('token')
         }
@@ -247,7 +247,7 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       axios({
         method: 'get',
-        url: 'http://13.229.222.82/reports/parent',
+        url: 'http://localhost:3000/reports/parent',
         headers: {
           token: localStorage.getItem('token')
         }
@@ -271,7 +271,7 @@ export default new Vuex.Store({
         headers: {
           token: localStorage.getItem('token')
         },
-        url: 'http://13.229.222.82/attendances/parent'
+        url: 'http://localhost:3000/attendances/parent'
       })
         .then(({ data }) => {
           commit('SET_PARENTSTUDENT', data.data)
@@ -288,7 +288,7 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       axios({
         method: 'POST',
-        url: 'http://13.229.222.82/reports',
+        url: 'http://localhost:3000/reports',
         headers: {
           token: localStorage.getItem('token')
         },
@@ -320,7 +320,7 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       axios({
         method: 'put',
-        url: 'http://13.229.222.82/reports/' + id,
+        url: 'http://localhost:3000/reports/' + id,
         data: {
           score
         },
@@ -344,7 +344,7 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       axios({
         method: 'post',
-        url: 'http://13.229.222.82/register',
+        url: 'http://localhost:3000/register',
         data: {
           name,
           password,
@@ -375,7 +375,7 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       axios({
         method: 'get',
-        url: 'http://13.229.222.82/course',
+        url: 'http://localhost:3000/course',
         headers: {
           token: localStorage.getItem('token')
         }
@@ -395,7 +395,7 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       axios({
         method: 'get',
-        url: 'http://13.229.222.82/parent',
+        url: 'http://localhost:3000/parent',
         headers: {
           token: localStorage.getItem('token')
         }
@@ -415,7 +415,7 @@ export default new Vuex.Store({
       commit('SET_LOADING', true)
       axios({
         method: 'post',
-        url: 'http://13.229.222.82/students',
+        url: 'http://localhost:3000/students',
         headers: {
           token: localStorage.getItem('token')
         },
@@ -448,7 +448,7 @@ export default new Vuex.Store({
         headers: {
           token: localStorage.getItem('token')
         },
-        url: 'http://13.229.222.82/course'
+        url: 'http://localhost:3000/course'
       })
         .then(({ data }) => {
           console.log(data.message)
@@ -473,7 +473,7 @@ export default new Vuex.Store({
         headers: {
           token: localStorage.getItem('token')
         },
-        url: 'http://13.229.222.82/class'
+        url: 'http://localhost:3000/class'
       })
         .then(({ data }) => {
           commit('SET_SUCCESS', true)
@@ -491,7 +491,7 @@ export default new Vuex.Store({
     setAttendance ({ commit }, payload) {
       commit('SET_LOADING', true)
       axios({
-        url: 'http://13.229.222.82/attendances',
+        url: 'http://localhost:3000/attendances',
         method: 'post',
         headers: {
           token: localStorage.getItem('token')
@@ -517,7 +517,7 @@ export default new Vuex.Store({
     demoSMS ({ commit }, payload) {
       commit('SET_LOADING', true)
       axios({
-        url: 'http://13.229.222.82/demo/sms/' + payload,
+        url: 'http://localhost:3000/demo/sms/' + payload,
         method: 'get'
       })
         .then(({ data }) => {
@@ -535,7 +535,7 @@ export default new Vuex.Store({
     demoEmail ({ commit }, payload) {
       commit('SET_LOADING', true)
       axios({
-        url: 'http://13.229.222.82/demo/email/' + payload,
+        url: 'http://localhost:3000/demo/email/' + payload,
         method: 'get'
       })
         .then(({ data }) => {
@@ -552,7 +552,7 @@ export default new Vuex.Store({
     },
     fecthAttendance ({ commit }) {
       axios({
-        url: 'http://13.229.222.82/attendances',
+        url: 'http://localhost:3000/attendances',
         headers: {
           token: localStorage.getItem('token')
         }
