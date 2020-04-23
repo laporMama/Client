@@ -24,13 +24,11 @@ export default {
         hoverBackgroundColor: 'red',
         hoverBorderWidth: 10,
         labels: ['Hadir', 'Absen', 'Sakit', 'Izin'],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#2c3e50'],
-            data: this.absensi
-          }
-        ]
+        datasets: [{
+          label: 'Data One',
+          backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#2c3e50'],
+          data: this.absensi
+        }]
       }
     }
   },
@@ -43,21 +41,20 @@ export default {
         hoverBackgroundColor: 'red',
         hoverBorderWidth: 10,
         labels: ['Present', 'Not present', 'Sick', 'Permit'],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#2c3e50'],
-            data: this.absensi
-          }
-        ]
+        datasets: [{
+          label: 'Data One',
+          backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#2c3e50'],
+          data: this.absensi
+        }]
       }
     }
   },
   computed: {
     myStyles () {
       return {
-        width: `${this.width}vw`,
-        position: 'relative'
+        width: '80%',
+        position: 'relative',
+        marginTop: '-60px'
       }
     }
   },
