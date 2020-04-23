@@ -1,21 +1,23 @@
 <template>
   <div class="formCard">
     <b-card
-    title="register Class"
+    title="Create Class"
     style="max-width: 30rem; width: 30rem;"
     >
-      <b-form>
+      <b-form @submit.prevent="addClass(nama)">
         <b-form-group label="Class:"
         description="Example XI-1"
         >
           <b-form-input
-          placeholder="class"
+          placeholder="Class"
           v-model="nama"
           autocomplete="off"
           required
           />
         </b-form-group>
-        <b-button @click="addClass(nama)">Submit</b-button>
+        <div class="btn-submit" style="display:flex;justify-content:center;align-items:center;">
+          <b-button variant="success" type="submit">Submit</b-button>
+        </div>
       </b-form>
     </b-card>
   </div>
@@ -31,6 +33,7 @@ export default {
   methods: {
     addClass (payload) {
       this.$store.dispatch('setClass', payload)
+      this.nama = ''
     }
   }
 }
