@@ -90,4 +90,10 @@ body, html {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+a:active, a:focus {
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+}
 </style>

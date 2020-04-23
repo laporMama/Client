@@ -1,10 +1,10 @@
 <template>
   <div class="formCard">
     <b-card
-    title="Student Register"
-    style="max-width: 30rem; width: 30rem;"
+      title="Create Student"
+      style="max-width: 30rem; width: 30rem;"
     >
-      <b-form>
+      <b-form @submit.prevent="addStudent({name: name, ClassId: kelasId, ParentId:parent})">
         <b-form-group label="Parent">
           <b-form-select
           :options="teacher"
@@ -23,10 +23,11 @@
           <b-form-input
           v-model="name"
           required
+          placeholder="Student name"
           />
         </b-form-group>
-        <div class="btn-submit">
-          <b-button @click="addStudent({name: name, ClassId: kelasId, ParentId:parent})">Submit</b-button>
+        <div class="btn-submit" style="display:flex;justify-content:center;align-items:center;">
+          <b-button variant="success" type="submit">Submit</b-button>
         </div>
       </b-form>
     </b-card>
@@ -37,8 +38,8 @@
 export default {
   data () {
     return {
-      name: '',
-      kelasId: '',
+      name: null,
+      kelasId: null,
       parent: ''
     }
   },
@@ -48,6 +49,9 @@ export default {
       this.$store.dispatch('Fetchclass')
     },
     addStudent (payload) {
+      this.name = null
+      this.kelasId = null
+      this.parent = null
       this.$store.dispatch('addStudent', payload)
     }
   },
